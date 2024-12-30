@@ -1,0 +1,44 @@
+#header {
+  width: 100%;
+  height: 10vh;
+  text-align: center;
+  border: 1px solid black;
+}
+
+#left {
+  display: inline-block;
+  width: 20%;
+  text-align: center;
+  outline: 1px solid black;
+  vertical-align: top;
+}
+
+#center {
+  display: inline-block;
+  width: 60%;
+  text-align: center;
+  outline: 1px solid black;
+  font-size: 0px;
+  vertical-align: top;
+}
+
+#right {
+  display: inline-block;
+  width: 20%;
+  text-align: center;
+  outline: 1px solid black;
+  vertical-align: top;
+}
+
+.brick-row {
+  display: block;
+}
+
+.brick {
+  display: inline-block;
+  border: 2px solid gray;
+  background-color: brown;
+  background-image: url(./img/brown_brick.png);
+  width: 76px;
+  height: 36px;
+}
