@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import '../game.css';
@@ -5,6 +6,7 @@ import '../game.css';
 import BrickRow from './BrickRow';
 
 import { numCols, numRows} from '../consts';
+import { loadState } from '../engine/save';
 
 function Game() {
   const res = useSelector(state => state.res);
@@ -13,6 +15,8 @@ function Game() {
   for (let i = 0; i < numRows; i++) {
     rows.push(<BrickRow key={`r_${i}`} row={i} numCols={numCols + i % 2} />)
   }
+
+  useEffect(() => loadState(), []);
 
   return (
     <div>

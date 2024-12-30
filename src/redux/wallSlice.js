@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+export const initialState = {
+};
+
 export const wallSlice = createSlice({
   name: 'wall',
-  initialState: {
-  },
+  initialState,
   reducers: {
     hide: (state, action) => {
       state[action.payload.id] = false;
@@ -11,9 +13,13 @@ export const wallSlice = createSlice({
     show: (state, action) => {
       state[action.payload.id] = true;
     },
+    load: (state, action) => {
+      console.log(action.payload);
+      Object.assign(state, action.payload);
+    }
   }
 })
 
-export const { hide, show } = wallSlice.actions
+export const { hide, show, load } = wallSlice.actions
 
 export default wallSlice.reducer
