@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Brick Wall
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple incremental clicker game.
 
 ## Available Scripts
 
