@@ -10,7 +10,7 @@
   display: grid;
   min-height: 100%;
   width: 100%;
-  grid-template: 10vh 80vh 10vh / 20% 60% 20%
+  grid-template: 10vh 80vh 10vh / 20vw 60vw 20vw
 }
 
 #header {
@@ -28,11 +28,14 @@
 }
 
 #center {
+  position: relative;
   grid-row: 2;
   grid-column: 2;
   text-align: center;
   outline: 1px solid black;
   font-size: 0px;
+  background-color: black;
+  overflow: hidden;
 }
 
 #right {
@@ -49,6 +52,15 @@
   outline: 1px solid black;
 }
 
+.wall {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
 .brick-row {
   display: block;
 }
@@ -56,8 +68,8 @@
 .brick-container {
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 40px;
+  width: 4.1666vw;
+  height: 4.1972vh;
 }
 
 .brick {
@@ -65,9 +77,10 @@
   left: 0;
   top: 0;
   display: inline;
-  width: 90px;
-  height: 50px;
+  width: 4.6875vw;
+  height: 5.2465vh;
   background-image: url(./img/brown_brick.png);
+  background-size: 100% 100%;
 }
 
 .brickHit {

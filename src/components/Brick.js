@@ -5,7 +5,7 @@ import hitImage from '../img/hit.png'
 
 import '../game.css';
 
-function Brick({ row, col }) {
+function Brick({ row, col, disabled=false }) {
   const id = `b_${row}_${col}`;
   const brickState = useSelector(state => state.wall[id]);
   const visibility = brickState === false ? 'hidden' : 'visible';
@@ -15,6 +15,7 @@ function Brick({ row, col }) {
   const onMouseDown = useCallback(() => {
     hit(id);
     setHits([...hits, Math.floor(Math.random() * 360)]);
+    console.log(window.innerHeight, window.innerWidth);
     setTimeout(() => {
       const [first, ...rest] = hits;
       setHits(rest);
@@ -25,7 +26,7 @@ function Brick({ row, col }) {
     <div className='brick-container'>
       <div
         className="brick"
-        onMouseDown={onMouseDown}
+        onMouseDown={!disabled ? onMouseDown : undefined}
         style={{visibility: visibility}}
       />
       {hits.map((value, index) => {
