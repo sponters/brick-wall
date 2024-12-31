@@ -14,7 +14,6 @@ export const wallSlice = createSlice({
       state[action.payload.id] = true;
     },
     load: (state, action) => {
-      console.log(action.payload);
       Object.assign(state, action.payload);
     }
   }

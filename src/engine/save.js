@@ -23,19 +23,16 @@ function decompressFromBase64(base64) {
 }
 
 export function saveState() {
-    console.log('Saving...');
     const save = {
         state,
         store: store.getState()
     };
-    console.log(save);
     const stringified = JSON.stringify(save);
     const base64 = compressToBase64(stringified);
     localStorage.setItem(SAVE_KEY, base64);
 }
 
 export function loadState() {
-    console.log('Loading...');
     const base64 = localStorage.getItem(SAVE_KEY);
     const stringified = decompressFromBase64(base64)
     const save = JSON.parse(stringified);

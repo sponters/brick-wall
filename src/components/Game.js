@@ -9,7 +9,7 @@ import { numCols, numRows} from '../consts';
 import { loadState } from '../engine/save';
 
 function Game() {
-  const res = useSelector(state => state.res);
+  // const res = useSelector(state => state.res);
 
   const rows = []
   for (let i = 0; i < numRows; i++) {
@@ -18,16 +18,13 @@ function Game() {
 
   useEffect(() => loadState(), []);
 
-  return (
-    <div>
-      <div id="header">Header</div>
-      <div id="left">Left<br />{res.bricks}</div>
-      <div id="center">
-        {rows}
-      </div>
-      <div id="right">Right</div>
-    </div>
-  );
+  return ([
+    <div key="header" id="header">Header</div>,
+    <div key="left" id="left">Left<br />{0}</div>,
+    <div key="center" id="center">{rows}</div>,
+    <div key="right" id="right">Right</div>,
+    <div key="footer" id="footer">Footer</div>
+  ]);
 }
 
 export default Game;

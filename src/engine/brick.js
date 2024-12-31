@@ -14,9 +14,10 @@ export function hit(id) {
 
 export function tick() {
     for (const [id, brick] of Object.entries(state.wall)) {
-        if (brick.brokenUntil == state.time.total) {
+        if ((brick.brokenUntil > 0) && (brick.brokenUntil <= state.time.total)) {
             store.dispatch(add({ type: 'bricks', amount: -1}));
             store.dispatch(show({ id }));
+            brick.brokenUntil = 0;
         }
     }
 }
