@@ -2,6 +2,20 @@
 
 A simple incremental clicker game.
 
+## TODO
+
+- Weapons
+  - Hammer (low damage, high speed)
+  - Granade (high damae, low speed)
+- Upgrades
+  - Sturdier bricks (more life, more resource)
+  - Slower rebuild (bricks take longer to rebuild)
+  - Faster rebuild (bricks take slower to rebuild)
+  - Stronger Hammer (more damage)
+  - Stronger Granade (more damage)
+- Research
+  - Blast Granade (1x) (bigger area)
+
 ## Available Scripts
 
 In the project directory, you can run:
