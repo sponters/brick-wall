@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux'
 import { hit } from '../engine/brick'
 import hitImage from '../img/hit.png'
@@ -17,7 +17,7 @@ function Brick({ row, col, disabled=false }) {
     setHits([...hits, Math.floor(Math.random() * 360)]);
     console.log(window.innerHeight, window.innerWidth);
     setTimeout(() => {
-      const [first, ...rest] = hits;
+      const [, ...rest] = hits;
       setHits(rest);
     }, 100);
   }, [id, hits, setHits]);
@@ -32,6 +32,7 @@ function Brick({ row, col, disabled=false }) {
       {hits.map((value, index) => {
         return <img
           key={index}
+          alt="Pow!"
           className="brickHit unselectable"
           src={hitImage} 
           style={{rotate: `${value}deg`}} 

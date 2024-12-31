@@ -12,7 +12,7 @@ function gameLoop(ticks) {
 
 let lastTime = Date.now();
 
-const id = setInterval(() => {
+setInterval(() => {
     const currentTime = Date.now();
     const deltaTime = currentTime - lastTime;
 
