@@ -1,10 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
-import resReducer from './resSlice'
-import wallReducer from './wallSlice'
+
+import slices from './slices'
+
+import { loadState } from '../engine/save'
+
+const reducers = {}
+for (const [id, item] of Object.entries(slices))
+  reducers[id] = item.default;
 
 export default configureStore({
-  reducer: {
-    res: resReducer,
-    wall: wallReducer
-  }
+  reducer: reducers
 });
+
+loadState();

@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux'
 
 function Resources() {
-  const res = useSelector(state => state.res);
+  const bricks = useSelector(state => state.res.brick.cur);
 
   return (
     <div>
-      {res.bricks}
+      Bricks: {bricks}
     </div>
   );
 }

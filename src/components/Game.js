@@ -1,15 +1,12 @@
-import { useEffect } from 'react'
-
 import '../game.css';
 
 import Resources from './Resources';
 import Wall from './Wall';
+import Upgrades from './Upgrades';
 
-import { loadState } from '../engine/save';
+import { resetState } from '../engine/save';
 
 function Game() {
-  useEffect(() => loadState(), []);
-
   return ([
     <div key="header" id="header">
       Header
@@ -21,10 +18,12 @@ function Game() {
       <Wall />
     </div>,
     <div key="right" id="right">
-      Right
+      <Upgrades />
     </div>,
     <div key="footer" id="footer">
-      Footer
+      <div id="footer-menu">
+        <span className="unselectable" onClick={resetState} id="reset">Reset</span>
+      </div>
     </div>
   ]);
 }

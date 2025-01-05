@@ -1,10 +1,10 @@
-import { state } from './state'
+import { time } from './time'
 import { tick as brickTick } from './brick'
 import { tick as saveTick } from './save'
 
 function gameLoop(ticks) {
     for(let i = 0; i < ticks; i++) {
-        state.time.total += ticks;
+        time.total += ticks;
         brickTick();
         saveTick();
     }

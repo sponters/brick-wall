@@ -1,26 +1,42 @@
-import { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux'
-import { hit } from '../engine/brick'
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { init } from '../redux/slices/wallSlice'
+import { hit, createBrick } from '../engine/brick'
 import hitImage from '../img/hit.png'
 
 import '../game.css';
 
-function Brick({ row, col, disabled=false }) {
+function Brick({ type, row, col, disabled=false }) {
   const id = `b_${row}_${col}`;
-  const brickState = useSelector(state => state.wall[id]);
-  const visibility = brickState === false ? 'hidden' : 'visible';
+
+  // Create state if not in the store (initialization)
+  const hasState = useSelector(state => !!state.wall[id]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!hasState)
+      dispatch(init({ id, initialState: createBrick(type) }));
+  }, [id, type, dispatch, hasState]);
+
+  // Prepare render
+  const health = useSelector(state => state.wall[id]?.health);
+  const damage = useSelector(state => state.items.hammer.damage);
+  const visibility = health === 0 ? 'hidden' : 'visible';
+  const glow = health > 0 && health <= damage;
 
   const [hits, setHits] = useState([]);
 
-  const onMouseDown = useCallback(() => {
+  // Discard render when without state
+  if (!hasState)
+    return false;
+
+  const onMouseDown = () => {
     hit(id);
     setHits([...hits, Math.floor(Math.random() * 360)]);
-    console.log(window.innerHeight, window.innerWidth);
     setTimeout(() => {
       const [, ...rest] = hits;
       setHits(rest);
     }, 100);
-  }, [id, hits, setHits]);
+  };
 
   return (
     <div className='brick-container'>
@@ -29,13 +45,14 @@ function Brick({ row, col, disabled=false }) {
         onMouseDown={!disabled ? onMouseDown : undefined}
         style={{visibility: visibility}}
       />
+      { glow && <div className="brick-glow" /> }
       {hits.map((value, index) => {
         return <img
           key={index}
           alt="Pow!"
           className="brickHit unselectable"
           src={hitImage} 
-          style={{rotate: `${value}deg`}} 
+          style={{transform: `translate(-50%, -50%) rotate(${value}deg)`}}
         />
       })}
     </div>

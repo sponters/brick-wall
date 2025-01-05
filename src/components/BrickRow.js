@@ -6,7 +6,7 @@ function BrickRow({ row, numCols }) {
 
     const bricks = [];
     for (let i = 0; i < numCols; i++) {
-        bricks.push(<Brick key={`b_${row}_${i}`} row={row} col={i} />);
+        bricks.push(<Brick key={`b_${row}_${i}`} type="clayBrick" row={row} col={i} />);
     }
 
     return (

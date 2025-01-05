@@ -1,10 +1,9 @@
 import pako from 'pako';
 
 import store from '../redux/store'
-import { state, initialState } from './state'
+import { time, initialTime } from './time'
 
-import { load as loadRes, initialState as initialStateRes } from '../redux/resSlice'
-import { load as loadWall, initialState as initialStateWall } from '../redux/wallSlice'
+import slices from '../redux/slices'
 
 export const SAVE_KEY = 'save';
 
@@ -24,7 +23,7 @@ function decompressFromBase64(base64) {
 
 export function saveState() {
     const save = {
-        state,
+        time,
         store: store.getState()
     };
     const stringified = JSON.stringify(save);
@@ -37,20 +36,19 @@ export function loadState() {
     const stringified = decompressFromBase64(base64)
     const save = JSON.parse(stringified);
 
-    Object.assign(state, save.state);
-
-    store.dispatch(loadRes(save.store.res));
-    store.dispatch(loadWall(save.store.wall));
+    Object.assign(time, save.time);
+    for (const [id, item] of Object.entries(slices))
+        store.dispatch(item.load(save.store[id]));
 }
 
 export function resetState() {
-    Object.assign(state, initialState);
-    store.dispatch(loadRes(initialStateRes));
-    store.dispatch(loadWall(initialStateWall));
+    Object.assign(time, initialTime);
+    for (const [, item] of Object.entries(slices))
+        store.dispatch(item.load(item.initialState));
 }
 
 export function tick() {
-    if ((state.time.total % 200) === 0){
+    if ((time.total % 200) === 0){
         saveState();
     }
 }
