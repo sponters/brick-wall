@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import '../game.css';
 
 import Resources from './Resources';
@@ -7,6 +9,8 @@ import Upgrades from './Upgrades';
 import { resetState } from '../engine/save';
 
 function Game() {
+  const { t } = useTranslation();
+
   return ([
     <div key="header" id="header">
       Header
@@ -22,7 +26,7 @@ function Game() {
     </div>,
     <div key="footer" id="footer">
       <div id="footer-menu">
-        <span className="unselectable" onClick={resetState} id="reset">Reset</span>
+        <span className="unselectable" onClick={resetState} id="reset">{t("menu.reset")}</span>
       </div>
     </div>
   ]);

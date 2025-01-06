@@ -31,7 +31,7 @@ function Brick({ type, row, col, disabled=false }) {
 
   const onMouseDown = () => {
     hit(id);
-    setHits([...hits, Math.floor(Math.random() * 360)]);
+    setHits([...hits, Math.floor(Math.random() * 0)]);
     setTimeout(() => {
       const [, ...rest] = hits;
       setHits(rest);

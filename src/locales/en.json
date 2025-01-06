@@ -1,0 +1,18 @@
+{
+    "translation": {
+        "menu": {
+            "reset": "Reset"
+        },
+        "upgrades": {
+            "hammerTechnique": {
+                "title": "Hammer Technique",
+                "flavor": "With enough spare bricks, one can enhance angle, aim and positioning"
+            }
+        },
+        "res": {
+            "brick": {
+                "name": "Bricks"
+            }
+        }
+    }
+}

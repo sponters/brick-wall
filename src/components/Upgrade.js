@@ -3,10 +3,12 @@ import { useSelector, shallowEqual  } from 'react-redux'
 import { calcCost, calcFunds} from '../engine/upgrades/upgrade'
 import upgrades from '../engine/upgrades';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function Upgrade({ id }) {
     const tooltip = useRef(null);
 
+    const { t } = useTranslation(null, { keyPrefix: "upgrades.hammerTechnique"});
     const upgrade = upgrades[id];
 
     const unlocked = useSelector(state => state.upgrades[id].unlocked);
@@ -34,10 +36,13 @@ function Upgrade({ id }) {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <div className="line">{upgrade.title}</div>
+            <div className="line">{t('title')}</div>
             <div className="line">Level: {level}</div>
             <div className="tooltip" ref={tooltip}>
-                {upgrade.flavor}
+                <div className="header">Description</div>
+                {t('flavor')}
+                <div className="header">Cost</div>
+                {formattedCost}
             </div>
         </div>
     )
