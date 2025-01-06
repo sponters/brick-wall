@@ -3,8 +3,10 @@ import { buildUpgrade } from "./upgrade";
 import { hammerDamage } from "../../redux/slices/itemsSlice";
 
 const def = {
-    id: 'strongerHammer',
-    title: 'Stronger hammer',
+    id: 'hammerTechnique',
+    title: 'Hammer Technique',
+    flavor: 'With enough spare bricks, one can enhance angle, aim and positioning',
+    effect
 
     initialState: {
         unlocked: true,

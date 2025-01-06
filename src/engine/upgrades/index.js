@@ -1,7 +1,7 @@
-import strongerHammer from './strongerHammer'
+import hammerTechnique from './hammerTechnique'
 
 const upgrades = {
-    strongerHammer
+    [hammerTechnique.id]: hammerTechnique,
 };
 
 export default upgrades;
