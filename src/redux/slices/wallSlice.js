@@ -14,13 +14,11 @@ export const wallSlice = createSlice({
       };
     },
     init: (state, action) => {
-      console.log("INIT");
       const current = state[action.payload.id];
       const initialState = action.payload.initialState;
       state[action.payload.id] = structuredClone(current ?? initialState);
     },
     load: (state, action) => {
-      console.log("LOAD");
       return structuredClone(action.payload);
     }
   }

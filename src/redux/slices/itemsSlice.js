@@ -20,12 +20,15 @@ export const itemsSlice = createSlice({
   name: 'items',
   initialState,
   reducers: {
+    hammerDamage: (state, action) => {
+      state.hammer.damage += action.payload;
+    },
     load: (state, action) => {
       return structuredClone(action.payload);
     }
   }
 });
 
-export const { load } = itemsSlice.actions;
+export const { hammerDamage, load } = itemsSlice.actions;
 
 export default itemsSlice.reducer;

@@ -27,7 +27,7 @@ function Brick({ type, row, col, disabled=false }) {
 
   // Discard render when without state
   if (!hasState)
-    return false;
+    return null;
 
   const onMouseDown = () => {
     hit(id);

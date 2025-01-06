@@ -1,4 +1,4 @@
-import * as strongerHammer from './strongerHammer'
+import strongerHammer from './strongerHammer'
 
 const upgrades = {
     strongerHammer

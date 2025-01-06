@@ -1,33 +1,30 @@
-import { useSelector } from 'react-redux'
+import { useSelector, shallowEqual  } from 'react-redux'
 
-import upgrades from '../engine/upgrades'
+import { calcCost, calcFunds} from '../engine/upgrades/upgrade'
+import upgrades from '../engine/upgrades';
 
-function Upgrade({ upgradeId }) {
-  const upgrade = upgrades[upgradeId];
-  const unlocked = useSelector(state => state.upgrade[upgradeId].unlocked);
-  const level = useSelector(state => state.upgrade[upgradeId].level);
-  const cost = useSelector(state => {
-    const up = state.upgrade[upgradeId];
-    return Math.floor(up.baseCost * Math.pow(up.costFactor, up.level));
-  });
-  const hasFunds = useSelector(state => state.upgrade[upgradeId].cost <= state.res.bricks);
-  const fundsBorder = hasFunds ? 'upgrade-buyable': 'upgrade-no-funds';
+function Upgrade({ id }) {
+    const unlocked = useSelector(state => state.upgrades[id].unlocked);
+    const level = useSelector(state => state.upgrades[id].level);
+    const cost = useSelector(state => calcCost(state.upgrades[id], level), shallowEqual);
+    const hasFunds = useSelector(state => calcFunds(state, cost));
+    const fundsBorder = hasFunds ? 'upgrade-buyable' : 'upgrade-no-funds';
 
-  const onclick = () => upgrades[upgradeId].buy();
+    const formattedCost = Object.keys(cost).map(key => `${key}: ${cost[key]}`).join(", ");
 
-  if (!unlocked)
-    return false;
+    if (!unlocked)
+        return null;
 
-  return (
-    <div 
-      className={`upgrade ${fundsBorder}`}
-      onClick={ hasFunds ? () => upgrades[upgradeId].buy() : false }
-    >
-      <div className="line">{upgrade.title}</div>
-      <div className="line">Level: {level}</div>
-      <div className="cost">Cost: {cost} bricks</div>
-    </div>
-  )
+    return (
+        <div
+            className={`upgrade ${fundsBorder}`}
+            onClick={() => upgrades[id].buy()}
+        >
+            <div className="line">{upgrades[id].title}</div>
+            <div className="line">Level: {level}</div>
+            <div className="cost">Cost: {formattedCost}</div>
+        </div>
+    )
 }
 
 export default Upgrade;
