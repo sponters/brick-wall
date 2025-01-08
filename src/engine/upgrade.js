@@ -1,6 +1,6 @@
-import store from '../../redux/store'
-import { spend } from '../../redux/slices/resSlice'
-import { level } from '../../redux/slices/upgradesSlice'
+import store from '../redux/store'
+import { spend } from '../redux/slices/resSlice'
+import { add } from '../redux/slices/upgradesSlice'
 
 export function calcCost({ costDef, level }) {
     const cost = {}
@@ -25,7 +25,7 @@ function buyDef({ id, buyEffect }) {
         return;
 
     store.dispatch(spend(cost));
-    store.dispatch(level(id));
+    store.dispatch(add({ [id]: { level: 1 } }));
     buyEffect();
 }
 

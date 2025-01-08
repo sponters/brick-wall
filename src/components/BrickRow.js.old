@@ -1,5 +1,3 @@
-import '../game.css';
-
 import Brick from './Brick';
 
 function BrickRow({ row, numCols }) {

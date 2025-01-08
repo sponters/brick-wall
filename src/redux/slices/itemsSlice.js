@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+import { commonAdd } from '../commonActions';
+
 export const initialState = {
   hammer: {
     damage: 1
   },
   clayBrick: {
     maxHealth: 6,
-    regenTime: 50,
+    regenTime: 6000,
     reward: {
       brick: 1,
     },
@@ -20,8 +22,8 @@ export const itemsSlice = createSlice({
   name: 'items',
   initialState,
   reducers: {
-    hammerDamage: (state, action) => {
-      state.hammer.damage += action.payload;
+    add: (state, action) => {
+      commonAdd(state, action.payload);
     },
     load: (state, action) => {
       return structuredClone(action.payload);
@@ -29,6 +31,6 @@ export const itemsSlice = createSlice({
   }
 });
 
-export const { hammerDamage, load } = itemsSlice.actions;
+export const { add, load } = itemsSlice.actions;
 
 export default itemsSlice.reducer;

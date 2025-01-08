@@ -28,6 +28,7 @@
 }
 
 #center {
+  display: block;
   position: relative;
   grid-row: 2;
   grid-column: 2;
@@ -55,59 +56,6 @@
   right: 0;
   bottom: 0;
   padding: 5px;
-}
-
-.wall {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  top: 0%;
-  left: 50%;
-  transform: translate(-50%, 0%);
-}
-
-.brick-row {
-  display: block;
-}
-
-.brick-container {
-  display: inline-block;
-  position: relative;
-  width: 4.1666vw;
-  height: 4.1972vh;
-}
-
-.brick {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: inline;
-  width: 4.6875vw;
-  height: 5.2465vh;
-  background-image: url(./img/brown_brick.png);
-  background-size: 100% 100%;
-}
-
-.brick-glow {
-  position: absolute;
-  display: inline;
-  pointer-events: none;
-  width: 4.1666vw;
-  height: 4.1972vh;
-  left: 0;
-  top: 0;
-  -webkit-box-shadow:0 0 20px #aa0000 inset; 
-  -moz-box-shadow: 0 0 20px #aa0000 inset; 
-  box-shadow:0 0 10px #ff0000 inset;
-  z-index: 1;
-}
-
-.brickHit {
-  position: absolute;
-  pointer-events: none;
-  left: 50%;
-  top: 50%;
-  z-index: 2;
 }
 
 #upgrades-container {

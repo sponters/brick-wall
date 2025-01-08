@@ -1,0 +1,48 @@
+.wall {
+  display: grid;
+  position: absolute;
+  grid-template-rows: repeat(44, 1fr);
+  grid-template-columns: repeat(68, 1fr);
+  top: calc(-200% / 44);
+  left: calc(-400% / 68);
+  height: calc(100% + 400% / 44);
+  width: calc(100% + 800% / 68);
+}
+
+.brick-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.brick {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 111%;
+  height: 121%;
+  display: inline;
+  background-size: 100% 100%;
+}
+
+.brick-glow {
+  position: absolute;
+  display: inline;
+  pointer-events: none;
+  width: 4.1666vw;
+  height: 4.1972vh;
+  left: 0;
+  top: 0;
+  -webkit-box-shadow:0 0 20px #aa0000 inset; 
+  -moz-box-shadow: 0 0 20px #aa0000 inset; 
+  box-shadow:0 0 10px #ff0000 inset;
+  z-index: 1;
+}
+
+.brickHit {
+  position: absolute;
+  pointer-events: none;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+}
+

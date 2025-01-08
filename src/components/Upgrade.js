@@ -1,6 +1,6 @@
 import { useSelector, shallowEqual  } from 'react-redux'
 
-import { calcCost, calcFunds} from '../engine/upgrades/upgrade'
+import { calcCost, calcFunds} from '../engine/upgrade'
 import upgrades from '../engine/upgrades';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 function Upgrade({ id }) {
     const tooltip = useRef(null);
 
-    const { t } = useTranslation(null, { keyPrefix: "upgrades.hammerTechnique"});
+    const { t } = useTranslation(null, { keyPrefix: `upgrades.${id}`});
     const upgrade = upgrades[id];
 
     const unlocked = useSelector(state => state.upgrades[id].unlocked);

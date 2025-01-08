@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const initialState = {
   brick: {
+    history: 0,
     best: 0,
     total: 0,
     cur: 0,
@@ -14,6 +15,7 @@ export const resSlice = createSlice({
   reducers: {
     gain: (state, action) => {
       for (const [resName, amount] of Object.entries(action.payload)) {
+        state[resName].history += amount;
         state[resName].total += amount;
         state[resName].cur += amount;
         state[resName].best = Math.max(state[resName].best, state[resName].total);

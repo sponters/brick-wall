@@ -4,7 +4,8 @@ function Upgrades() {
   return (
     <div id="upgrades-container">
       <Upgrade id="hammerTechnique" />
-      </div>
+      <Upgrade id="slowerBricks" />
+    </div>
   )
 }
 

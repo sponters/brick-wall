@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
 
-import '../game.css';
+import '../css/game.css';
+import '../css/wall.css';
 
 import Resources from './Resources';
-import Wall from './Wall';
+import ClassicWall from './walls/ClassicWall4x2';
 import Upgrades from './Upgrades';
 
 import { resetState } from '../engine/save';
@@ -19,8 +20,9 @@ function Game() {
       <Resources />
     </div>,
     <div key="center" id="center">
-      <Wall />
-    </div>,
+      <ClassicWall layer={2} brickType="clayBrick"/>
+      <ClassicWall layer={1} brickType="clayBrick"/>
+      </div>,
     <div key="right" id="right">
       <Upgrades />
     </div>,

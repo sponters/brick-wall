@@ -3,21 +3,21 @@ import { buildUpgrade } from "../upgrade";
 import { add } from "../../redux/slices/itemsSlice";
 
 const def = {
-    id: 'hammerTechnique',
+    id: 'slowerBricks',
 
     initialState: {
         unlocked: true,
         level: 0,
         costDef: {
             brick: {
-                base: 2,
-                factor: 1.2,
+                base: 5,
+                factor: 1.5,
             },
         },
     },
     
     buyEffect: () => {
-        store.dispatch(add({ hammer: { damage: 1 } }));
+        store.dispatch(add({ clayBrick: { regenTime: 20 } }));
     }
 }
 

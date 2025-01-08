@@ -1,7 +1,7 @@
 import store from '../redux/store'
 import { time } from './time'
 import { gain, expire } from '../redux/slices/resSlice'
-import { update } from '../redux/slices/wallSlice'
+import { set } from '../redux/slices/wallSlice'
 
 export function createBrick(type) {
     return {
@@ -21,13 +21,13 @@ export function hit(id) {
     const health = brick.health - damage;
 
     if (health > 0) {
-        store.dispatch(update({ id, change: { health } }));
+        store.dispatch(set({ [id]: { health }}));
         return;
     }
     
     if (health <= 0) {
         store.dispatch(gain(brick.reward));
-        store.dispatch(update({ id, change: {
+        store.dispatch(set({ [id]: {
             health: 0,
             brokenUntil: time.total + store.getState().items[brick.type].regenTime,
         }}));
@@ -38,7 +38,7 @@ export function tick() {
     for (const [id, brick] of Object.entries(store.getState().wall)) {
         if ((brick.brokenUntil > 0) && (brick.brokenUntil <= time.total)) {
             store.dispatch(expire(brick.expire));
-            store.dispatch(update({ id, change: {
+            store.dispatch(set({ [id]: {
                 health: store.getState().items[brick.type].maxHealth,
                 brokenUntil: 0,
             }}));
