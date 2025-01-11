@@ -2,6 +2,7 @@ import store from '../redux/store'
 import { time } from './time'
 import { gain, expire } from '../redux/slices/resSlice'
 import { set } from '../redux/slices/wallSlice'
+import { addTickCallback } from './loop'
 
 export function createBrick(type) {
     return {
@@ -34,7 +35,7 @@ export function hit(id) {
     }
 }
 
-export function tick() {
+addTickCallback(() => {
     for (const [id, brick] of Object.entries(store.getState().wall)) {
         if ((brick.brokenUntil > 0) && (brick.brokenUntil <= time.total)) {
             store.dispatch(expire(brick.expire));
@@ -44,4 +45,4 @@ export function tick() {
             }}));
         }
     }
-}
+});

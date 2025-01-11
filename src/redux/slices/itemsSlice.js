@@ -7,8 +7,8 @@ export const initialState = {
     damage: 1
   },
   clayBrick: {
-    maxHealth: 6,
-    regenTime: 6000,
+    maxHealth: 4,
+    regenTime: 200,
     reward: {
       brick: 1,
     },

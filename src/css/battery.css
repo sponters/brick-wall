@@ -1,0 +1,39 @@
+.battery-frame {
+    display: inline-block;
+    border-top:    0;
+    border-right:  2px solid  #555;
+    border-bottom: 2px solid #555;
+    border-left:   0;
+    background-color: #aaa;
+    font-size: 2vh;
+    text-align: center;
+    align-content: center;
+    white-space: nowrap;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    pointer-events: auto;
+    z-index: 2;
+}
+
+.battery-screen {
+    display: inline-block;
+    color: #509b5d;
+    background-color: black;
+    border-top:    2px solid  #555;
+    border-right:  0;
+    border-bottom: 0;
+    border-left:   2px solid  #555;
+    padding: 2px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.battery-led {
+    display: inline-block;
+    visibility: visible;
+}
+
+.battery-plug {
+    display: inline-block;
+    color: black;
+}

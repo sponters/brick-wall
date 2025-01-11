@@ -1,12 +1,20 @@
 import { time } from './time'
-import { tick as brickTick } from './brick'
-import { tick as saveTick } from './save'
+
+const tickCallbacks = new Set();
+
+export function addTickCallback(callback) {
+    tickCallbacks.add(callback);
+}
+
+export function delTickCallback(callback) {
+    tickCallbacks.delete(callback);
+}
 
 function gameLoop(ticks) {
     for(let i = 0; i < ticks; i++) {
         time.total += ticks;
-        brickTick();
-        saveTick();
+        for (const callback of tickCallbacks)
+            callback();
     }
 }
 

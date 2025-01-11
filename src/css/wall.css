@@ -7,6 +7,7 @@
   left: calc(-400% / 68);
   height: calc(100% + 400% / 44);
   width: calc(100% + 800% / 68);
+  pointer-events: none;
 }
 
 .brick-wrapper {
@@ -22,6 +23,22 @@
   height: 121%;
   display: inline;
   background-size: 100% 100%;
+  pointer-events: auto;
+}
+
+.brick::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: inline;
+  pointer-events: auto;
+  -webkit-box-shadow:0 0 20px #000000;
+  -moz-box-shadow: 0 0 20px #000000;
+  box-shadow: 0 0 20px #000000;
+  z-index: -1;
 }
 
 .brick-glow {
@@ -32,10 +49,9 @@
   height: 4.1972vh;
   left: 0;
   top: 0;
-  -webkit-box-shadow:0 0 20px #aa0000 inset; 
-  -moz-box-shadow: 0 0 20px #aa0000 inset; 
+  -webkit-box-shadow:0 0 20px #aa0000 inset;
+  -moz-box-shadow: 0 0 20px #aa0000 inset;
   box-shadow:0 0 10px #ff0000 inset;
-  z-index: 1;
 }
 
 .brickHit {
@@ -43,6 +59,6 @@
   pointer-events: none;
   left: 50%;
   top: 50%;
-  z-index: 2;
+  z-index: 1;
 }
 

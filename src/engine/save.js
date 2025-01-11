@@ -4,6 +4,7 @@ import store from '../redux/store'
 import { time, initialTime } from './time'
 
 import slices from '../redux/slices'
+import { addTickCallback } from './loop';
 
 export const SAVE_KEY = 'save';
 
@@ -47,8 +48,8 @@ export function resetState() {
         store.dispatch(item.load(item.initialState));
 }
 
-export function tick() {
+addTickCallback(() => {
     if ((time.total % 200) === 0){
         saveState();
     }
-}
+});

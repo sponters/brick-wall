@@ -10,8 +10,8 @@ const def = {
         level: 0,
         costDef: {
             brick: {
-                base: 2,
-                factor: 1.2,
+                base: 3,
+                factor: 1.3,
             },
         },
     },
