@@ -2,8 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { commonSet } from '../commonActions';
 
-export const initialState = {
-};
+export const initialState = {}
 
 export const wallSlice = createSlice({
   name: 'wall',
@@ -11,9 +10,7 @@ export const wallSlice = createSlice({
   reducers: {
     set: (state, action) => commonSet(state, action.payload),
     init: (state, action) => {
-      const current = state[action.payload.id];
-      const initialState = action.payload.initialState;
-      state[action.payload.id] = structuredClone(current ?? initialState);
+      state[action.payload.id] = structuredClone(action.payload.initialState);
     },
     load: (state, action) => {
       return structuredClone(action.payload);

@@ -1,7 +1,7 @@
 import Brick from '../Brick';
 import { wallCols, wallRows } from '../../consts';
 
-function ClassicWall4x2({ layer, brickType, layout, children }) {
+function ClassicWall4x2({ id, brickType, layout, children }) {
     const bricks = []
 
     const numRows = wallRows / 2 - 1;
@@ -16,12 +16,12 @@ function ClassicWall4x2({ layer, brickType, layout, children }) {
         for (let j = 0; j < rowNumCols; j++) {
             const row = i * 2 + startRow;
             const col = j * 4 + (parity ? 0 : 2) + startCol + layout;
-            const id = `w${layer}_r${row}_c${col}`;
+            const brickId = `${id}_r${row}_c${col}`;
             const disabled = (i === 0) || (i === numRows - 1) || (j === 0) || (j === rowNumCols - 1);
             bricks.push(
                 <Brick
-                    key={id}
-                    id={id}
+                    key={brickId}
+                    id={brickId}
                     type={brickType}
                     row={row}
                     col={col}
@@ -34,7 +34,8 @@ function ClassicWall4x2({ layer, brickType, layout, children }) {
     }
 
     return (
-        <div className='wall unselectable' style={{zIndex: layer}}>
+        // <div className='wall' style={{zIndex: layer}}>
+        <div className='wall'>
             {bricks}
             {children}
         </div>

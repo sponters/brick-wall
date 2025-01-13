@@ -7,7 +7,7 @@ import store from './redux/store'
 import { Provider } from 'react-redux'
 import './engine/loop'
 import './engine/save'
-import './engine/light'
+// import './engine/light'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

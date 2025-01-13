@@ -1,17 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { init } from '../redux/slices/wallSlice'
-import { hit, createBrick } from '../engine/brick'
+import { useState } from 'react';
+import { useSelector } from 'react-redux'
+import { hit, createBrickState } from '../engine/brick'
 import images from '../img'
+import useInitState from '../hooks/useInitState';
 
-function Brick({ id, type, row, col, height, width, disabled=false }) {
+function Brick({ id, type, row, col, height, width, disabled = false }) {
   // Create state if not in the store (initialization)
-  const hasState = useSelector(state => !!state.wall[id]);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (!hasState)
-      dispatch(init({ id, initialState: createBrick(type) }));
-  }, [id, type, dispatch, hasState]);
+  const hasState = useInitState("wall", id, createBrickState(type));
 
   // Prepare render
   const health = useSelector(state => state.wall[id]?.health);
@@ -49,14 +44,14 @@ function Brick({ id, type, row, col, height, width, disabled=false }) {
           backgroundImage: `url(${images[type]})`
         }}
       />
-      { glow && <div className="brick-glow" /> }
+      {glow && <div className="brick-glow" />}
       {hits.map((value, index) => {
         return <img
           key={index}
           alt="Pow!"
           className="brickHit unselectable"
-          src={images.hit} 
-          style={{transform: `translate(-50%, -50%) rotate(${value}deg)`}}
+          src={images.hit}
+          style={{ transform: `translate(-50%, -50%) rotate(${value}deg)` }}
         />
       })}
     </div>

@@ -6,7 +6,7 @@ const def = {
     id: 'hammerTechnique',
 
     initialState: {
-        unlocked: true,
+        unlocked: false,
         level: 0,
         costDef: {
             brick: {
@@ -14,6 +14,10 @@ const def = {
                 factor: 1.3,
             },
         },
+    },
+
+    checkUnlock: state => {
+        return state.res.brick.history >= 20;
     },
     
     buyEffect: () => {

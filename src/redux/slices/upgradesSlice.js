@@ -13,12 +13,13 @@ export const upgradesSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action) => commonAdd(state, action.payload),
+    unlock: (state, action) => { state[action.payload].unlock = true },
     load: (state, action) => {
       return structuredClone(action.payload);
     }
   }
 });
 
-export const { add, load } = upgradesSlice.actions;
+export const { add, unlock, load } = upgradesSlice.actions;
 
 export default upgradesSlice.reducer;

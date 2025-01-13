@@ -5,8 +5,6 @@ import { addTickCallback } from "./loop";
 addTickCallback(() => {
     const eletronics = store.getState().eletronics;
 
-    console.log(eletronics);
-
     for (const [id, value] of Object.entries(eletronics.lights)) {
         if (eletronics.batteries[value.battery].charge > 0) {
             store.dispatch(discharge({ id: value.battery, charge: 1 }))

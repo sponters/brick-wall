@@ -4,6 +4,8 @@ import '../css/game.css';
 import '../css/wall.css';
 import '../css/light.css';
 import '../css/battery.css';
+import '../css/brick.css';
+import '../css/upgrade.css';
 
 import Resources from './Resources';
 import Upgrades from './Upgrades';
@@ -16,16 +18,16 @@ function Game() {
 
     return ([
         <div key="header" id="header">
-            Header
+            <h1>Brick Wall</h1>
         </div>,
-        <div key="left" id="left">
+        <div key="left" id="left" className="unselectable">
             <Resources />
+        </div>,
+        <div key="right" id="right" className="unselectable">
+            <Upgrades />
         </div>,
         <div key="center" id="center" className="unselectable">
             <Level1 />
-        </div>,
-        <div key="right" id="right">
-            <Upgrades />
         </div>,
         <div key="footer" id="footer">
             <div id="footer-menu">

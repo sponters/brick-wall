@@ -7,58 +7,5 @@
   left: calc(-400% / 68);
   height: calc(100% + 400% / 44);
   width: calc(100% + 800% / 68);
-  pointer-events: none;
+  z-index: 0;
 }
-
-.brick-wrapper {
-  display: inline-block;
-  position: relative;
-}
-
-.brick {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 111%;
-  height: 121%;
-  display: inline;
-  background-size: 100% 100%;
-  pointer-events: auto;
-}
-
-.brick::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: inline;
-  pointer-events: auto;
-  -webkit-box-shadow:0 0 20px #000000;
-  -moz-box-shadow: 0 0 20px #000000;
-  box-shadow: 0 0 20px #000000;
-  z-index: -1;
-}
-
-.brick-glow {
-  position: absolute;
-  display: inline;
-  pointer-events: none;
-  width: 4.1666vw;
-  height: 4.1972vh;
-  left: 0;
-  top: 0;
-  -webkit-box-shadow:0 0 20px #aa0000 inset;
-  -moz-box-shadow: 0 0 20px #aa0000 inset;
-  box-shadow:0 0 10px #ff0000 inset;
-}
-
-.brickHit {
-  position: absolute;
-  pointer-events: none;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
-}
-

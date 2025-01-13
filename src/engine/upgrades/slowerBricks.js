@@ -6,7 +6,7 @@ const def = {
     id: 'slowerBricks',
 
     initialState: {
-        unlocked: true,
+        unlocked: false,
         level: 0,
         costDef: {
             brick: {
@@ -15,7 +15,11 @@ const def = {
             },
         },
     },
-    
+
+    checkUnlock: state => {
+        return false;
+    },
+
     buyEffect: () => {
         store.dispatch(add({ clayBrick: { regenTime: 20 } }));
     }

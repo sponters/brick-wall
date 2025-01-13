@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const initialState = {
   brick: {
+    unlocked: false,
+    unlockHistory: 5,
     history: 0,
     best: 0,
     total: 0,
@@ -19,6 +21,7 @@ export const resSlice = createSlice({
         state[resName].total += amount;
         state[resName].cur += amount;
         state[resName].best = Math.max(state[resName].best, state[resName].total);
+        state[resName].unlocked = (state[resName].history >= state[resName].unlockHistory);
       }
     },
     spend: (state, action) => {

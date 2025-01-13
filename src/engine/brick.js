@@ -4,7 +4,7 @@ import { gain, expire } from '../redux/slices/resSlice'
 import { set } from '../redux/slices/wallSlice'
 import { addTickCallback } from './loop'
 
-export function createBrick(type) {
+export function createBrickState(type) {
     return {
         type,
         maxHealth: store.getState().items[type].maxHealth,

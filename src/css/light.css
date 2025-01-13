@@ -1,5 +1,5 @@
 .light {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   width: 100%;
@@ -8,4 +8,5 @@
   opacity: 1;
   visibility: visible;
   background: black;
+  z-index: 10;
 }

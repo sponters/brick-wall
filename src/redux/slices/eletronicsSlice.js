@@ -1,40 +1,37 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { commonAdd } from '../commonActions';
-
-export const initialState = {
-    batteries: {
-        b3: {
-            capacity: 200,
-            charge: 0
-        }
-    },
-    lights: {
-        l1: {
-            battery: 'b3',
-            status: false
-        }
-    }
-};
+export const initialState = {}
 
 export const eletronicsSlice = createSlice({
     name: 'eletronics',
     initialState,
     reducers: {
         recharge: (state, action) => {
-            const battery = state.batteries[action.payload.id];
+            const battery = state[action.payload.id];
             battery.charge += action.payload.charge;
             if (battery.charge > battery.capacity)
                 battery.charge = battery.capacity;
         },
         discharge: (state, action) => {
-            const battery = state.batteries[action.payload.id];
+            const battery = state[action.payload.id];
             battery.charge -= action.payload.charge;
             if (battery.charge <= 0)
                 battery.charge = 0;
         },
         light: (state, action) => {
-            state.lights[action.payload.id].status = action.payload.status;
+            const { id, status } = action.payload;
+            const lightState = state[id];
+            lightState.status = status;
+            lightState.heat += status ? 2 : -1;
+            if (lightState.heat < 0)
+                lightState.heat = 0;
+            if (lightState.heat > 1200)
+                lightState.heat = 1200;
+            if (lightState.heat >= 100)
+                lightState.reached100Heat = true;
+        },
+        init: (state, action) => {
+            state[action.payload.id] = structuredClone(action.payload.initialState);
         },
         load: (state, action) => {
             return structuredClone(action.payload);
@@ -42,6 +39,6 @@ export const eletronicsSlice = createSlice({
     }
 });
 
-export const { recharge, discharge, light, load } = eletronicsSlice.actions;
+export const { recharge, discharge, light, init, load } = eletronicsSlice.actions;
 
 export default eletronicsSlice.reducer;
