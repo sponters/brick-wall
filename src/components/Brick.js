@@ -12,7 +12,6 @@ function Brick({ id, type, row, col, height, width, disabled = false }) {
   const health = useSelector(state => state.wall[id]?.health);
   const damage = useSelector(state => state.items.hammer.damage);
   const display = health === 0 ? 'none' : 'inline';
-  const glow = health > 0 && health <= damage;
 
   const [hits, setHits] = useState([]);
 
@@ -21,12 +20,15 @@ function Brick({ id, type, row, col, height, width, disabled = false }) {
     return null;
 
   const onMouseDown = () => {
-    hit(id);
-    setHits([...hits, Math.floor(Math.random() * 0)]);
-    setTimeout(() => {
-      const [, ...rest] = hits;
-      setHits(rest);
-    }, 100);
+    const tookDamage = hit(id);
+
+    if (tookDamage) {
+      setHits([...hits, Math.floor(Math.random() * 0)]);
+      setTimeout(() => {
+        const [, ...rest] = hits;
+        setHits(rest);
+      }, 100);
+    }
   };
 
   const placementStyle = {
@@ -44,7 +46,6 @@ function Brick({ id, type, row, col, height, width, disabled = false }) {
           backgroundImage: `url(${images[type]})`
         }}
       />
-      {glow && <div className="brick-glow" />}
       {hits.map((value, index) => {
         return <img
           key={index}

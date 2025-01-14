@@ -17,7 +17,7 @@ function Game() {
     const { t } = useTranslation();
 
     return ([
-        <div key="header" id="header">
+        <div key="header" id="header" className="unselectable">
             <h1>Brick Wall</h1>
         </div>,
         <div key="left" id="left" className="unselectable">

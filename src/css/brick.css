@@ -29,19 +29,6 @@
   z-index: -1;
 }
 
-.brick-glow {
-  position: absolute;
-  display: inline;
-  pointer-events: none;
-  width: 4.1666vw;
-  height: 4.1972vh;
-  left: 0;
-  top: 0;
-  -webkit-box-shadow:0 0 20px #aa0000 inset;
-  -moz-box-shadow: 0 0 20px #aa0000 inset;
-  box-shadow:0 0 10px #ff0000 inset;
-}
-
 .brickHit {
   position: absolute;
   pointer-events: none;

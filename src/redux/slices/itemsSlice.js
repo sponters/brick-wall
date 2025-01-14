@@ -8,6 +8,18 @@ export const initialState = {
   },
   clayBrick: {
     maxHealth: 4,
+    damageResistance: 5,
+    regenTime: 200,
+    reward: {
+      brick: 1,
+    },
+    expire: {
+      brick: 1,
+    }
+  },
+  unburntBrick: {
+    maxHealth: 4,
+    damageResistance: 0,
     regenTime: 200,
     reward: {
       brick: 1,

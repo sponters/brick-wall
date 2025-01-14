@@ -18,21 +18,25 @@ export function createBrickState(type) {
 export function hit(id) {
     const brick = store.getState().wall[id];
     const damage = store.getState().items.hammer.damage;
+    const brickDef = store.getState().items[brick.type];
 
-    const health = brick.health - damage;
+    const realDamage = damage - brickDef.damageResistance;
+    if (realDamage <= 0)
+        return false;
 
-    if (health > 0) {
+    const health = brick.health - realDamage;
+
+    if (health > 0)
         store.dispatch(set({ [id]: { health }}));
-        return;
-    }
-    
-    if (health <= 0) {
+    else {
         store.dispatch(gain(brick.reward));
         store.dispatch(set({ [id]: {
             health: 0,
-            brokenUntil: time.total + store.getState().items[brick.type].regenTime,
+            brokenUntil: time.total + brickDef.regenTime,
         }}));
     }
+
+    return true;
 }
 
 addTickCallback(() => {

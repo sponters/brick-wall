@@ -14,7 +14,7 @@ function Battery({ id, row, col, height, width }) {
 
     useTick(() => {
         if (charging)
-            dispatch(recharge({ id, charge: 2 }));
+            dispatch(recharge(id));
     }, [charging, dispatch]);
 
     const charge = useSelector(state => state.eletronics[id]?.charge);
@@ -45,7 +45,7 @@ function Battery({ id, row, col, height, width }) {
 
     return (
         <div
-            className="battery-frame"
+            className="eletronic-metal-frame"
             style={placementStyle}
             onMouseDown={handleChargeOn}
             onMouseLeave={handleChargeOff}

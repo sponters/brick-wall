@@ -7,8 +7,8 @@ export const eletronicsSlice = createSlice({
     initialState,
     reducers: {
         recharge: (state, action) => {
-            const battery = state[action.payload.id];
-            battery.charge += action.payload.charge;
+            const battery = state[action.payload];
+            battery.charge += battery.chargeSpeed;
             if (battery.charge > battery.capacity)
                 battery.charge = battery.capacity;
         },
