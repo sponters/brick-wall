@@ -4,7 +4,7 @@ function ThinPipe({ left = false, right = false, top = false, bottom = false, ro
         gridColumn: `${col} / ${col + width}`,
     }
 
-    const straight = (left && right) != (top && bottom);
+    const straight = (left && right) !== (top && bottom);
 
     const thickness = straight ? "30%" : "50%";
     const offset = straight ? "35%" : "25%";
