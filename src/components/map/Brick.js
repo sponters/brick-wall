@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux'
-import { hit, createBrickState } from '../engine/brick'
-import images from '../img'
-import useInitState from '../hooks/useInitState';
+import { hit, createBrickState } from 'engine/brick'
+import images from 'img'
+import useInitState from 'hooks/useInitState';
 
 function Brick({ id, type, row, col, height, width, disabled = false }) {
   // Create state if not in the store (initialization)

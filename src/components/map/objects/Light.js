@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import useTick from "../hooks/useTick";
-import store from "../redux/store";
-import { discharge, light } from "../redux/slices/eletronicsSlice";
-import useInitState from "../hooks/useInitState";
-import { createLight } from "../engine/eletronics";
+import useTick from "hooks/useTick";
+import store from "state/store";
+import { discharge, light } from "state/slices/eletronicsSlice";
+import useInitState from "hooks/useInitState";
+import { createLight } from "engine/eletronics";
+import { useEffect } from "react";
 
-function Light({ id, batteryId }) {
+function Light({ id, batteryId, level }) {
     // Create state if not in the store (initialization)
     const hasState = useInitState("eletronics", id, createLight(batteryId));
     
@@ -29,6 +30,10 @@ function Light({ id, batteryId }) {
     const status = useSelector(state => state.eletronics[id]?.status);
     const heat = useSelector(state => state.eletronics[id]?.heat);
     const reached100Heat = useSelector(state => state.eletronics[id]?.reached100Heat);
+
+    useEffect(() => {
+        level.current.style.visibility = status ? 'visible' : 'hidden';
+    }, [level, status]);
 
     if (!hasState)
         return null;

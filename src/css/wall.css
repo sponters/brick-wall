@@ -8,4 +8,12 @@
   height: calc(100% + 400% / 44);
   width: calc(100% + 800% / 68);
   z-index: 0;
+
+  --wall-cell-height: calc((100% + 400% / 44) / 44);
+  --wall-cell-width: calc((100% + 800% / 68) / 68);
+}
+
+.inventory-item {
+  display: inline;
+  pointer-events: auto;
 }

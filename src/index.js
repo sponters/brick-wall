@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './i18n';
 import './css/index.css';
 import Game from './components/Game';
-import store from './redux/store'
+import store from './state/store'
 import { Provider } from 'react-redux'
 import './engine/loop'
 import './engine/save'

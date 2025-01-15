@@ -1,7 +1,7 @@
-import store from '../redux/store'
+import store from 'state/store'
 import { time } from './time'
-import { gain, expire } from '../redux/slices/resSlice'
-import { set } from '../redux/slices/wallSlice'
+import { gain, expire } from 'state/slices/resSlice'
+import { set } from 'state/slices/wallSlice'
 import { addTickCallback } from './loop'
 
 export function createBrickState(type) {

@@ -1,6 +1,6 @@
-import store from "../../redux/store";
+import store from "state/store";
 import { buildUpgrade } from "../upgrade";
-import { add } from "../../redux/slices/itemsSlice";
+import { add } from "state/slices/itemsSlice";
 
 const def = {
     id: 'slowerBricks',

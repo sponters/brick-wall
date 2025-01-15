@@ -15,9 +15,12 @@
                 "effect": ""
             }
         },
-        "res": {
+        "items": {
             "brick": {
                 "name": "bricks"
+            },
+            "controller": {
+                "name": "Controller"
             }
         }
     }

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { recharge } from "../redux/slices/eletronicsSlice";
+import { recharge } from "state/slices/eletronicsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import useTick from "../hooks/useTick";
-import { createBattery } from "../engine/eletronics";
-import useInitState from "../hooks/useInitState";
+import useTick from "hooks/useTick";
+import { createBattery } from "engine/eletronics";
+import useInitState from "hooks/useInitState";
 
 function Battery({ id, row, col, height, width }) {
     // Create state if not in the store (initialization)

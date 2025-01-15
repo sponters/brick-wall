@@ -1,9 +1,9 @@
 import pako from 'pako';
 
-import store from '../redux/store'
+import store from 'state/store'
 import { time, initialTime } from './time'
 
-import slices from '../redux/slices'
+import slices from 'state/slices'
 import { addTickCallback } from './loop';
 
 export const SAVE_KEY = 'save';

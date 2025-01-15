@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import upgrades from "../engine/upgrades";
-import { unlock } from "../redux/slices/upgradesSlice";
+import upgrades from "engine/upgrades";
+import { unlock } from "state/slices/upgradesSlice";
 
 function useUpgradeCheckUnlock(id) {
     const unlockedStatus = useSelector(state => {

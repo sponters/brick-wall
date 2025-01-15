@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { init as initWall } from "../redux/slices/wallSlice";
-import { init as initEletronics } from "../redux/slices/eletronicsSlice";
+import { init as initWall } from "state/slices/wallSlice";
+import { init as initEletronics } from "state/slices/eletronicsSlice";
+import { useEffect } from "react";
 
 const initers = {
     wall: initWall,
@@ -11,8 +12,10 @@ const initers = {
 function useInitState(slice, id, initialState) {
     const hasState = useSelector(state => !!state[slice][id]);
     const dispatch = useDispatch();
-    if (!hasState)
-        dispatch(initers[slice]({ id, initialState }));
+    useEffect(() => {
+        if (!hasState)
+            dispatch(initers[slice]({ id, initialState }));
+    }, [hasState, dispatch, id, initialState, slice]);
     return hasState;
 }
 

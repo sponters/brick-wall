@@ -1,5 +1,5 @@
+import { wallCols, wallRows } from 'consts';
 import Brick from '../Brick';
-import { wallCols, wallRows } from '../../consts';
 
 function ClassicWall4x2({ id, brickType, layout, children }) {
     const bricks = []

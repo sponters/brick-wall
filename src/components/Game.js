@@ -1,15 +1,15 @@
 import { useTranslation } from 'react-i18next';
 
-import '../css/game.css';
-import '../css/wall.css';
-import '../css/light.css';
-import '../css/battery.css';
-import '../css/brick.css';
-import '../css/upgrade.css';
+import 'css/game.css';
+import 'css/wall.css';
+import 'css/eletronics.css';
+import 'css/brick.css';
+import 'css/upgrade.css';
+import 'css/items.css';
 
 import Resources from './Resources';
 import Upgrades from './Upgrades';
-import Level1 from './levels/Level1'
+import Level1 from './map/levels/Level1'
 
 import { resetState } from '../engine/save';
 

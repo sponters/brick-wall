@@ -1,5 +1,5 @@
-import { discharge, light } from "../redux/slices/eletronicsSlice";
-import store from "../redux/store";
+import { discharge, light } from "state/slices/eletronicsSlice";
+import store from "state/store";
 import { addTickCallback } from "./loop";
 
 addTickCallback(() => {

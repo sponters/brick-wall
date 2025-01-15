@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import upgrades from '../../engine/upgrades'
+import upgrades from 'engine/upgrades'
 import { commonAdd } from '../commonActions';
 
 export const initialState = {}

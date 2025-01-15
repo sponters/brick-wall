@@ -4,19 +4,19 @@ import { useSelector } from 'react-redux'
 function Resources() {
     const { t } = useTranslation(null, { keyPrefix: `items` });
 
-    const brick = useSelector(state => state.res.brick.unlocked ? state.res.brick.cur : -1);
+    const controller = useSelector(state => state.items.controller.found);
 
-    const unlocked = brick >= 0;
+    const unlocked = controller;
 
     if (!unlocked)
         return null;
 
-    return (
+    return [
         <div className="item-container">
-            <div className="header">Resources</div>
-            {brick >= 0 ? (<div>{t('brick.name')}: {brick}</div>) : ""}
+            <div className="header">Inventory</div>
+            {controller ? (<div>{t('controller.name')}</div>) : ""}
         </div>
-    );
+    ];
 }
 
 export default Resources;

@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { addTickCallback, delTickCallback } from "../engine/loop";
+import { addTickCallback, delTickCallback } from "engine/loop";
 
 function useTick(callback, deps) {
     // eslint-disable-next-line

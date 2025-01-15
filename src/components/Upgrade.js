@@ -1,9 +1,9 @@
 import { useSelector, shallowEqual } from 'react-redux'
 
-import { calcCost, calcFunds} from '../engine/upgrade'
-import upgrades from '../engine/upgrades';
+import { calcCost, calcFunds} from 'engine/upgrade'
+import upgrades from 'engine/upgrades';
 import { useTranslation } from 'react-i18next';
-import useUpgradeCheckUnlock from '../hooks/useUpgradeCheckUnlock';
+import useUpgradeCheckUnlock from 'hooks/useUpgradeCheckUnlock';
 import { useRef } from 'react';
 
 function Upgrade({ id }) {

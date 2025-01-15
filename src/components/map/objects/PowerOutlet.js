@@ -1,5 +1,5 @@
-import { createPowerOutlet } from "../engine/eletronics";
-import useInitState from "../hooks/useInitState";
+import { createPowerOutlet } from "engine/eletronics";
+import useInitState from "hooks/useInitState";
 
 function PowerOutlet({ id, batteryId, row, col, height, width }) {
     // Create state if not in the store (initialization)
