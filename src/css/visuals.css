@@ -85,8 +85,9 @@
 .controller-screen {
     display: inline-block;
     position: absolute;
+    text-align: center;
     color: #509b5d;
-    left: 10%;
+    left: calc(10% - 1px);
     top: 5%;
     background-color: black;
     border-top: 1px solid #555;

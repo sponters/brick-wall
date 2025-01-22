@@ -21,7 +21,7 @@ const def = {
     },
 
     buyEffect: () => {
-        store.dispatch(add({ clayBrick: { regenTime: 20 } }));
+        store.dispatch(add({ clayBrick: { regenTicks: 20 } }));
     }
 }
 

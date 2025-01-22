@@ -7,7 +7,7 @@ import store from './state/store'
 import { Provider } from 'react-redux'
 import './engine/loop'
 import './engine/save'
-// import './engine/light'
+// import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,3 +17,5 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
+
+// reportWebVitals(console.log);

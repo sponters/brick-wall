@@ -2,13 +2,14 @@ import { useTranslation } from 'react-i18next';
 
 import 'css/game.css';
 import 'css/wall.css';
-import 'css/eletronics.css';
+import 'css/visuals.css';
 import 'css/brick.css';
 import 'css/upgrade.css';
-import 'css/items.css';
+import 'css/inventory.css';
 
-import Resources from './Resources';
-import Upgrades from './Upgrades';
+import Resources from './inventory/Resources';
+import Invetory from './inventory/Collectables';
+import Upgrades from './upgrades/Upgrades';
 import Level1 from './map/levels/Level1'
 
 import { resetState } from '../engine/save';
@@ -22,9 +23,11 @@ function Game() {
         </div>,
         <div key="left" id="left" className="unselectable">
             <Resources />
+            <Invetory />
         </div>,
         <div key="right" id="right" className="unselectable">
             <Upgrades />
+            {/* <Connections /> */}
         </div>,
         <div key="center" id="center" className="unselectable">
             <Level1 />

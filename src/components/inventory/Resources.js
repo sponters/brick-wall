@@ -12,7 +12,7 @@ function Resources() {
         return null;
 
     return (
-        <div className="item-container">
+        <div className="inventory-container">
             <div className="header">Resources</div>
             {brick >= 0 ? (<div>{t('brick.name')}: {brick}</div>) : ""}
         </div>

@@ -1,18 +1,17 @@
-import InventoryItem from '../InventoryItem';
+import CollectableObject from '../CollectableObject';
+import { default as ControllerVisual, size }from '../../visuals/Controller'
 
 function Controller(props) {
     return (
-        <InventoryItem
+        <CollectableObject
             id="controller"
             style={{ transform: "rotate(30deg)" }}
+            width={size.width}
+            height={size.height}
             {...props}
         >
-            <div className="tech-black-frame">
-                <div className="controller-screen">
-                    ≡≡<br />▒▒
-                </div>
-            </div>
-        </InventoryItem>
+            <ControllerVisual />
+        </CollectableObject>
     )
 }
 

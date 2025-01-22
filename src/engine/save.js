@@ -48,7 +48,7 @@ export function resetState() {
         store.dispatch(item.load(item.initialState));
 }
 
-addTickCallback(() => {
+addTickCallback(4, () => {
     if ((time.total % 200) === 0){
         saveState();
     }

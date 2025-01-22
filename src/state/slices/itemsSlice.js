@@ -9,7 +9,8 @@ export const initialState = {
     clayBrick: {
         maxHealth: 4,
         damageResistance: 5,
-        regenTime: 200,
+        regenTicks: 200,
+        regenCharge: 20,
         reward: {
             brick: 1,
         },
@@ -20,7 +21,8 @@ export const initialState = {
     unburntBrick: {
         maxHealth: 4,
         damageResistance: 0,
-        regenTime: 200,
+        regenTicks: 200,
+        regenCharge: 20,
         reward: {
             brick: 1,
         },

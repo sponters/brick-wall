@@ -12,9 +12,10 @@ function Battery({ id, row, col, height, width }) {
     const [charging, setCharging] = useState(false);
     const dispatch = useDispatch();
 
-    useTick(() => {
-        if (charging)
+    useTick(0, () => {
+        if (charging) {
             dispatch(recharge(id));
+        }
     }, [charging, dispatch]);
 
     const charge = useSelector(state => state.eletronics[id]?.charge);

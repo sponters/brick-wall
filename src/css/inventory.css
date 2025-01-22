@@ -1,12 +1,11 @@
-.item-container {
-  text-align: left;
+.inventory-container {
+  text-align: center;
   width: 90%;
-  height: 90%;
   z-index: 1;
   margin: 5%;
 }
 
-.item-container .header {
+.inventory-container .header {
   text-align: center;
   font-size: 1.1em;
   font-weight: bold;

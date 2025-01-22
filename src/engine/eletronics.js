@@ -1,8 +1,8 @@
 export function createBattery() {
     return {
-        capacity: 200,
+        capacity: 1000,
         charge: 0,
-        chargeSpeed: 3,
+        chargeSpeed: 5,
     }
 }
 

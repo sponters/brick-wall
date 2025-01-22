@@ -1,12 +1,11 @@
 import Upgrade from './Upgrade'
 
-function Upgrades() {
+function Connections() {
   return (
     <div id="upgrades-container">
       <Upgrade id="hammerTechnique" />
-      <Upgrade id="slowerBricks" />
     </div>
   )
 }
 
-export default Upgrades;
+export default Connections;

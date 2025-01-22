@@ -12,7 +12,10 @@
   display: grid;
   min-height: 100%;
   width: 100%;
-  grid-template: 10vh 80vh 10vh / 20vw 60vw 20vw
+  grid-template: 10vh 80vh 10vh / 20vw 60vw 20vw;
+
+  --wall-cell-height: calc((80vh + 4 * 80vh / 44) / 44);
+  --wall-cell-width: calc((60vw + 8 * 60vw / 68) / 68);
 }
 
 #header {

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { set } from "state/slices/itemsSlice";
 
-function InventoryItem({ id, row, col, height, width, style, children }) {
+function CollectableObject({ id, row, col, height, width, style, children }) {
     const found = useSelector(state => state.items[id].found)
 
     const dispatch = useDispatch();
@@ -32,4 +32,4 @@ function InventoryItem({ id, row, col, height, width, style, children }) {
     )
 }
 
-export default InventoryItem;
+export default CollectableObject;

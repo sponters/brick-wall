@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux'
+import Controller from './objects/Controller';
 
-function Resources() {
+function Collectables() {
     const { t } = useTranslation(null, { keyPrefix: `items` });
 
     const controller = useSelector(state => state.items.controller.found);
@@ -11,12 +12,12 @@ function Resources() {
     if (!unlocked)
         return null;
 
-    return [
-        <div className="item-container">
-            <div className="header">Inventory</div>
-            {controller ? (<div>{t('controller.name')}</div>) : ""}
+    return (
+        <div className="inventory-container">
+            <div className="header">Collectables</div>
+            {controller && <Controller />}
         </div>
-    ];
+    );
 }
 
-export default Resources;
+export default Collectables;

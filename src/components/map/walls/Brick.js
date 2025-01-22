@@ -4,9 +4,9 @@ import { hit, createBrickState } from 'engine/brick'
 import images from 'img'
 import useInitState from 'hooks/useInitState';
 
-function Brick({ id, type, row, col, height, width, disabled = false }) {
+function Brick({ id, batteryId, type, row, col, height, width, disabled = false }) {
   // Create state if not in the store (initialization)
-  const hasState = useInitState("wall", id, createBrickState(type));
+  const hasState = useInitState("wall", id, createBrickState(batteryId, type));
 
   // Prepare render
   const health = useSelector(state => state.wall[id]?.health);

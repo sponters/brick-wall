@@ -12,7 +12,7 @@ function Light({ id, batteryId, level }) {
     
     const dispatch = useDispatch();
 
-    useTick(() => {
+    useTick(1, () => {
         if (!hasState)
             return;
 

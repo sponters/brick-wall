@@ -1,7 +1,7 @@
 import { wallCols, wallRows } from 'consts';
-import Brick from '../Brick';
+import Brick from './Brick';
 
-function ClassicWall4x2({ id, brickType, layout, children }) {
+function ClassicWall4x2({ id, batteryId, brickType, layout, children }) {
     const bricks = []
 
     const numRows = wallRows / 2 - 1;
@@ -22,6 +22,7 @@ function ClassicWall4x2({ id, brickType, layout, children }) {
                 <Brick
                     key={brickId}
                     id={brickId}
+                    batteryId={batteryId}
                     type={brickType}
                     row={row}
                     col={col}
