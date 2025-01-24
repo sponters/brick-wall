@@ -7,7 +7,7 @@ import { useContext } from 'react';
 function ClassicWall4x2({ id, batteryId, brickType, layout, children }) {
     const bricks = []
 
-    const reverse = useContext(LevelContext);
+    const front = useContext(LevelContext);
 
     const numRows = wallRows / 2 - 1;
     const numCols = wallCols / 4;
@@ -19,7 +19,7 @@ function ClassicWall4x2({ id, batteryId, brickType, layout, children }) {
         const parity = (i % 2) === layout;
         const rowNumCols = numCols - (parity ? 0 : 1);
         for (let k = 0; k < rowNumCols; k++) {
-            const j = reverse ? rowNumCols - k - 1 : k;
+            const j = front ? k : rowNumCols - k - 1;
             const row = i * 2 + startRow;
             const col = j * 4 + (parity ? 0 : 2) + startCol + layout;
             const brickId = `${id}_r${row}_c${col}`;

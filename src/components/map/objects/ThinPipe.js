@@ -2,10 +2,10 @@ import { LevelContext } from '../Level';
 import { useContext } from 'react';
 
 function ThinPipe({ left = false, right = false, top = false, bottom = false, row, col, height, width }) {
-    const reverse = useContext(LevelContext);
+    const front = useContext(LevelContext);
 
-    const localLeft = reverse ? right : left;
-    const localRight = reverse ? left : right;
+    const localLeft = front ? left : right;
+    const localRight = front ? right : left;
 
     const placementStyle = {
         gridRow: `${row} / ${row + height}`,

@@ -12,7 +12,7 @@ function Battery({ id, row, col, height, width, global=false }) {
     // Create state if not in the store (initialization)
     const hasState = useInitState("eletronics", id, createBattery());
 
-    const reverse = useContext(LevelContext);
+    const front = useContext(LevelContext);
 
     const [charging, setCharging] = useState(false);
     const dispatch = useDispatch();
@@ -45,7 +45,7 @@ function Battery({ id, row, col, height, width, global=false }) {
         color: ledColor,
         textShadow: `0 0 4px ${ledColor}`
     };
-    if (global && !reverse)
+    if (global && front)
         ledStyle.zIndex = 11;
 
     const handleChargeOn = () => { setCharging(true); }
