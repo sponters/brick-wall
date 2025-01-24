@@ -1,6 +1,7 @@
 .eletronic-metal-frame {
     display: inline-block;
     position: relative;
+    direction: ltf;
     border-top: 0;
     border-right: 2px solid #555;
     border-bottom: 2px solid #555;
@@ -30,27 +31,11 @@
     position: relative;
     display: inline-block;
     visibility: visible;
-    z-index: 11;
 }
 
 .battery-plug {
     display: inline-block;
     color: black;
-}
-
-.thin-pipe {
-    position: relative;
-    display: inline;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.thin-pipe .pipe {
-    position: absolute;
-    display: inline;
-    background-color: black;
 }
 
 .tech-black-frame {

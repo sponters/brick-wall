@@ -5,7 +5,6 @@ function Controller(props) {
     return (
         <CollectableObject
             id="controller"
-            style={{ transform: "rotate(30deg)" }}
             width={size.width}
             height={size.height}
             {...props}

@@ -31,10 +31,12 @@ setInterval(() => {
     const currentTime = Date.now();
     const deltaTime = currentTime - lastTime;
 
-    const ticks = Math.floor(deltaTime / 50);
+    const realTicks = Math.floor(deltaTime / 50);
 
-    lastTime += ticks * 50;
-    
+    lastTime += realTicks * 50;
+
+    const ticks = realTicks > 10 ? 10 : realTicks;
+
     if (ticks > 0)
         gameLoop(ticks);
 }, 50);

@@ -10,7 +10,37 @@
   z-index: 0;
 }
 
-.inventory-item {
+.collectable-item {
   display: inline;
   pointer-events: auto;
+  direction: ltr;
+}
+
+.level {
+  display: grid;
+  position: absolute;
+  grid-template-rows: repeat(44, 1fr);
+  grid-template-columns: repeat(68, 1fr);
+  top: calc(-200% / 44);
+  left: calc(-400% / 68);
+  height: calc(100% + 400% / 44);
+  width: calc(100% + 800% / 68);
+  z-index: 0;
+  background-color: #101010;
+}
+
+.thin-pipe {
+  position: relative;
+  display: inline;
+  direction: ltr;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.thin-pipe .pipe {
+  position: absolute;
+  display: inline;
+  background-color: black;
 }

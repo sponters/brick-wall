@@ -5,9 +5,14 @@ import useTick from "hooks/useTick";
 import { createBattery } from "engine/eletronics";
 import useInitState from "hooks/useInitState";
 
-function Battery({ id, row, col, height, width }) {
+import { LevelContext } from '../Level';
+import { useContext } from 'react';
+
+function Battery({ id, row, col, height, width, global=false }) {
     // Create state if not in the store (initialization)
     const hasState = useInitState("eletronics", id, createBattery());
+
+    const reverse = useContext(LevelContext);
 
     const [charging, setCharging] = useState(false);
     const dispatch = useDispatch();
@@ -39,7 +44,9 @@ function Battery({ id, row, col, height, width }) {
     const ledStyle = {
         color: ledColor,
         textShadow: `0 0 4px ${ledColor}`
-    }
+    };
+    if (global && !reverse)
+        ledStyle.zIndex = 11;
 
     const handleChargeOn = () => { setCharging(true); }
     const handleChargeOff = () => { setCharging(false); }

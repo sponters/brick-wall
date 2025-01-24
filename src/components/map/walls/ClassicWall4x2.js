@@ -1,8 +1,13 @@
 import { wallCols, wallRows } from 'consts';
 import Brick from './Brick';
 
+import { LevelContext } from '../Level';
+import { useContext } from 'react';
+
 function ClassicWall4x2({ id, batteryId, brickType, layout, children }) {
     const bricks = []
+
+    const reverse = useContext(LevelContext);
 
     const numRows = wallRows / 2 - 1;
     const numCols = wallCols / 4;
@@ -13,7 +18,8 @@ function ClassicWall4x2({ id, batteryId, brickType, layout, children }) {
     for (let i = 0; i < numRows; i++) {
         const parity = (i % 2) === layout;
         const rowNumCols = numCols - (parity ? 0 : 1);
-        for (let j = 0; j < rowNumCols; j++) {
+        for (let k = 0; k < rowNumCols; k++) {
+            const j = reverse ? rowNumCols - k - 1 : k;
             const row = i * 2 + startRow;
             const col = j * 4 + (parity ? 0 : 2) + startCol + layout;
             const brickId = `${id}_r${row}_c${col}`;
@@ -35,11 +41,7 @@ function ClassicWall4x2({ id, batteryId, brickType, layout, children }) {
     }
 
     return (
-        // <div className='wall' style={{zIndex: layer}}>
-        <div className='wall'>
-            {bricks}
-            {children}
-        </div>
+        [...bricks, children]
     );
 }
 

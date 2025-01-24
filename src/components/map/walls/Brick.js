@@ -43,7 +43,7 @@ function Brick({ id, batteryId, type, row, col, height, width, disabled = false 
   }
 
   return (
-    <div className='brick-wrapper' style={placementStyle}>
+    <div className='brick-wrapper' style={placementStyle} dir="ltr">
       <div
         className="brick"
         onMouseDown={!disabled ? onMouseDown : undefined}

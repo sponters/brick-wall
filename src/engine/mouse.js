@@ -1,10 +1,14 @@
 import { useEffect } from "react";
 
 export function useMouseFollow(id, callback) {
-    const element = document.getElementById(id);
-
+    
     useEffect(() => {
+        const element = document.getElementById(id);
+
         const handler = event => {
+            if (!element)
+                return;
+
             const rect = element.getBoundingClientRect();
 
             const inside = 
@@ -24,5 +28,5 @@ export function useMouseFollow(id, callback) {
 
         document.addEventListener("mousemove", handler);
         return () => { document.removeEventListener("mousemove", handler) }
-    }, [element, callback]);
+    }, [id, callback]);
 }

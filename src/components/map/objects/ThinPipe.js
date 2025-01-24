@@ -1,4 +1,12 @@
+import { LevelContext } from '../Level';
+import { useContext } from 'react';
+
 function ThinPipe({ left = false, right = false, top = false, bottom = false, row, col, height, width }) {
+    const reverse = useContext(LevelContext);
+
+    const localLeft = reverse ? right : left;
+    const localRight = reverse ? left : right;
+
     const placementStyle = {
         gridRow: `${row} / ${row + height}`,
         gridColumn: `${col} / ${col + width}`,
@@ -12,7 +20,7 @@ function ThinPipe({ left = false, right = false, top = false, bottom = false, ro
 
     return (
         <div className="thin-pipe" style={placementStyle}>
-            {left &&
+            {localLeft &&
                 <div className="pipe"
                     style={{
                         height: thickness,
@@ -22,7 +30,7 @@ function ThinPipe({ left = false, right = false, top = false, bottom = false, ro
                     }}
                 />
             }
-            {right &&
+            {localRight &&
                 <div className="pipe"
                     style={{
                         height: thickness,

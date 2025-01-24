@@ -20,7 +20,7 @@ function CollectableObject({ id, row, col, height, width, style, children }) {
 
     return (
         <div
-            className="inventory-item"
+            className="collectable-item"
             style={{
                 ...placementStyle,
                 ...style

@@ -5,7 +5,6 @@ function Flashlight(props) {
     return (
         <CollectableObject
             id="flashlight"
-            style={{ transform: "rotate(30deg)" }}
             width={size.width}
             height={size.height}
             {...props}
