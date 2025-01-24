@@ -1,12 +1,12 @@
 import CollectableObject from '../CollectableObject';
-import { default as ControllerVisual, size } from '../../visuals/Controller'
+import { default as FlashlightVisual, size } from '../../visuals/Flashlight'
 
-function Controller() {
+function Flashlight() {
     return (
         <CollectableObject height={size.height} width={size.width}>
-            <ControllerVisual />
+            <FlashlightVisual />
         </CollectableObject>
     )
 }
 
-export default Controller;
+export default Flashlight;

@@ -32,6 +32,9 @@ export const initialState = {
     },
     controller: {
         found: false,
+    },
+    flashlight: {
+        found: false,
     }
 };
 

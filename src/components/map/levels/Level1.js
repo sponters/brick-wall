@@ -4,6 +4,7 @@ import Light from '../objects/Light';
 import PowerOutlet from '../objects/PowerOutlet';
 import ThinPipe from '../objects/ThinPipe';
 import Controller from '../objects/Controller';
+import Flashlight from '../objects/Flashlight';
 import { useRef } from 'react';
 
 
@@ -11,7 +12,7 @@ function Level1() {
     const levelRef = useRef();
 
     return (
-        <div className="level" ref={levelRef}>
+        <div className="level" ref={levelRef} style={{ backgroundColor: "#101010", width: "100%", height: "100%" }}>
             <ClassicWall4x2 id="l1_w3" batteryId="l1_b1" brickType="clayBrick" layout={0} />
             <ClassicWall4x2 id="l1_w2" batteryId="l1_b1" brickType="clayBrick" layout={1}>
                 <ThinPipe top bottom row={24} col={10} height={15} width={1} />
@@ -22,7 +23,8 @@ function Level1() {
             </ClassicWall4x2>
             <ClassicWall4x2 id="l1_w1" batteryId="l1_b1" brickType="unburntBrick" layout={0}>
                 <Battery id="l1_b1" row={22} col={8} height={2} width={5} />
-                <Light id="l1_l1" batteryId="l1_b1" level={levelRef} />
+                <Light id="l1_l1" batteryId="l1_b1" level={levelRef} global />
+                <Flashlight row={10} col={10} />
             </ClassicWall4x2>
         </div>
     )

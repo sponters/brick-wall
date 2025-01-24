@@ -5,6 +5,7 @@ import 'css/wall.css';
 import 'css/visuals.css';
 import 'css/brick.css';
 import 'css/upgrade.css';
+import 'css/light.css';
 import 'css/inventory.css';
 
 import Resources from './inventory/Resources';
@@ -13,6 +14,7 @@ import Upgrades from './upgrades/Upgrades';
 import Level1 from './map/levels/Level1'
 
 import { resetState } from '../engine/save';
+
 
 function Game() {
     const { t } = useTranslation();

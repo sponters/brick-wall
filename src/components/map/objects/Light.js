@@ -4,12 +4,34 @@ import store from "state/store";
 import { discharge, light } from "state/slices/eletronicsSlice";
 import useInitState from "hooks/useInitState";
 import { createLight } from "engine/eletronics";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { useMouseFollow } from "engine/mouse";
 
-function Light({ id, batteryId, level }) {
+function LightFromFlashlight() {
+    const ref = useRef();
+
+    useMouseFollow("center", (x, y, inside) => {
+        if (inside) {
+            ref.current.style.left = `calc(50% + ${x}px)`;
+            ref.current.style.top = `calc(50% + ${y}px)`;
+        } else {
+            ref.current.style.left = `calc(150%)`;
+            ref.current.style.top = `calc(150%)`;
+        }
+    });
+
+    return (
+        <div
+            ref={ref}
+            className="light-common light-flashlight"
+        />
+    )
+}
+
+function Light({ id, batteryId, level, global = false }) {
     // Create state if not in the store (initialization)
     const hasState = useInitState("eletronics", id, createLight(batteryId));
-    
+
     const dispatch = useDispatch();
 
     useTick(1, () => {
@@ -18,6 +40,9 @@ function Light({ id, batteryId, level }) {
 
         const eletronics = store.getState().eletronics;
         const lightState = eletronics[id];
+
+        if (!lightState.battery)
+            return;
 
         if (eletronics[lightState.battery].charge > 0) {
             dispatch(discharge({ id: lightState.battery, charge: 1 }))
@@ -30,26 +55,47 @@ function Light({ id, batteryId, level }) {
     const status = useSelector(state => state.eletronics[id]?.status);
     const heat = useSelector(state => state.eletronics[id]?.heat);
     const reached100Heat = useSelector(state => state.eletronics[id]?.reached100Heat);
+    const flashlight = useSelector(state => state.items['flashlight']?.found);
 
     useEffect(() => {
-        level.current.style.visibility = status ? 'visible' : 'hidden';
-    }, [level, status]);
+        level.current.style.visibility = (status || flashlight) ? 'visible' : 'hidden';
+    }, [level, status, flashlight]);
 
     if (!hasState)
         return null;
 
     const opacity = heat > 100 ? 0 : (1 - heat / 100);
 
-    return (
-        <div
-            className="light"
-            style={{
-                position: reached100Heat ? "relative" : "fixed",
-                opacity,
-                display: opacity === 0 && !status ? "none" : "inline"
-            }}
-        />
-    )
+    // No lights
+    if (!status && !flashlight) {
+        return (
+            <div
+                className="light-common light-darkness"
+                style={{
+                    position: global && !reached100Heat ? "fixed" : "absolute",
+                }}
+            />
+        )
+    }
+
+    // Using flashlight
+    if (!status && flashlight) {
+        return <LightFromFlashlight />
+    }
+
+    // Light on and heating
+    if (opacity > 0) {
+        return (
+            <div
+                className="light-common light-heating"
+                style={{
+                    position: global && !reached100Heat ? "fixed" : "absolute",
+                    opacity
+                }}
+            />
+        )
+
+    }
 }
 
 export default Light;

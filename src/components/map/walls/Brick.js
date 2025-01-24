@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux'
 import { hit, createBrickState } from 'engine/brick'
-import images from 'img'
+import * as images from 'img'
 import useInitState from 'hooks/useInitState';
 
 function Brick({ id, batteryId, type, row, col, height, width, disabled = false }) {
