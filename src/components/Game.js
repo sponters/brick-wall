@@ -11,6 +11,7 @@ import 'css/inventory.css';
 import Resources from './inventory/Resources';
 import Invetory from './inventory/Collectables';
 import Upgrades from './upgrades/Upgrades';
+import Connections from './upgrades/Connections';
 import Level1 from './map/levels/Level1'
 
 import { resetState } from '../engine/save';
@@ -29,7 +30,7 @@ function Game() {
         </div>,
         <div key="right" id="right" className="unselectable">
             <Upgrades />
-            {/* <Connections /> */}
+            <Connections />
         </div>,
         <div key="center" id="center" className="unselectable">
             <Level1 />

@@ -4,17 +4,50 @@ A simple incremental clicker game.
 
 ## TODO
 
+- Places:
+  - Armory (rifle, granade, mounted gun)
+  - Refinary (process ore to metal -> lithium)
+  - Old Mine (access to wood and ore)
+  - Lab (reverse engineer tech)
+  - Malfunctioning Area (reality is weird, good to get rare materials)
+
 - Weapons
   - Hammer (low damage, high speed)
-  - Granade (high damae, low speed)
+  - Rifle (middle damage, high speed, automatic)
+  - Granade (high damage, low speed)
+  - Mounted Gun (automatically fires at random objects, used to farm items while away)
+
+- Resources
+  - brick
+  - mortar
+  - metal
+  - ore
+  - lithium
+  - wood
+  - glass
+  - wire (metal + brick)
+
+- Collectables
+  - Hammer
+  - Flashlight
+  - Controller
+  - Mounted Gun
+  - Headlamp
+
 - Upgrades
-  - Sturdier bricks (more life, more resource)
-  - Slower rebuild (bricks take longer to rebuild)
-  - Faster rebuild (bricks take slower to rebuild)
-  - Stronger Hammer (more damage)
-  - Stronger Granade (more damage)
+  - Hammer Technique (more damage)
+  - Hammer Technique (more life, more resource)
+  - Repeating hammer (click and hold)
+  - Faster rebuild (bricks take slower to respawn)
+
 - Research
   - Blast Granade (1x) (bigger area)
+
+- Mechanics
+  - Flashlight and headlamp allows exploration (when light runs outs in a dark place, returns to start)
+  - Moving from room to room expends flashlight power
+  - When running out of battery, broken walls remain broken
+
 
 ## Available Scripts
 

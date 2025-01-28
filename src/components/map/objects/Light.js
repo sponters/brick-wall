@@ -55,7 +55,9 @@ function Light({ id, batteryId, level, global = false }) {
     const status = useSelector(state => state.eletronics[id]?.status);
     const heat = useSelector(state => state.eletronics[id]?.heat);
     const reached100Heat = useSelector(state => state.eletronics[id]?.reached100Heat);
-    const flashlight = useSelector(state => state.items['flashlight']?.found);
+    const flashlight = useSelector(state => 
+        state.items['flashlight']?.found 
+    );
 
     useEffect(() => {
         level.current.style.visibility = (status || flashlight) ? 'visible' : 'hidden';
