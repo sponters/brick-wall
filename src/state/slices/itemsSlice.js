@@ -36,7 +36,7 @@ export const initialState = {
     flashlight: {
         found: false,
         charge: 0,
-        maxCharge: 100,
+        capacity: 100,
         ports: {
             "●": 1,
         }

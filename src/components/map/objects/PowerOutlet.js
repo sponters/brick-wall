@@ -1,6 +1,6 @@
 import { createPowerOutlet } from "engine/eletronics";
 import useInitState from "hooks/useInitState";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { connect, disconnect } from "state/slices/connectionSlice";
 

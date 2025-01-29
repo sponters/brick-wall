@@ -20,7 +20,7 @@ function ChargeUpgrade({ itemId, batteryId, transfer }) {
             const transferCharge = Math.min(
                 transfer, 
                 state.eletronics[batteryId].charge,
-                state.items[itemId].maxCharge - state.items[itemId].charge
+                state.items[itemId].capacity - state.items[itemId].charge
             );
             if (transferCharge > 0) {
                 dispatch(discharge({id: batteryId, charge: transferCharge}));
@@ -29,7 +29,8 @@ function ChargeUpgrade({ itemId, batteryId, transfer }) {
         }
     }, [charging, dispatch]);
 
-    const percentage = useSelector(state => Math.floor(state.items[itemId].charge * 100 / state.items[itemId].maxCharge));
+    const percentage = useSelector(state => 
+        Math.floor(state.items[itemId].charge * 100 / state.items[itemId].capacity));
 
     const handleMouseEnter = () => {
         tooltip.current.style.visibility = "visible";

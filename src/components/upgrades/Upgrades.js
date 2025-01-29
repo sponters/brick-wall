@@ -1,11 +1,17 @@
+import { useSelector } from 'react-redux';
 import Upgrade from './Upgrade'
 
 function Upgrades() {
-  return (
-    <div id="upgrades-container">
-      <Upgrade id="hammerTechnique" />
-    </div>
-  )
+    const unlocked = useSelector(state => {
+        return state.upgrades.tabUnlocked
+    });
+
+    return (
+        <div className="upgrades-container">
+            {unlocked && <div className="header">Upgrades</div>}
+            <Upgrade id="hammerTechnique" />
+        </div>
+    )
 }
 
 export default Upgrades;

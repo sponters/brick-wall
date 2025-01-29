@@ -56,7 +56,7 @@ function Light({ id, batteryId, level, global = false }) {
     const heat = useSelector(state => state.eletronics[id]?.heat);
     const reached100Heat = useSelector(state => state.eletronics[id]?.reached100Heat);
     const flashlight = useSelector(state => 
-        state.items['flashlight']?.found 
+        state.items['flashlight']?.found && state.items['flashlight']?.charge >= 20
     );
 
     useEffect(() => {
