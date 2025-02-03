@@ -8,15 +8,22 @@ function CollectableObject({ height, width, collectablesRef, children }) {
         const csRect = collectablesRef.current.getBoundingClientRect();
         const cRect = collectableRef.current.getBoundingClientRect();
         const left = Math.round(cRect.left - csRect.left);
-        console.log(csRect, cRect, left);
         tooltipRef.current.style.left = `-${left}px`;
-        tooltipRef.current.style.width = `${Math.round(csRect.width)}px`;
 
     }, [collectablesRef, collectableRef, tooltipRef]);
+
+    const handleMouseEnter = () => {
+        tooltipRef.current.style.visibility = "visible";
+    }
+    const handleMouseLeave = () => {
+        tooltipRef.current.style.visibility = "hidden";
+    }
 
     return (
         <div
             className="collectable"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             ref={collectableRef}
             style={{
                 width: `calc(${width} * var(--wall-cell-width)`,

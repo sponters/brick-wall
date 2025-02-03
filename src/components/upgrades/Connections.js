@@ -16,8 +16,6 @@ function ChargePort({ port, id }) {
             .map(id => [id, ...ids[id].ports[port]])
     );
 
-    console.log("Rerender");
-
     const upgrades = useSelector(selectChargeItems);
     const batteryId = useSelector(state => state.eletronics[id]?.battery);
     const batteryHasCharge = useSelector(state => batteryId && state.eletronics[batteryId].charge >= 0);

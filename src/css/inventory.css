@@ -47,9 +47,9 @@
 .collectable .tooltip {
   display: inline;
   position: absolute;
-  visibility: visible;
+  visibility: hidden;
   top: calc(100% + 10px);
-  width: calc(var(--left-width) * 0.9);
+  width: calc(var(--left-width) * 0.9 - 10px);
   left: 0;
   pointer-events: none;
   border: 1px solid;

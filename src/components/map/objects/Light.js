@@ -10,6 +10,7 @@ import { useMouseFollow } from "engine/mouse";
 function LightFromFlashlight() {
     const ref = useRef();
 
+    console.log("Flash!");
     useMouseFollow("center", (x, y, inside) => {
         if (inside) {
             ref.current.style.left = `calc(50% + ${x}px)`;
@@ -55,8 +56,8 @@ function Light({ id, batteryId, level, global = false }) {
     const status = useSelector(state => state.eletronics[id]?.status);
     const heat = useSelector(state => state.eletronics[id]?.heat);
     const reached100Heat = useSelector(state => state.eletronics[id]?.reached100Heat);
-    const flashlight = useSelector(state => 
-        state.items.ids['flashlight']?.found && state.items.ids['flashlight']?.charge >= 20
+    const flashlight = useSelector(state =>
+        state.items.ids.flashlight?.found && state.items.charges.flashlight?.charge >= 20
     );
 
     useEffect(() => {
