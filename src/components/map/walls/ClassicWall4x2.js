@@ -36,13 +36,13 @@ function ClassicWall4x2({ id, batteryId, brickType, layout }) {
     const hasWallState = useSelector(state => !!state.wall[brickData[0][0]]);
 
     useEffect(() => {
-        const initialStates = {};
         if (!hasWallState) {
+            const initialStates = {};
             for(const [brickId] of brickData)
                 initialStates[brickId] = createBrickState(batteryId, brickType);
             dispatch(wallInit(initialStates));
         }
-    }, [dispatch, hasWallState, brickData])
+    });
 
     const bricks = [];
     const shadows = [];
