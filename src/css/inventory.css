@@ -1,7 +1,7 @@
 .inventory-container {
+  position: relative;
   text-align: center;
   width: 90%;
-  z-index: 1;
   margin: 5%;
 }
 
@@ -12,4 +12,62 @@
   padding-bottom: 5px;
   border-bottom: 1px solid white;
   margin-bottom: 10px;
+}
+
+.resource {
+  position: relative;
+  width: 100%;
+}
+
+.resource .tooltip {
+  display: inline;
+  position: absolute;
+  visibility: hidden;
+  top: 150%;
+  width: 90%;
+  left: calc(5% - 5px);
+  pointer-events: none;
+  border: 1px solid;
+  background-color: black;
+  padding: 5px;
+  z-index: 1;
+}
+
+.collectables {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.collectable {
+  position: relative;
+  display: inline-block;
+}
+
+.collectable .tooltip {
+  display: inline;
+  position: absolute;
+  visibility: visible;
+  top: calc(100% + 10px);
+  width: calc(var(--left-width) * 0.9);
+  left: 0;
+  pointer-events: none;
+  border: 1px solid;
+  background-color: black;
+  padding: 5px;
+  z-index: 1;
+}
+
+.resource .tooltip .section,
+.collectable .tooltip .section {
+  font-size: 1em;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.resource .tooltip .separator,
+.collectable .tooltip .separator {
+  padding-top: 5px;
+  margin-top: 5px;
+  border-top: 1px solid white;
 }

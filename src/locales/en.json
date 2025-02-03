@@ -4,6 +4,18 @@
             "reset": "Reset"
         },
         "upgrades": {
+            "meta": {
+                "upgrades": "Upgrades",
+                "level": "Level",
+                "description": "Description",
+                "effect": "Effect",
+                "cost": "Cost",
+                "powerOutlet": {
+                    "title": "Power Outlet",
+                    "nothing": "Nothing to charge",
+                    "noCharge": "No charge from power source"
+                }
+            },
             "hammerTechnique": {
                 "title": "Hammer Technique",
                 "description": "With enough spare bricks, one can train their aim and precision.",
@@ -13,11 +25,22 @@
                 "title": "Slower Bricks",
                 "description": "Some wires in the right place will cause a slower brick respawn.",
                 "effect": ""
+            },
+            "flashlight": {
+                "charge": {
+                    "title": "Charge flashlight"
+                }
+            },
+            "controller": {
+                "charge": {
+                    "title": "Charge controller"
+                }
             }
         },
         "items": {
             "brick": {
-                "name": "bricks"
+                "name": "bricks",
+                "description": "Bricks of a variety of types. They come of the wall whenever it gets broken, but the Machine phases them back after some time."
             },
             "controller": {
                 "name": "Controller"

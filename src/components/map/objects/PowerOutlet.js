@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { connect, disconnect } from "state/slices/connectionSlice";
 
-function PowerOutlet({ id, batteryId, port, row, col, height, width }) {
+function PowerOutlet({ id, batteryId, port, amperage, row, col, height, width }) {
     // Create state if not in the store (initialization)
     const hasState = useInitState("eletronics", id, createPowerOutlet(batteryId));
 
@@ -19,7 +19,7 @@ function PowerOutlet({ id, batteryId, port, row, col, height, width }) {
             dispatch(disconnect(id));
             setConnected(false);
         } else {
-            dispatch(connect({ id, port }));
+            dispatch(connect({ id, port, extra: amperage }));
             setConnected(true);
         }
     }

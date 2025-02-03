@@ -19,4 +19,5 @@ function useInitState(slice, id, initialState) {
     return hasState;
 }
 
+
 export default useInitState;

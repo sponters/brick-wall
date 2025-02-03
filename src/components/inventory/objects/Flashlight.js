@@ -1,9 +1,9 @@
 import CollectableObject from '../CollectableObject';
 import { default as FlashlightVisual, size } from '../../visuals/Flashlight'
 
-function Flashlight() {
+function Flashlight(props) {
     return (
-        <CollectableObject height={size.height} width={size.width}>
+        <CollectableObject height={size.height} width={size.width} {...props}>
             <FlashlightVisual />
         </CollectableObject>
     )

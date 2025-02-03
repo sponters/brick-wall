@@ -19,9 +19,9 @@ const def = {
     checkUnlock: state => {
         return state.res.brick.history >= 20;
     },
-    
+
     buyEffect: () => {
-        store.dispatch(add({ hammer: { damage: 1 } }));
+        store.dispatch(add({ ids: { hammer: { damage: 1 } } }));
     }
 }
 

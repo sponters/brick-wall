@@ -42,7 +42,7 @@
   white-space: nowrap;
 }
 
-.tooltip {
+.upgrade .tooltip {
   display: inline;
   position: absolute;
   visibility: hidden;
@@ -56,13 +56,13 @@
   padding: 5px;
 }
 
-.tooltip .header {
+.upgrade .tooltip .section {
   font-size: 1em;
   font-weight: bold;
   padding-bottom: 5px;
 }
 
-.tooltip .separator {
+.upgrade .tooltip .separator {
   padding-top: 5px;
   margin-top: 5px;
   border-top: 1px solid white;

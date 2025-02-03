@@ -8,7 +8,9 @@ import { useRef } from 'react';
 
 function Upgrade({ id }) {
     const { t } = useTranslation(null, { keyPrefix: `upgrades.${id}`});
-    const { t: tRes } = useTranslation(null, { keyPrefix: `res`});
+    const { t: tMeta } = useTranslation(null, { keyPrefix: `upgrades.meta`});
+    const { t: tRes } = useTranslation(null, { keyPrefix: `items`});
+
     const tooltip = useRef(null);
 
     const unlocked = useUpgradeCheckUnlock(id);
@@ -41,13 +43,13 @@ function Upgrade({ id }) {
             onMouseLeave={handleMouseLeave}
         >
             <div className="line">{t('title')}</div>
-            <div className="line">Level: {level}</div>
+            <div className="line">{tMeta('level')}: {level}</div>
             <div className="tooltip" ref={tooltip}>
-                <div className="header">Description</div>
+                <div className="section">{tMeta('description')}</div>
                 {t('description')}
-                {t('effect') ? <div className="header separator">Effect</div> : ""}
+                {t('effect') ? <div className="section separator">{tMeta('effect')}</div> : ""}
                 {t('effect')}
-                <div className="header separator">Cost</div>
+                <div className="section separator">{tMeta('cost')}</div>
                 {formattedCost}
             </div>
         </div>

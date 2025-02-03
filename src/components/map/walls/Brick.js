@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux'
-import { hit, createBrickState } from 'engine/brick'
+import { hit } from 'engine/brick'
 import * as images from 'img'
-import useInitState from 'hooks/useInitState';
 
-function Brick({ id, batteryId, type, row, col, height, width, disabled = false }) {
-  // Create state if not in the store (initialization)
-  const hasState = useInitState("wall", id, createBrickState(batteryId, type));
-
+function Brick({ id, type, row, col, height, width, disabled = false }) {
+  
   // Prepare render
+  const hasState = useSelector(state => !!state.wall[id]);
   const health = useSelector(state => state.wall[id]?.health);
   const maxHealth = useSelector(state => state.wall[id]?.maxHealth);
   const display = health === 0 ? 'none' : 'inline';

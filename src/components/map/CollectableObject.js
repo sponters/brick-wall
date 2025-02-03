@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { set } from "state/slices/itemsSlice";
 
 function CollectableObject({ id, row, col, height, width, style, children }) {
-    const found = useSelector(state => state.items[id].found)
+    const found = useSelector(state => state.items.ids[id].found)
 
     const dispatch = useDispatch();
 
@@ -10,7 +10,7 @@ function CollectableObject({ id, row, col, height, width, style, children }) {
         return null;
 
     const handleClick = () => {
-        dispatch(set({ [id]: { found: true } }));
+        dispatch(set({ ids: { [id]: { found: true } } }));
     }
 
     const placementStyle = {

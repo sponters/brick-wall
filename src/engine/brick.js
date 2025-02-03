@@ -8,19 +8,19 @@ export function createBrickState(batteryId, type) {
     return {
         batteryId,
         type,
-        maxHealth: store.getState().items[type].maxHealth,
-        health: store.getState().items[type].maxHealth,
+        maxHealth: store.getState().items.ids[type].maxHealth,
+        health: store.getState().items.ids[type].maxHealth,
         brokenTicks: 0,
         brokenCharge: 0,
-        reward: { ...store.getState().items[type].reward },
-        expire: { ...store.getState().items[type].expire },
+        reward: { ...store.getState().items.ids[type].reward },
+        expire: { ...store.getState().items.ids[type].expire },
     }
 };
 
 export function hit(id) {
     const brick = store.getState().wall[id];
-    const damage = store.getState().items.hammer.damage;
-    const brickDef = store.getState().items[brick.type];
+    const damage = store.getState().items.ids.hammer.damage;
+    const brickDef = store.getState().items.ids[brick.type];
 
     const realDamage = damage - brickDef.damageResistance;
     if (realDamage <= 0)
@@ -73,7 +73,7 @@ addTickCallback(3, () => {
 
         if ((newValues.brokenTicks === 0) && (newValues.brokenCharge === 0)) {
             store.dispatch(expire(brick.expire));
-            newValues.health = state.items[brick.type].maxHealth;
+            newValues.health = state.items.ids[brick.type].maxHealth;
         }
 
         batchDispatch[id] = newValues;

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const initialState = {
     port: undefined,
     id: undefined,
+    extra: undefined
 };
 
 export const connectionSlice = createSlice({
@@ -12,11 +13,13 @@ export const connectionSlice = createSlice({
         connect: (state, action) => {
             state.port = action.payload.port;
             state.id = action.payload.id;
+            state.extra = action.payload.extra;
         },
         disconnect: (state, action) => {
             if (state.id === action.payload) {
                 state.port = undefined;
                 state.id = undefined;
+                state.extra = undefined;
             }
         },
         load: (state, action) => {

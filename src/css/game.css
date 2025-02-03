@@ -16,6 +16,7 @@
 
   --wall-cell-height: calc((80vh + 4 * 80vh / 44) / 44);
   --wall-cell-width: calc((60vw + 8 * 60vw / 68) / 68);
+  --left-width: 20vw;
 }
 
 #header {

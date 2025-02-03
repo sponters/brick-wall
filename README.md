@@ -13,7 +13,7 @@ A simple incremental clicker game.
 
 - Weapons
   - Hammer (low damage, high speed)
-  - Rifle (middle damage, high speed, automatic)
+  - Drill (low damage, high speed, automatic)
   - Granade (high damage, low speed)
   - Mounted Gun (automatically fires at random objects, used to farm items while away)
 
@@ -29,6 +29,7 @@ A simple incremental clicker game.
 
 - Collectables
   - Hammer
+  - Drill
   - Flashlight
   - Controller
   - Mounted Gun
