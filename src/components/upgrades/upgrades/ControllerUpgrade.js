@@ -4,30 +4,68 @@ import store from 'state/store'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useCallback } from 'react';
-import { discharge } from 'state/slices/eletronicsSlice';
-import { recharge } from 'state/slices/itemsSlice';
-import TimeUpgrade from './TimeUpgrade';
+import ProgressBarUpgrade from './ProgressBarUpgrade';
+import { calcCost, calcFunds } from 'engine/upgrade';
+import { add, set } from 'state/slices/upgradesSlice';
+import { spend } from 'state/slices/resSlice';
+import useTick from 'hooks/useTick';
+import upgrades from 'engine/upgrades';
+import { ChargeUpgradeStatus } from 'consts';
 
-function ControllerUpgrade({ upgradeId, itemId, batteryId, output, input }) {
+function ControllerUpgrade({ upgradeId }) {
     const dispatch = useDispatch();
 
-    const handleTick = useCallback(() => {
-        const state = store.getState();
-        const transferCharge = Math.min(
-            output,
-            state.eletronics[batteryId].charge,
-            state.items.charges[itemId].capacity - state.items.charges[itemId].charge
-        );
-        if (transferCharge > 0) {
-            dispatch(discharge({ id: batteryId, charge: output }));
-            dispatch(recharge({ id: itemId, charge: input }))
+    const status = useSelector(state => state.upgrades[upgradeId].status);
+
+    const handleClick = () => {
+        if (status === ChargeUpgradeStatus.paused) {
+            dispatch(set({ [upgradeId]: { status: ChargeUpgradeStatus.charging } }));
+            return;
         }
-    }, [batteryId, itemId, dispatch, output, input]);
+        if (status === ChargeUpgradeStatus.charging) {
+            dispatch(set({ [upgradeId]: { status: ChargeUpgradeStatus.paused } }));
+            return;
+        }
 
-    const percentage = useSelector(state =>
-        Math.floor(state.items.charges[itemId].charge * 100 / state.items.charges[itemId].capacity));
+        const upgradeState = store.getState().upgrades[upgradeId];
+        const cost = calcCost(upgradeState);
+        const hasFunds = calcFunds(store.getState(), cost);
 
-    return <TimeUpgrade id={upgradeId} onTick={handleTick} percentage={percentage} />
+        if (!hasFunds)
+            return;
+
+        store.dispatch(spend(cost));
+        dispatch(set({ [upgradeId]: { status: ChargeUpgradeStatus.charging } }));
+    }
+
+    useTick(3, useCallback(() => {
+        const state = store.getState();
+        const charge = state.upgrades[upgradeId].charge;
+        const capacity = upgrades[upgradeId].selectCapacity(state);
+
+        if (charge >= capacity) {
+            dispatch(set({ [upgradeId]: { 
+                charge: charge - capacity,
+                status: ChargeUpgradeStatus.pending 
+            } }));
+            upgrades[upgradeId].buyEffect();
+
+            return;
+        }
+
+        if (status !== ChargeUpgradeStatus.charging)
+            return;
+
+        if (!upgrades[upgradeId].tickSpend())
+            return;
+
+        dispatch(add({ [upgradeId]: { charge: 1 } }));
+    }, [upgradeId, status, dispatch]));
+
+    const charge = useSelector(state => state.upgrades[upgradeId].charge);
+    const capacity = useSelector(upgrades[upgradeId].selectCapacity);
+
+    return <ProgressBarUpgrade id={upgradeId} onClick={handleClick} progress={charge / capacity} />
 }
 
 export default ControllerUpgrade;

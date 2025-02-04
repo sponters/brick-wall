@@ -2,6 +2,7 @@ import store from 'state/store'
 import { spend } from 'state/slices/resSlice'
 import { add } from 'state/slices/upgradesSlice'
 
+
 export function calcCost({ costDef, level }) {
     const cost = {}
     for(const [resName, def] of Object.entries(costDef))

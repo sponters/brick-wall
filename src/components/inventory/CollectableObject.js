@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -45,8 +46,8 @@ function CollectableObject({ itemId, height, width, collectablesRef, onClick, ch
                 {ports ? <div className="section separator">{tMeta('ports')}</div> : ""}
                 <div style={{ display: "inline-block" }}>
                     {Object.keys(ports).map(port =>
-                        <div style={{ textAlign: "left" }}>
-                            <span class="port">{port}</span>
+                        <div key={port} style={{ textAlign: "left" }}>
+                            <span className="port">{port}</span>
                             <span>: {t(`ports.${port}`)}</span>
                         </div>
                     )}

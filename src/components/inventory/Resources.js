@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux'
@@ -7,7 +8,7 @@ function Resource({ id }) {
 
     const tooltip = useRef(null);
 
-    const brick = useSelector(state => state.res.brick.cur);
+    const cur = useSelector(state => state.res[id].cur);
 
     const handleMouseEnter = () => {
         tooltip.current.style.visibility = "visible";
@@ -22,7 +23,7 @@ function Resource({ id }) {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            {t('name')}: {brick}
+            {t('name')}: {cur}
             <div className='tooltip' ref={tooltip}>
                 <div className="section">Description</div>
                 {t('description')}
@@ -34,8 +35,9 @@ function Resource({ id }) {
 
 function Resources() {
     const brick = useSelector(state => state.res.brick.unlocked);
+    const hash = useSelector(state => state.res.hash.unlocked);
 
-    const unlocked = brick;
+    const unlocked = brick || hash;
 
     if (!unlocked)
         return null;
@@ -44,6 +46,7 @@ function Resources() {
         <div className="inventory-container">
             <div className="header">Resources</div>
             {brick && <Resource id="brick" />}
+            {hash && <Resource id="hash" />}
         </div>
     );
 }

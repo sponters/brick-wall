@@ -51,6 +51,10 @@
                 "name": "bricks",
                 "description": "Bricks of a variety of types. They come of the wall whenever it gets broken, but this Machine phases them back after some time. The phasing only occurs if there is power. That's strange."
             },
+            "hash": {
+                "name": "hashes",
+                "description": "Pre-stored hashing power to spend in intensive computing operations. There is limited space inside the controller, but this storage can be expanded."
+            },
             "controller": {
                 "name": "Controller",
                 "description": "An equipment that connects and controls parts of the environment",

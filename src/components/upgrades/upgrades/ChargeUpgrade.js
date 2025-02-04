@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react';
 import { discharge } from 'state/slices/eletronicsSlice';
 import { recharge } from 'state/slices/itemsSlice';
-import TimeUpgrade from './TimeUpgrade';
+import ProgressBarUpgrade from './ProgressBarUpgrade';
 import useTick from 'hooks/useTick';
 
 function ChargeUpgrade({ upgradeId, itemId, batteryId, output, input }) {
@@ -33,10 +33,10 @@ function ChargeUpgrade({ upgradeId, itemId, batteryId, output, input }) {
         }
     }, [active, batteryId, itemId, dispatch, output, input]));
 
-    const percentage = useSelector(state =>
-        Math.floor(state.items.charges[itemId].charge * 100 / state.items.charges[itemId].capacity));
+    const charge = useSelector(state => state.items.charges[itemId].charge);
+    const capacity = useSelector(state =>state.items.charges[itemId].capacity);
 
-    return <TimeUpgrade id={upgradeId} onClick={handleClick} percentage={percentage} />
+    return <ProgressBarUpgrade id={upgradeId} onClick={handleClick} progress={charge / capacity} />
 }
 
 export default ChargeUpgrade;

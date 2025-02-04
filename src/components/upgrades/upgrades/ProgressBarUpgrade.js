@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
 
-function TimeUpgrade({ id, tooltip=false, onClick, percentage }) {
+function ProgressBarUpgrade({ id, tooltip=false, onClick, progress }) {
     const { t } = useTranslation(null, { keyPrefix: `upgrades.${id}` });
     const tooltipRef = useRef(null);
 
@@ -14,6 +14,8 @@ function TimeUpgrade({ id, tooltip=false, onClick, percentage }) {
         if (tooltip)
             tooltipRef.current.style.visibility = "hidden";
     }
+
+    const percentage = Math.min(Math.floor(progress * 10000) / 100, 100);
 
     return (
         <div
@@ -37,4 +39,4 @@ function TimeUpgrade({ id, tooltip=false, onClick, percentage }) {
     )
 }
 
-export default TimeUpgrade;
+export default ProgressBarUpgrade;
