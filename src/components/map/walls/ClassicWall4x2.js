@@ -1,3 +1,4 @@
+import React from 'react';
 import { wallCols, wallRows } from 'consts';
 import Brick from './Brick';
 import BrickShadow from './BrickShadow';

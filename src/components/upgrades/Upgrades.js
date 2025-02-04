@@ -1,3 +1,4 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
 import Upgrade from './upgrades/Upgrade'
 import { useTranslation } from 'react-i18next';

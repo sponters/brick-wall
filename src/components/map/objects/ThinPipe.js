@@ -1,3 +1,4 @@
+import React from 'react';
 import { LevelContext } from '../Level';
 import { useContext } from 'react';
 

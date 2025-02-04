@@ -1,3 +1,4 @@
+import React from 'react';
 import { useSelector } from 'react-redux'
 
 function BrickShadow({ id, row, col, height, width }) {

@@ -1,3 +1,4 @@
+import React from 'react';
 import ClassicWall4x2 from '../walls/ClassicWall4x2';
 import Battery from '../objects/Battery'
 import Light from '../objects/Light';

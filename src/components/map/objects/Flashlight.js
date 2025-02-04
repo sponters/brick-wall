@@ -1,3 +1,4 @@
+import React from 'react';
 import CollectableObject from '../CollectableObject';
 import { default as FlashlightVisual, size }from '../../visuals/Flashlight'
 

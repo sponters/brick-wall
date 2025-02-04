@@ -16,7 +16,7 @@ const def = {
         },
     },
 
-    checkUnlock: state => {
+    checkUnlock: () => {
         return false;
     },
 

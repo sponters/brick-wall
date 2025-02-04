@@ -1,3 +1,5 @@
+import React from 'react';
+
 function Controller() {
     return (
         <div className="tech-black-frame">

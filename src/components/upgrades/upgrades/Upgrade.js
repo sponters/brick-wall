@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useSelector, shallowEqual } from 'react-redux'
 
 import { calcCost, calcFunds} from 'engine/upgrade'

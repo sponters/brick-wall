@@ -19,7 +19,7 @@ function ChargePort({ port, id }) {
 
     const upgrades = useSelector(selectChargeItems);
     const batteryId = useSelector(state => state.eletronics[id]?.battery);
-    const batteryHasCharge = useSelector(state => batteryId && state.eletronics[batteryId].charge >= 0);
+    const batteryHasCharge = useSelector(state => batteryId && state.eletronics[batteryId].charge > 0);
 
     if (batteryId === undefined)
         return null;

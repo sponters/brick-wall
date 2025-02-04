@@ -1,3 +1,4 @@
+import React from 'react';
 import { createPowerOutlet } from "engine/eletronics";
 import useInitState from "hooks/useInitState";
 import { useEffect, useState } from "react";
