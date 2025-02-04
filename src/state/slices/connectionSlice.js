@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const initialState = {
     port: undefined,
     id: undefined,
-    extra: undefined
+    controller: false,
 };
 
 export const connectionSlice = createSlice({
@@ -13,14 +13,16 @@ export const connectionSlice = createSlice({
         connect: (state, action) => {
             state.port = action.payload.port;
             state.id = action.payload.id;
-            state.extra = action.payload.extra;
         },
         disconnect: (state, action) => {
             if (state.id === action.payload) {
                 state.port = undefined;
                 state.id = undefined;
-                state.extra = undefined;
             }
+        },
+        controller: (state, action) => {
+            if (state.controller !== action.payload)
+                state.controller = action.payload;
         },
         load: (state, action) => {
             return structuredClone(action.payload);
@@ -28,6 +30,6 @@ export const connectionSlice = createSlice({
     }
 });
 
-export const { connect, disconnect, load } = connectionSlice.actions;
+export const { connect, disconnect, controller, load } = connectionSlice.actions;
 
 export default connectionSlice.reducer;

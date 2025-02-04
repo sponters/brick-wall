@@ -8,6 +8,14 @@ export const initialState = {
     best: 0,
     total: 0,
     cur: 0,
+  },
+  hash: {
+    unlocked: false,
+    unlockHistory: 1,
+    history: 0,
+    best: 0,
+    total: 0,
+    cur: 0,
   }
 };
 

@@ -42,6 +42,7 @@
 .collectable {
   position: relative;
   display: inline-block;
+  margin: 5px;
 }
 
 .collectable .tooltip {
@@ -70,4 +71,10 @@
   padding-top: 5px;
   margin-top: 5px;
   border-top: 1px solid white;
+}
+
+.collectable .tooltip .port {
+  font-size: 2vh;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
 }

@@ -36,14 +36,15 @@ export const initialState = {
             found: false,
             charged: false,
             ports: {
-                "●": [1, 100],
+                "●": [1, 100, "chargeController"],
+                "◘": 1
             }
         },
         flashlight: {
             found: false,
             charged: false,
             ports: {
-                "●": [1, 1],
+                "●": [1, 1, "chargeFlashlight"],
             }
         },
     },

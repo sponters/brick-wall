@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import Upgrade from './Upgrade'
+import Upgrade from './upgrades/Upgrade'
 import { useTranslation } from 'react-i18next';
 
 function Upgrades() {

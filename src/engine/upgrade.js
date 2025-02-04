@@ -35,3 +35,9 @@ export function buildUpgrade(def) {
         buy: () => buyDef(def),
     }
 }
+
+export function buildChargeUpgrade(def) {
+    return {
+        ...def,
+    }
+}

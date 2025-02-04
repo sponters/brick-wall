@@ -1,13 +1,11 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { addTickCallback, delTickCallback } from "engine/loop";
 
-function useTick(priority, callback, deps) {
-    // eslint-disable-next-line
-    const memoized = useCallback(callback, [...deps]);
+function useTick(priority, memoizedCallback) {
     useEffect(() => {
-        addTickCallback(priority, memoized);
-        return () => { delTickCallback(priority, memoized) };
-    }, [priority, memoized]);
+        addTickCallback(priority, memoizedCallback);
+        return () => { delTickCallback(priority, memoizedCallback) };
+    }, [priority, memoizedCallback]);
 }
 
 export default useTick;

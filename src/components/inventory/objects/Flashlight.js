@@ -3,7 +3,7 @@ import { default as FlashlightVisual, size } from '../../visuals/Flashlight'
 
 function Flashlight(props) {
     return (
-        <CollectableObject height={size.height} width={size.width} {...props}>
+        <CollectableObject itemId="flashlight" height={size.height} width={size.width} {...props}>
             <FlashlightVisual />
         </CollectableObject>
     )

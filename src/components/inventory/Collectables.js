@@ -1,3 +1,4 @@
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux'
 import Controller from './objects/Controller';
@@ -5,7 +6,7 @@ import Flashlight from './objects/Flashlight';
 import { useRef } from 'react';
 
 function Collectables() {
-    const { t } = useTranslation(null, { keyPrefix: `items` });
+    const { t } = useTranslation(null, { keyPrefix: `items.meta` });
 
     const collectablesRef = useRef(null);
 
@@ -19,7 +20,7 @@ function Collectables() {
 
     return (
         <div className="inventory-container" ref={collectablesRef}>
-            <div className="header">Collectables</div>
+            <div className="header">{t("collectables")}</div>
             <div className="collectables">
                 {controller && <Controller collectablesRef={collectablesRef} />}
                 {flashlight && <Flashlight collectablesRef={collectablesRef} />}

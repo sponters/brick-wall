@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React from "react";
+import { useCallback, useState } from "react";
 import { recharge } from "state/slices/eletronicsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import useTick from "hooks/useTick";
@@ -17,11 +18,11 @@ function Battery({ id, row, col, height, width, global=false }) {
     const [charging, setCharging] = useState(false);
     const dispatch = useDispatch();
 
-    useTick(0, () => {
+    useTick(0, useCallback(() => {
         if (charging) {
             dispatch(recharge(id));
         }
-    }, [charging, dispatch]);
+    }, [charging, dispatch, id]));
 
     const charge = useSelector(state => state.eletronics[id]?.charge);
 

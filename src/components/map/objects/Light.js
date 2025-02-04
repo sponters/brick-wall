@@ -1,3 +1,4 @@
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useTick from "hooks/useTick";
 import store from "state/store";
@@ -35,7 +36,7 @@ function Light({ id, batteryId, level, global = false }) {
 
     const dispatch = useDispatch();
 
-    useTick(1, () => {
+    useTick(1, useCallback(() => {
         if (!hasState)
             return;
 
@@ -51,7 +52,7 @@ function Light({ id, batteryId, level, global = false }) {
         } else {
             dispatch(light({ id, status: false }))
         }
-    }, [id, hasState, dispatch]);
+    }, [id, hasState, dispatch]));
 
     const status = useSelector(state => state.eletronics[id]?.status);
     const heat = useSelector(state => state.eletronics[id]?.heat);

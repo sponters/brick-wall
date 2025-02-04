@@ -14,6 +14,9 @@
                     "title": "Power Outlet",
                     "nothing": "Nothing to charge",
                     "noCharge": "No charge from power source"
+                },
+                "controller": {
+                    "title": "Controller"
                 }
             },
             "hammerTechnique": {
@@ -26,24 +29,44 @@
                 "description": "Some wires in the right place will cause a slower brick respawn.",
                 "effect": ""
             },
-            "flashlight": {
-                "charge": {
-                    "title": "Charge flashlight"
-                }
+            "hashGenerator": {
+                "title": "Generate Hash"
             },
-            "controller": {
-                "charge": {
-                    "title": "Charge controller"
-                }
+            "chargeFlashlight": {
+                "title": "Charge flashlight"
+            },
+            "chargeController": {
+                "title": "Charge controller"
             }
         },
         "items": {
-            "brick": {
+            "meta": {
+                "resources": "Resources",
+                "collectables": "Collectables",
+                "description": "Description",
+                "ports": "Ports",
+                "action": "Action"
+            },
+           "brick": {
                 "name": "bricks",
-                "description": "Bricks of a variety of types. They come of the wall whenever it gets broken, but the Machine phases them back after some time."
+                "description": "Bricks of a variety of types. They come of the wall whenever it gets broken, but this Machine phases them back after some time. The phasing only occurs if there is power. That's strange."
             },
             "controller": {
-                "name": "Controller"
+                "name": "Controller",
+                "description": "An equipment that connects and controls parts of the environment",
+                "ports": {
+                    "●": "Charging port",
+                    "◘": "Control port"
+                },
+                "action": "Click to open/close"
+            },
+            "flashlight": {
+                "name": "Flashlight",
+                "description": "A rechargable flashlight for exploring in the dark",
+                "ports": {
+                    "●": "Charging port"
+                },
+                "action": ""
             }
         }
     }
