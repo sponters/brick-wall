@@ -1,8 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export const initialState = {
-    port: undefined,
-    id: undefined,
+    port: {
+        port: undefined,
+        id: undefined,
+        type: undefined,
+    },
     controller: false,
 };
 
@@ -11,13 +14,15 @@ export const connectionSlice = createSlice({
     initialState,
     reducers: {
         connect: (state, action) => {
-            state.port = action.payload.port;
-            state.id = action.payload.id;
+            state.port.port = action.payload.port;
+            state.port.id = action.payload.id;
+            state.port.type = action.payload.type;
         },
         disconnect: (state, action) => {
             if (state.id === action.payload) {
-                state.port = undefined;
-                state.id = undefined;
+                state.port.port = undefined;
+                state.port.id = undefined;
+                state.port.type = undefined;
             }
         },
         controller: (state, action) => {

@@ -26,7 +26,7 @@ function Level1({ front = true }) {
             <ThinPipe top bottom row={24} col={10} height={15} width={1} />
             <ThinPipe top right row={39} col={10} height={1} width={1} />
             <ThinPipe left right row={39} col={11} height={1} width={10} />
-            <PowerOutlet id="l1_o1" batteryId="l1_b1" port="●" amperage="1" row={39} col={21} height={1} width={1} />
+            <PowerOutlet id="l1_o1" batteryId="l1_b1" port="●" row={39} col={21} height={1} width={1} />
             <Flashlight row={10} col={10} style={{ transform: `rotate(${front ? "" : "-"}30deg)` }} />
             <Controller row={10} col={40} style={{ transform: `rotate(${front ? "" : "-"}30deg)` }} />
 

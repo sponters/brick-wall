@@ -1,28 +1,26 @@
 import React from 'react';
 import { createPowerOutlet } from "engine/eletronics";
 import useInitState from "hooks/useInitState";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { connect, disconnect } from "state/slices/connectionSlice";
+import { EletronicTypes } from 'consts';
 
-function PowerOutlet({ id, batteryId, port, amperage, row, col, height, width }) {
+function PowerOutlet({ id, batteryId, port, row, col, height, width }) {
     // Create state if not in the store (initialization)
-    const hasState = useInitState("eletronics", id, createPowerOutlet(batteryId));
+    const hasState = useInitState("eletronics", id, () => createPowerOutlet(id, batteryId));
 
     const dispatch = useDispatch();
 
     useEffect(() => () => { dispatch(disconnect(id)) }, [dispatch, id]);
 
-    const [connected, setConnected] = useState(false);
+    const connected = useSelector(state => state.connection.id === id && state.connection.port === port);
 
     const handleClick = () => {
-        if (connected) {
+        if (connected)
             dispatch(disconnect(id));
-            setConnected(false);
-        } else {
-            dispatch(connect({ id, port, extra: amperage }));
-            setConnected(true);
-        }
+        else
+            dispatch(connect({ id, port, type: EletronicTypes.power }));
     }
 
     if (!hasState)

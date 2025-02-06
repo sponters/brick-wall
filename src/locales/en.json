@@ -17,6 +17,9 @@
                 },
                 "controller": {
                     "title": "Controller"
+                },
+                "controlBattery": {
+                    "title": "Battery Controls"
                 }
             },
             "hammerTechnique": {

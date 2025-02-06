@@ -2,7 +2,6 @@
   position: relative;
   text-align: center;
   width: 90%;
-  z-index: 1;
   margin: 5%;
 }
 
@@ -54,6 +53,7 @@
   border: 1px solid;
   background-color: black;
   padding: 5px;
+  z-index: 1;
 }
 
 .upgrade .tooltip .section {

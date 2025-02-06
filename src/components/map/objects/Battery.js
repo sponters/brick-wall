@@ -8,10 +8,12 @@ import useInitState from "hooks/useInitState";
 
 import { LevelContext } from '../Level';
 import { useContext } from 'react';
+import { connect, disconnect } from "state/slices/connectionSlice";
+import { EletronicTypes } from "consts";
 
 function Battery({ id, row, col, height, width, global=false }) {
     // Create state if not in the store (initialization)
-    const hasState = useInitState("eletronics", id, createBattery());
+    const hasState = useInitState("eletronics", id, () => createBattery(id));
 
     const front = useContext(LevelContext);
 
@@ -25,6 +27,8 @@ function Battery({ id, row, col, height, width, global=false }) {
     }, [charging, dispatch, id]));
 
     const charge = useSelector(state => state.eletronics[id]?.charge);
+
+    const connected = useSelector(state => state.connection.id === id && state.connection.port === "◘");
 
     if (!hasState)
         return null;
@@ -52,6 +56,13 @@ function Battery({ id, row, col, height, width, global=false }) {
     const handleChargeOn = () => { setCharging(true); }
     const handleChargeOff = () => { setCharging(false); }
 
+    const handlePortClick = () => {
+        if (connected)
+            dispatch(disconnect(id));
+        else
+            dispatch(connect({ id, port: "◘", type: EletronicTypes.battery }));
+    }
+
     return (
         <div
             className="eletronic-metal-frame"
@@ -64,7 +75,7 @@ function Battery({ id, row, col, height, width, global=false }) {
             <div className="battery-screen">
                 {formattedCharge}
             </div>
-            <div className="battery-plug">◘</div>
+            <div className="battery-plug" onClick={handlePortClick}>◘</div>
         </div>
     )
 }

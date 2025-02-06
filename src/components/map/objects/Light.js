@@ -32,7 +32,7 @@ function LightFromFlashlight() {
 
 function Light({ id, batteryId, level, global = false }) {
     // Create state if not in the store (initialization)
-    const hasState = useInitState("eletronics", id, createLight(batteryId));
+    const hasState = useInitState("eletronics", id, () => createLight(id, batteryId));
 
     const dispatch = useDispatch();
 

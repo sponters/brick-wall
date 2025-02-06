@@ -6,3 +6,9 @@ export const ChargeUpgradeStatus = {
     paused: 1,
     charging: 2
 };
+
+export const EletronicTypes = {
+    power: "power",
+    battery: "battery",
+    controller: "controller",
+}

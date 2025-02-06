@@ -4,12 +4,22 @@ import { discharge } from "state/slices/itemsSlice";
 import { ChargeUpgradeStatus } from "consts";
 
 const def = {
-    id: 'hashGenerator',
+    id: 'chargeFaster',
 
     initialState: {
         status: ChargeUpgradeStatus.pending,
         charge: 0,
-        costDef: {},
+        level: 0,
+        costDef: {
+            brick: {
+                base: 10,
+                factor: 2,
+            },
+            hash: {
+                base: 5,
+                factor: 1.3,
+            }
+        },
         capacityDef: {
             capacity: {
                 base: 100,
@@ -17,8 +27,8 @@ const def = {
             }
         },
     },
-    
-    selectLevel: state => state.res.hash.cur,
+
+    selectLevel: (state, id) => state.upgrades[id].chargeFaster.level,
 
     tickSpend: () => {
         const state = store.getState();

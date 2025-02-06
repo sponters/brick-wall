@@ -30,6 +30,7 @@
   grid-row: 2;
   grid-column: 1;
   text-align: center;
+  z-index: 1;
 }
 
 #center {
@@ -48,6 +49,7 @@
   grid-row: 2;
   grid-column: 3;
   text-align: center;
+  z-index: 1;
 }
 
 #footer {
