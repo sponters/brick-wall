@@ -1,10 +1,11 @@
 import store from "state/store";
-import { gain } from "state/slices/resSlice";
-import { discharge } from "state/slices/itemsSlice";
 import { ChargeUpgradeStatus } from "consts";
+import { selectUpgrade } from "state/slices/improvementsSlice";
+import { discharge, selectCharge } from "state/slices/inventorySlice";
+import { addObj } from "state/slices/levelsSlice";
 
 const def = {
-    id: 'chargeFaster',
+    id: 'batteryChargeFaster',
 
     initialState: {
         status: ChargeUpgradeStatus.pending,
@@ -28,18 +29,18 @@ const def = {
         },
     },
 
-    selectLevel: (state, id) => state.upgrades[id].chargeFaster.level,
+    selectLevel: (state, levelId, ownerId) => selectUpgrade(state, levelId, ownerId, "batteryChargeFaster").level,
 
     tickSpend: () => {
         const state = store.getState();
-        if (state.items.charges.controller.charge <= 0)
+        if (selectCharge(state, "controller").charge <= 0)
             return false;
-        store.dispatch(discharge({ id: "controller", charge: 1 }));
+        store.dispatch(discharge({ itemId: "controller", charge: 1 }));
         return true;
     },
 
-    buyEffect: () => {
-        store.dispatch(gain({ hash: 1 }));
+    buyEffect: (levelId, ownerId) => {
+        store.dispatch(addObj({ levelId, objId: ownerId, value: { chargeSpeed: 5 } }));
     }
 }
 

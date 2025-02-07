@@ -1,7 +1,6 @@
 import store from "state/store";
-import { gain } from "state/slices/resSlice";
-import { discharge } from "state/slices/itemsSlice";
 import { ChargeUpgradeStatus } from "consts";
+import { discharge, gain, selectCharge } from "state/slices/inventorySlice";
 
 const def = {
     id: 'hashGenerator',
@@ -22,9 +21,9 @@ const def = {
 
     tickSpend: () => {
         const state = store.getState();
-        if (state.items.charges.controller.charge <= 0)
+        if (selectCharge(state, "controller").charge <= 0)
             return false;
-        store.dispatch(discharge({ id: "controller", charge: 1 }));
+        store.dispatch(discharge({ itemId: "controller", charge: 1 }));
         return true;
     },
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPowerOutlet } from "engine/eletronics";
-import useInitState from "hooks/useInitState";
+import useInitState from "hooks/useInitLevelState";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { connect, disconnect } from "state/slices/connectionSlice";

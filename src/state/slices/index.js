@@ -1,17 +1,11 @@
-import * as res from './resSlice'
-import * as wall from './wallSlice'
-import * as upgrades from './upgradesSlice'
-import * as items from './itemsSlice'
-import * as eletronics from './eletronicsSlice'
-import * as connection from './connectionSlice'
+import * as levels from './levelsSlice'
+import * as inventory from './inventorySlice'
+import * as improvements from './improvementsSlice'
 
 const slices = {
-    res,
-    wall,
-    upgrades,
-    items,
-    eletronics,
-    connection,
+    levels,
+    inventory,
+    improvements,
 };
 
 export default slices;

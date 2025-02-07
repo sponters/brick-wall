@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export function useMouseFollow(id, callback) {
+function useMouseFollow(id, callback) {
     
     useEffect(() => {
         const element = document.getElementById(id);
@@ -30,3 +30,5 @@ export function useMouseFollow(id, callback) {
         return () => { document.removeEventListener("mousemove", handler) }
     }, [id, callback]);
 }
+
+export default useMouseFollow;

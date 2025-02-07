@@ -4,7 +4,7 @@ import { recharge } from "state/slices/eletronicsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import useTick from "hooks/useTick";
 import { createBattery } from "engine/eletronics";
-import useInitState from "hooks/useInitState";
+import useInitState from "hooks/useInitLevelState";
 
 import { LevelContext } from '../Level';
 import { useContext } from 'react';

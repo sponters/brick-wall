@@ -9,7 +9,6 @@ export function createBattery(id) {
             chargeSpeed: 5,
         }
     }));
-    
 }
 
 export function createPowerOutlet(id, batteryId) {

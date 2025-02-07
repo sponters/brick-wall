@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import useTick from "hooks/useTick";
 import store from "state/store";
 import { discharge, light } from "state/slices/eletronicsSlice";
-import useInitState from "hooks/useInitState";
+import useInitState from "hooks/useInitLevelState";
 import { createLight } from "engine/eletronics";
 import { useEffect, useRef } from "react";
-import { useMouseFollow } from "engine/mouse";
+import { useMouseFollow } from "hooks/useMouseFollow";
 
 function LightFromFlashlight() {
     const ref = useRef();

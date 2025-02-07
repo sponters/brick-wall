@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-function useInitState(slice, id, initCallback) {
-    const hasState = useSelector(state => !!state[slice][id]);
+function useInitLevelState(level, id, initCallback) {
+    const hasState = useSelector(state => !!state.level[level][id]);
     useEffect(() => {
         if (!hasState)
             initCallback();
@@ -11,4 +11,4 @@ function useInitState(slice, id, initCallback) {
 }
 
 
-export default useInitState;
+export default useInitLevelState;

@@ -1,26 +1,26 @@
 import store from 'state/store'
-import { gain, expire } from 'state/slices/resSlice'
-import { set } from 'state/slices/wallSlice'
-import { discharge } from "state/slices/eletronicsSlice";
 import { addTickCallback } from './loop'
+import { discharge, selectBrick, selectDef, selectObj, set, setBrick } from 'state/slices/levelsSlice';
+import { expire, gain, selectItem } from 'state/slices/inventorySlice';
 
 export function createBrickState(batteryId, type) {
     return {
         batteryId,
         type,
-        maxHealth: store.getState().items.ids[type].maxHealth,
-        health: store.getState().items.ids[type].maxHealth,
+        maxHealth: selectDef(store.getState(), type).maxHealth,
+        health: selectDef(store.getState(), type).maxHealth,
         brokenTicks: 0,
         brokenCharge: 0,
-        reward: { ...store.getState().items.ids[type].reward },
-        expire: { ...store.getState().items.ids[type].expire },
+        reward: { ...selectDef(store.getState(), type).reward },
+        expire: { ...selectDef(store.getState(), type).expire },
     }
 };
 
-export function hit(id) {
-    const brick = store.getState().wall[id];
-    const damage = store.getState().items.ids.hammer.damage;
-    const brickDef = store.getState().items.ids[brick.type];
+export function hit(levelId, brickId) {
+    const state = store.getState();
+    const brick = selectBrick(state, levelId, brickId);
+    const damage = selectItem(state, "hammer").damage;
+    const brickDef = selectDef(state, brick.type);
 
     const realDamage = damage - brickDef.damageResistance;
     if (realDamage <= 0)
@@ -29,14 +29,16 @@ export function hit(id) {
     const health = brick.health - realDamage;
 
     if (health > 0)
-        store.dispatch(set({ [id]: { health }}));
+        store.dispatch(setBrick({ levelId, brickId, value: { health } }));
     else {
         store.dispatch(gain(brick.reward));
-        store.dispatch(set({ [id]: {
-            health: 0,
-            brokenTicks: brickDef.regenTicks,
-            brokenCharge: brickDef.regenCharge,
-        }}));
+        store.dispatch(setBrick({
+            levelId, brickId, value: {
+                health: 0,
+                brokenTicks: brickDef.regenTicks,
+                brokenCharge: brickDef.regenCharge,
+            }
+        }));
     }
 
     return true;
@@ -45,40 +47,47 @@ export function hit(id) {
 addTickCallback(3, () => {
     const batchDispatch = {};
 
-    for (const [id, brick] of Object.entries(store.getState().wall)) {
-        const state = store.getState();
-
-        if ((brick.brokenTicks === 0) && (brick.brokenCharge === 0))
+    for (const [levelId, level] of Object.entries(store.getState().levels)) {
+        if (!level.bricks)
             continue;
 
-        if (state.eletronics[brick.batteryId].charge <= 0)
-            continue;
+        for (const [brickId, brick] of Object.entries(level.bricks)) {
+            const state = store.getState();
 
-        const newValues = {
-            brokenTicks: brick.brokenTicks,
-            brokenCharge: brick.brokenCharge,
-        };
+            if ((brick.brokenTicks === 0) && (brick.brokenCharge === 0))
+                continue;
 
-        if (newValues.brokenTicks > 0)
-            newValues.brokenTicks--;
+            if (selectObj(state, levelId, brick.batteryId).charge <= 0)
+                continue;
 
-        if ((newValues.brokenTicks === 0) && (newValues.brokenCharge > 0)) {
-            const dischargeValue = Math.min(newValues.brokenCharge, state.eletronics[brick.batteryId].charge);
+            const newValues = {
+                brokenTicks: brick.brokenTicks,
+                brokenCharge: brick.brokenCharge,
+            };
 
-            if (dischargeValue > 0) {
-                newValues.brokenCharge -= dischargeValue;
-                store.dispatch(discharge({ id: brick.batteryId, charge: dischargeValue}));
+            if (newValues.brokenTicks > 0)
+                newValues.brokenTicks--;
+
+            if ((newValues.brokenTicks === 0) && (newValues.brokenCharge > 0)) {
+                const dischargeValue = Math.min(newValues.brokenCharge, selectObj(state, levelId, brick.batteryId).charge);
+
+                if (dischargeValue > 0) {
+                    newValues.brokenCharge -= dischargeValue;
+                    store.dispatch(discharge({ levelId, batteryId: brick.batteryId, charge: dischargeValue }));
+                }
             }
+
+            if ((newValues.brokenTicks === 0) && (newValues.brokenCharge === 0)) {
+                store.dispatch(expire(brick.expire));
+                newValues.health = state.levels.defs[brick.type].maxHealth;
+            }
+
+            if (!batchDispatch[levelId])
+                batchDispatch[levelId] = { bricks: {} };
+            batchDispatch.levels[levelId].bricks[brickId] = newValues;
         }
 
-        if ((newValues.brokenTicks === 0) && (newValues.brokenCharge === 0)) {
-            store.dispatch(expire(brick.expire));
-            newValues.health = state.items.ids[brick.type].maxHealth;
-        }
-
-        batchDispatch[id] = newValues;
+        if (Object.keys(batchDispatch).length > 0)
+            store.dispatch(set(batchDispatch));
     }
-
-    if (Object.keys(batchDispatch).length > 0)
-        store.dispatch(set(batchDispatch));
 });

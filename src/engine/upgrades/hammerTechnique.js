@@ -1,6 +1,5 @@
+import { addItem } from "state/slices/inventorySlice";
 import store from "state/store";
-import { buildUpgrade } from "../upgrade";
-import { add } from "state/slices/itemsSlice";
 
 const def = {
     id: 'hammerTechnique',
@@ -21,8 +20,8 @@ const def = {
     },
 
     buyEffect: () => {
-        store.dispatch(add({ ids: { hammer: { damage: 1 } } }));
+        store.dispatch(addItem({ itemId: "hammer", value: { damage: 1 } }));
     }
 }
 
-export default buildUpgrade(def);
+export default def;
