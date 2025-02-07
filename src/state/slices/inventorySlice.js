@@ -24,11 +24,12 @@ export const initialState = {
     items: {
         hammer: {
             found: true,
-            damage: 1
+            damage: 1,
         },
         controller: {
             found: false,
             charged: false,
+            hasCharge: false,
             ports: {
                 "●": [1, 100, "chargeController"],
                 "◘": 1
@@ -37,12 +38,13 @@ export const initialState = {
         flashlight: {
             found: false,
             charged: false,
+            hasCharge: false,
             ports: {
                 "●": [1, 1, "chargeFlashlight"],
             }
         },
     },
-    charges: {
+    tick: {
         flashlight: {
             charge: 0,
             capacity: 100,
@@ -58,32 +60,36 @@ export const inventorySlice = createSlice({
     name: 'inventory',
     initialState,
     reducers: {
-        addItem: (state, action) => {
+        addItemInfo: (state, action) => {
             const { itemId, value } = action.payload;
             commonAdd(state.items[itemId], value);
         },
-        setItem: (state, action) => {
+        setItemInfo: (state, action) => {
             const { itemId, value } = action.payload;
             commonSet(state.items[itemId], value);
         },
         recharge: (state, action) => {
             const { itemId, charge } = action.payload;
-            const charges = state.charges[itemId];
+            const tick = state.tick[itemId];
             const item = state.items[itemId];
-            charges.charge += charge;
-            if (charges.charge >= charges.capacity) {
-                charges.charge = charges.capacity;
+            tick.charge += charge;
+            if (tick.charge > tick.capacity)
+                tick.charge = tick.capacity;
+            if (!item.charged && tick.charge >= tick.capacity)
                 item.charged = true;
-            }
+            if (!item.hasCharge)
+                item.hasCharge = true;
         },
         discharge: (state, action) => {
             const { itemId, charge } = action.payload;
-            const charges = state.charges[itemId];
+            const tick = state.tick[itemId];
             const item = state.items[itemId];
-            charges.charge -= charge;
-            if (charges.charge < 0)
-                charges.charge = 0;
-            if (charges.charge < charges.capacity)
+            tick.charge -= charge;
+            if (tick.charge < 0)
+                tick.charge = 0;
+            if (item.hasCharge && tick.charge <= 0)
+                item.hasCharge = false;
+            if (item.charged)
                 item.charged = false;
         },
         gain: (state, action) => {
@@ -119,9 +125,10 @@ export const inventorySlice = createSlice({
 });
 
 export const selectRes = (state, resId) => state.inventory.res[resId];
-export const selectItem = (state, itemId) => state.inventory.items[itemId];
-export const selectCharge = (state, itemId) => state.inventory.charges[itemId];
+export const selectItemInfo = (state, itemId) => state.inventory.items[itemId];
+export const selectItemTick = (state, itemId) => state.inventory.tick[itemId];
+export const selectAllItems = (state) => state.inventory.items;
 
-export const { addItem, setItem, recharge, discharge, gain, spend, expire, load } = inventorySlice.actions;
+export const { addItemInfo, setItemInfo, recharge, discharge, gain, spend, expire, load } = inventorySlice.actions;
 
 export default inventorySlice.reducer;

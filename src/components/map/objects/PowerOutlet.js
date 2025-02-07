@@ -1,44 +1,43 @@
-import React from 'react';
-import { createPowerOutlet } from "engine/eletronics";
-import useInitState from "hooks/useInitLevelState";
-import { useEffect } from "react";
+import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { connect, disconnect } from "state/slices/connectionSlice";
-import { EletronicTypes } from 'consts';
 
-function PowerOutlet({ id, batteryId, port, row, col, height, width }) {
+import { createPowerOutlet } from "engine/eletronics";
+import useInitLevelObjState from "hooks/useInitLevelObjState";
+import { EletronicTypes } from 'consts';
+import { LevelContext } from '../Level';
+import { connect, disconnect, selectConnected } from 'state/slices/improvementsSlice';
+import WallObject from '../WallObject';
+
+function PowerOutlet({ objId, batteryId, port, ...props}) {
+    const { levelId } = useContext(LevelContext);
+
     // Create state if not in the store (initialization)
-    const hasState = useInitState("eletronics", id, () => createPowerOutlet(id, batteryId));
+    const hasState = useInitLevelObjState(levelId, objId, () => createPowerOutlet(levelId, objId, batteryId));
 
     const dispatch = useDispatch();
 
-    useEffect(() => () => { dispatch(disconnect(id)) }, [dispatch, id]);
+    useEffect(() => () => { dispatch(disconnect(objId)) }, [dispatch, objId]);
 
-    const connected = useSelector(state => state.connection.id === id && state.connection.port === port);
+    const connected = useSelector(state => selectConnected(state, objId, port));
 
     const handleClick = () => {
         if (connected)
-            dispatch(disconnect(id));
+            dispatch(disconnect(objId));
         else
-            dispatch(connect({ id, port, type: EletronicTypes.power }));
+            dispatch(connect({ levelId, objId, port, type: EletronicTypes.power }));
     }
 
     if (!hasState)
         return null;
 
-    const placementStyle = {
-        gridRow: `${row} / ${row + height}`,
-        gridColumn: `${col} / ${col + width}`,
-    }
-
     return (
-        <div
+        <WallObject
+            {...props}
             className="eletronic-metal-frame"
-            style={placementStyle}
             onClick={handleClick}
         >
             <div className="battery-plug">{port}</div>
-        </div>
+        </WallObject>
     )
 }
 

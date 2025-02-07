@@ -6,11 +6,11 @@ import BrickShadow from './BrickShadow';
 import { LevelContext } from '../Level';
 import { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { wallInit } from 'state/slices/wallSlice';
 import { createBrickState } from 'engine/brick'
+import { selectBrick, setWall } from 'state/slices/levelsSlice';
 
-function ClassicWall4x2({ id, batteryId, brickType, layout }) {
-    const front = useContext(LevelContext);
+function ClassicWall4x2({ id: wallId, batteryId, brickType, layout }) {
+    const { levelId, front } = useContext(LevelContext);
 
     const brickData = [];
 
@@ -27,32 +27,33 @@ function ClassicWall4x2({ id, batteryId, brickType, layout }) {
             const j = front ? k : rowNumCols - k - 1;
             const row = i * 2 + startRow;
             const col = j * 4 + (parity ? 0 : 2) + startCol + layout;
-            const brickId = `${id}_r${row}_c${col}`;
+            const brickId = `${wallId}_r${row}_c${col}`;
             const disabled = (i === 0) || (i === numRows - 1) || (j === 0) || (j === rowNumCols - 1);
             brickData.push([brickId, row, col, disabled]);
         }
     }
 
     const dispatch = useDispatch()
-    const hasWallState = useSelector(state => !!state.wall[brickData[0][0]]);
+    const hasWallState = useSelector(state => !!selectBrick(state, levelId, brickData[0][0]));
 
     useEffect(() => {
         if (!hasWallState) {
-            const initialStates = {};
-            for(const [brickId] of brickData)
-                initialStates[brickId] = createBrickState(batteryId, brickType);
-            dispatch(wallInit(initialStates));
+            const value = {};
+            for (const [brickId] of brickData)
+                value[brickId] = createBrickState(batteryId, brickType);
+            dispatch(setWall({ levelId, value }));
         }
     });
 
     const bricks = [];
     const shadows = [];
 
-    for(const [brickId, row, col, disabled] of brickData) {
+    for (const [brickId, row, col, disabled] of brickData) {
         bricks.push(
             <Brick
                 key={brickId}
-                id={brickId}
+                levelId={levelId}
+                brickId={brickId}
                 type={brickType}
                 row={row}
                 col={col}
@@ -64,7 +65,8 @@ function ClassicWall4x2({ id, batteryId, brickType, layout }) {
         shadows.push(
             <BrickShadow
                 key={brickId + "_s"}
-                id={brickId}
+                levelId={levelId}
+                brickId={brickId}
                 row={row}
                 col={col}
                 height={2}

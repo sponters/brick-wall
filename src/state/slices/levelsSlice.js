@@ -36,14 +36,14 @@ export const levelsSlice = createSlice({
     initialState,
     reducers: {
         recharge: (state, action) => {
-            const { levelId, batteryId} = action.payload;
+            const { levelId, batteryId } = action.payload;
             const battery = state[levelId].objects[batteryId];
             battery.charge += battery.chargeSpeed;
             if (battery.charge > battery.capacity)
                 battery.charge = battery.capacity;
         },
         discharge: (state, action) => {
-            const { levelId, batteryId, charge} = action.payload;
+            const { levelId, batteryId, charge } = action.payload;
             const battery = state[levelId].objects[batteryId];
             battery.charge -= charge;
             if (battery.charge <= 0)
@@ -71,14 +71,18 @@ export const levelsSlice = createSlice({
                     lightState.reached100Heat = true;
             }
         },
-        set: (state, action) => commonSet(state, action.payload),
+        setLevels: (state, action) => { commonSet(state, action.payload) },
+        setWall: (state, action) => {
+            const { levelId, value } = action.payload;
+            commonSet(state, { [levelId]: { bricks: value } });
+        },
         setBrick: (state, action) => {
             const { levelId, brickId, value } = action.payload;
-            commonSet(state[levelId].bricks[brickId], value);
+            commonSet(state, { [levelId]: { bricks: { [brickId]: value } } });
         },
         setObj: (state, action) => {
             const { levelId, objId, value } = action.payload;
-            commonSet(state[levelId].objects[objId], value);
+            commonSet(state, { [levelId]: { objects: { [objId]: value } } });
         },
         addObj: (state, action) => {
             const { levelId, objId, value } = action.payload;
@@ -94,7 +98,7 @@ export const selectDef = (state, defId) => state.levels.defs[defId];
 export const selectBrick = (state, levelId, brickId) => state.levels[levelId].bricks[brickId];
 export const selectObj = (state, levelId, objId) => state.levels[levelId].objects[objId];
 
-export const { recharge, discharge, light, set, setBrick, setObj, addObj, load } = levelsSlice.actions;
+export const { recharge, discharge, light, setLevels, setWall, setBrick, setObj, addObj, load } = levelsSlice.actions;
 
 
 export default levelsSlice.reducer;

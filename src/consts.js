@@ -13,7 +13,7 @@ export const ChargeUpgradeStatus = {
     charging: 2
 };
 
-export const EletronicTypes = {
+export const ObjectTypes = {
     power: "power",
     battery: "battery",
     controller: "controller",

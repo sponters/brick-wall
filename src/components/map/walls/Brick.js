@@ -3,29 +3,28 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux'
 import { hit } from 'engine/brick'
 import * as images from 'img'
+import { selectBrick } from 'state/slices/levelsSlice';
+import WallObject from '../WallObject';
 
-function Brick({ id, type, row, col, height, width, disabled = false }) {
+function Brick({ levelId, brickId, type, disabled = false, ...props }) {
   
-  // Prepare render
-  const hasState = useSelector(state => !!state.wall[id]);
-  const health = useSelector(state => state.wall[id]?.health);
-  const maxHealth = useSelector(state => state.wall[id]?.maxHealth);
-  const display = health === 0 ? 'none' : 'inline';
-
+  const brickInfo = useSelector(state => selectBrick(state, levelId, brickId)?.info);
   const [hits, setHits] = useState([]);
 
-  const cracked1 = ((health / maxHealth) < 0.67) ? ((col * row * 31) % 3 + 1) : 0;
-  const cracked2 = ((health / maxHealth) < 0.34) ? ((col * row * 31 + 1) % 3 + 1) : 0;
+  // Discard render when without state
+  if (!brickInfo)
+    return null;
 
+  const display = brickInfo.health === 0 ? 'none' : 'inline';
+
+  const crackValue = brickInfo.health / brickInfo.maxHealth;
+  const cracked1 = (crackValue < 0.67) ? brickInfo.cracked1 : 0;
+  const cracked2 = (crackValue < 0.34) ? brickInfo.cracked2 : 0;
   const cracked1Img = `cracked${cracked1}`;
   const cracked2Img = `cracked${cracked2}`;
 
-  // Discard render when without state
-  if (!hasState)
-    return null;
-
   const onMouseDown = () => {
-    const tookDamage = hit(id);
+    const tookDamage = hit(levelId, brickId);
 
     if (tookDamage) {
       setHits([...hits, Math.floor(Math.random() * 0)]);
@@ -36,13 +35,8 @@ function Brick({ id, type, row, col, height, width, disabled = false }) {
     }
   };
 
-  const placementStyle = {
-    gridRow: `${row} / ${row + height}`,
-    gridColumn: `${col} / ${col + width}`,
-  }
-
   return (
-    <div className='brick-wrapper' style={placementStyle} dir="ltr">
+    <WallObject {...props} className='brick-wrapper' dir="ltr">
       <div
         className="brick"
         onMouseDown={!disabled ? onMouseDown : undefined}
@@ -78,7 +72,7 @@ function Brick({ id, type, row, col, height, width, disabled = false }) {
           style={{ transform: `translate(-50%, -50%) rotate(${value}deg)` }}
         />
       })}
-    </div>
+    </WallObject>
   );
 }
 

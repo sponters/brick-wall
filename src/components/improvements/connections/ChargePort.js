@@ -1,25 +1,29 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import ChargeUpgrade from "../upgrades/ChargeUpgrade";
 import { createSelector } from "@reduxjs/toolkit";
 import { useTranslation } from "react-i18next";
+import { selectAllItems } from "state/slices/inventorySlice";
+import { selectObj } from "state/slices/levelsSlice";
 
-function ChargePort({ port, id }) {
-    const { t: tMeta } = useTranslation(null, { keyPrefix: 'upgrades.meta.powerOutlet' });
-    const selectChargeItems = createSelector(
-        [state => state.items.ids],
-        (ids) => Object.keys(ids)
-            .filter(id =>
-                ids[id].ports?.[port] &&
-                ids[id].found &&
-                !ids[id].charged
+
+function ChargePort({ levelId, objId, port }) {
+    const { t: tMeta } = useTranslation(null, { keyPrefix: 'improvements.meta.powerOutlet' });
+
+    const selectChargeableItems = useMemo(() => createSelector(
+        [selectAllItems],
+        (items) => Object.keys(items)
+            .filter(itemId =>
+                items[itemId].info.ports?.[port] &&
+                items[itemId].info.found &&
+                !items[itemId].info.charged
             )
-            .map(id => [id, ...ids[id].ports[port]])
-    );
+            .map(itemId => [itemId, ...items[itemId].ports[port]])
+    ), [port]);
 
-    const upgrades = useSelector(selectChargeItems);
-    const batteryId = useSelector(state => state.eletronics[id]?.battery);
-    const batteryHasCharge = useSelector(state => batteryId && state.eletronics[batteryId].charge > 0);
+    const upgrades = useSelector(selectChargeableItems);
+    const batteryId = useSelector(state => selectObj(state, levelId, objId)).batteryId;
+    const batteryHasCharge = useSelector(state => batteryId && selectObj(state, levelId, batteryId).charge > 0);
 
     if (batteryId === undefined)
         return null;
@@ -50,6 +54,7 @@ function ChargePort({ port, id }) {
                     key={u[3]}
                     upgradeId={u[3]}
                     itemId={u[0]}
+                    levelId={levelId}
                     batteryId={batteryId}
                     output={u[1]}
                     input={u[2]}

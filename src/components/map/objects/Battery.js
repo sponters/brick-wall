@@ -1,45 +1,40 @@
 import React from "react";
-import { useCallback, useState } from "react";
-import { recharge } from "state/slices/eletronicsSlice";
+import { useCallback, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import useTick from "hooks/useTick";
+import useInitLevelObjState from "hooks/useInitLevelObjState";
+import { ObjectTypes } from "consts";
 import { createBattery } from "engine/eletronics";
-import useInitState from "hooks/useInitLevelState";
 
 import { LevelContext } from '../Level';
-import { useContext } from 'react';
-import { connect, disconnect } from "state/slices/connectionSlice";
-import { EletronicTypes } from "consts";
+import WallObject from "../WallObject";
+import { recharge, selectObj } from "state/slices/levelsSlice";
+import { connect, disconnect, selectConnected } from "state/slices/improvementsSlice";
 
-function Battery({ id, row, col, height, width, global=false }) {
+function Battery({ objId, front = false, back = false, ...props }) {
+    const { levelId, front: levelFront } = useContext(LevelContext);
+
     // Create state if not in the store (initialization)
-    const hasState = useInitState("eletronics", id, () => createBattery(id));
-
-    const front = useContext(LevelContext);
+    const hasState = useInitLevelObjState(levelId, objId, () => createBattery(levelId, objId));
 
     const [charging, setCharging] = useState(false);
     const dispatch = useDispatch();
 
     useTick(0, useCallback(() => {
         if (charging) {
-            dispatch(recharge(id));
+            dispatch(recharge({ levelId, batteryId: objId }));
         }
-    }, [charging, dispatch, id]));
+    }, [charging, dispatch, levelId, objId]));
 
-    const charge = useSelector(state => state.eletronics[id]?.charge);
-
-    const connected = useSelector(state => state.connection.id === id && state.connection.port === "◘");
+    const charge = useSelector(state => selectObj(state, levelId, objId)?.charge);
+    const connected = useSelector(state => selectConnected(state, objId, "◘"));
 
     if (!hasState)
         return null;
 
     const displayCharge = charge >= 9999 ? 9999 : charge;
     const formattedCharge = `0000${displayCharge}`.slice(-4);
-
-    const placementStyle = {
-        gridRow: `${row} / ${row + height}`,
-        gridColumn: `${col} / ${col + width}`,
-    }
 
     const ledColor = (
         charging ? '#f0df4f' :
@@ -50,7 +45,8 @@ function Battery({ id, row, col, height, width, global=false }) {
         color: ledColor,
         textShadow: `0 0 4px ${ledColor}`
     };
-    if (global && front)
+
+    if (front && levelFront || back && !levelFront)
         ledStyle.zIndex = 11;
 
     const handleChargeOn = () => { setCharging(true); }
@@ -58,15 +54,15 @@ function Battery({ id, row, col, height, width, global=false }) {
 
     const handlePortClick = () => {
         if (connected)
-            dispatch(disconnect(id));
+            dispatch(disconnect(objId));
         else
-            dispatch(connect({ id, port: "◘", type: EletronicTypes.battery }));
+            dispatch(connect({ levelId, objId, port: "◘", type: ObjectTypes.battery }));
     }
 
     return (
-        <div
+        <WallObject
+            {...props}
             className="eletronic-metal-frame"
-            style={placementStyle}
             onMouseDown={handleChargeOn}
             onMouseLeave={handleChargeOff}
             onMouseUp={handleChargeOff}
@@ -76,7 +72,7 @@ function Battery({ id, row, col, height, width, global=false }) {
                 {formattedCharge}
             </div>
             <div className="battery-plug" onClick={handlePortClick}>◘</div>
-        </div>
+        </WallObject>
     )
 }
 

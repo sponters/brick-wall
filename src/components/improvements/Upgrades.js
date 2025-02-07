@@ -1,18 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Upgrade from './upgrades/Upgrade'
+import InstantUpgrade from './upgrades/InstantUpgrade'
 import { useTranslation } from 'react-i18next';
+import { selectTabUnlocked } from 'state/slices/improvementsSlice';
 
 function Upgrades() {
     const { t } = useTranslation();
-    const unlocked = useSelector(state => {
-        return state.upgrades.tabUnlocked
-    });
+    const unlocked = useSelector(selectTabUnlocked);
 
     return (
         <div className="upgrades-container">
             {unlocked && <div className="header">{t('upgrades.meta.upgrades')}</div>}
-            <Upgrade id="hammerTechnique" />
+            <InstantUpgrade levelId="global" ownerId="player" upgradeId="hammerTechnique" />
         </div>
     )
 }

@@ -16,7 +16,8 @@ export const initialState = {
     connections: {
         port: {
             port: undefined,
-            id: undefined,
+            levelId: undefined,
+            objId: undefined,
             type: undefined,
         },
         controller: false,
@@ -35,13 +36,15 @@ export const improvementsSlice = createSlice({
         },
         connect: (state, action) => {
             state.connections.port.port = action.payload.port;
-            state.connections.port.id = action.payload.id;
+            state.connections.port.levelId = action.payload.levelId;
+            state.connections.port.objId = action.payload.objId;
             state.connections.port.type = action.payload.type;
         },
         disconnect: (state, action) => {
-            if (state.connections.port.id === action.payload) {
+            if (state.connections.port.objId === action.payload) {
                 state.connections.port.port = undefined;
-                state.connections.port.id = undefined;
+                state.connections.port.levelId = undefined;
+                state.connections.port.objId = undefined;
                 state.connections.port.type = undefined;
             }
         },
@@ -67,6 +70,7 @@ export const selectTabUnlocked = (state) => state.improvements.tabUnlocked;
 export const selectConnectionPort = (state) => state.improvements.connections.port;
 export const selectConnectionController = (state) => state.improvements.connections.controller;
 export const selectUpgrade = (state, levelId, ownerId, upgradeId) => state.improvements[levelId][ownerId][upgradeId];
+export const selectConnected = (state, objId, port) => state.improvements.connections.port === port && state.improvements.connections.objId === objId;
 
 export const { unlock, connect, disconnect, switchController, addUpgrade, setUpgrade, load } = improvementsSlice.actions;
 

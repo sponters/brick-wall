@@ -4,6 +4,7 @@ import ChargePort from "./connections/ChargePort";
 import ControllerInterface from "./connections/ControllerInterface";
 import ControlBatteryPort from "./connections/ControlBatteryPort";
 import { EletronicTypes } from "consts";
+import { selectConnectionController, selectConnectionPort } from "state/slices/improvementsSlice";
 
 const ConnectionComponents = {
     [EletronicTypes.power]: ChargePort,
@@ -11,8 +12,8 @@ const ConnectionComponents = {
 }
 
 function Connections() {
-    const { port, id, type } = useSelector(state => state.connection.port);
-    const controller = useSelector(state => state.connection.controller);
+    const { levelId, objId, port, type } = useSelector(selectConnectionPort);
+    const controller = useSelector(selectConnectionController);
 
     const connections = [];
 
@@ -20,7 +21,7 @@ function Connections() {
         connections.push(<ControllerInterface key="controller-interface" />);
     if (type !== undefined) {
         const Component = ConnectionComponents[type];
-        connections.push(<Component key="port-interface" port={port} id={id} />);
+        connections.push(<Component key="port-interface" levelId={levelId} objId={objId} port={port} />);
     }
 
     if (connections.length <= 0)

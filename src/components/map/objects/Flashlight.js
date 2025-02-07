@@ -1,17 +1,17 @@
 import React from 'react';
-import CollectableObject from '../CollectableObject';
-import { default as FlashlightVisual, size }from '../../visuals/Flashlight'
+import CollectableItem from '../CollectableItem';
+import { default as FlashlightVisual, size } from '../../visuals/Flashlight'
 
 function Flashlight(props) {
     return (
-        <CollectableObject
-            id="flashlight"
+        <CollectableItem
+            itemId="flashlight"
             width={size.width}
             height={size.height}
             {...props}
         >
             <FlashlightVisual />
-        </CollectableObject>
+        </CollectableItem>
     )
 }
 

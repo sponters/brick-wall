@@ -2,13 +2,14 @@ import React from 'react';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux'
+import { selectRes } from 'state/slices/inventorySlice';
 
-function Resource({ id }) {
-    const { t } = useTranslation(null, { keyPrefix: `items.${id}` });
+function Resource({ resId }) {
+    const { t } = useTranslation(null, { keyPrefix: `items.${resId}` });
 
     const tooltip = useRef(null);
 
-    const cur = useSelector(state => state.res[id].cur);
+    const cur = useSelector(state => selectRes(state, resId).cur);
 
     const handleMouseEnter = () => {
         tooltip.current.style.visibility = "visible";
@@ -34,8 +35,8 @@ function Resource({ id }) {
 }
 
 function Resources() {
-    const brick = useSelector(state => state.res.brick.unlocked);
-    const hash = useSelector(state => state.res.hash.unlocked);
+    const brick = useSelector(state => selectRes(state, "brick").unlocked);
+    const hash = useSelector(state => selectRes(state, "hash").unlocked);
 
     const unlocked = brick || hash;
 
@@ -45,8 +46,8 @@ function Resources() {
     return (
         <div className="inventory-container">
             <div className="header">Resources</div>
-            {brick && <Resource id="brick" />}
-            {hash && <Resource id="hash" />}
+            {brick && <Resource resId="brick" />}
+            {hash && <Resource resId="hash" />}
         </div>
     );
 }

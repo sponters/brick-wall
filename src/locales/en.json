@@ -3,7 +3,7 @@
         "menu": {
             "reset": "Reset"
         },
-        "upgrades": {
+        "improvements": {
             "meta": {
                 "upgrades": "Upgrades",
                 "level": "Level",
@@ -19,30 +19,34 @@
                     "title": "Controller"
                 },
                 "controlBattery": {
-                    "title": "Battery Controls"
+                    "title": "Battery Controls",
+                    "noItem": "No item to connect",
+                    "noCharge": "Control item has no charge"
                 }
             },
-            "hammerTechnique": {
-                "title": "Hammer Technique",
-                "description": "With enough spare bricks, one can train their aim and precision.",
-                "effect": "+1 damage to hammer"
-            },
-            "slowerBricks": {
-                "title": "Slower Bricks",
-                "description": "Some wires in the right place will cause a slower brick respawn.",
-                "effect": ""
-            },
-            "hashGenerator": {
-                "title": "Generate Hash"
-            },
-            "chargeFlashlight": {
-                "title": "Charge flashlight"
-            },
-            "chargeController": {
-                "title": "Charge controller"
+            "upgrades": {
+                "hammerTechnique": {
+                    "title": "Hammer Technique",
+                    "description": "With enough spare bricks, one can train their aim and precision.",
+                    "effect": "+1 damage to hammer"
+                },
+                "slowerBricks": {
+                    "title": "Slower Bricks",
+                    "description": "Some wires in the right place will cause a slower brick respawn.",
+                    "effect": ""
+                },
+                "hashGenerator": {
+                    "title": "Generate Hash"
+                },
+                "chargeFlashlight": {
+                    "title": "Charge flashlight"
+                },
+                "chargeController": {
+                    "title": "Charge controller"
+                }
             }
         },
-        "items": {
+        "inventory": {
             "meta": {
                 "resources": "Resources",
                 "collectables": "Collectables",
@@ -50,30 +54,34 @@
                 "ports": "Ports",
                 "action": "Action"
             },
-           "brick": {
-                "name": "bricks",
-                "description": "Bricks of a variety of types. They come of the wall whenever it gets broken, but this Machine phases them back after some time. The phasing only occurs if there is power. That's strange."
-            },
-            "hash": {
-                "name": "hashes",
-                "description": "Pre-stored hashing power to spend in intensive computing operations. There is limited space inside the controller, but this storage can be expanded."
-            },
-            "controller": {
-                "name": "Controller",
-                "description": "An equipment that connects and controls parts of the environment",
-                "ports": {
-                    "●": "Charging port",
-                    "◘": "Control port"
+            "res": {
+                "brick": {
+                    "name": "bricks",
+                    "description": "Bricks of a variety of types. They come of the wall whenever it gets broken, but this Machine phases them back after some time. The phasing only occurs if there is power. That's strange."
                 },
-                "action": "Click to open/close"
+                "hash": {
+                    "name": "hashes",
+                    "description": "Pre-stored hashing power to spend in intensive computing operations. There is limited space inside the controller, but this storage can be expanded."
+                }
             },
-            "flashlight": {
-                "name": "Flashlight",
-                "description": "A rechargable flashlight for exploring in the dark",
-                "ports": {
-                    "●": "Charging port"
+            "items": {
+                "controller": {
+                    "name": "Controller",
+                    "description": "An equipment that connects and controls parts of the environment",
+                    "ports": {
+                        "●": "Charging port",
+                        "◘": "Control port"
+                    },
+                    "action": "Click to open/close"
                 },
-                "action": ""
+                "flashlight": {
+                    "name": "Flashlight",
+                    "description": "A rechargable flashlight for exploring in the dark",
+                    "ports": {
+                        "●": "Charging port"
+                    },
+                    "action": ""
+                }
             }
         }
     }

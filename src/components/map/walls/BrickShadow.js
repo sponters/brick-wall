@@ -1,20 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
+import WallObject from '../WallObject';
+import { selectBrick } from 'state/slices/levelsSlice';
 
-function BrickShadow({ id, row, col, height, width }) {
+function BrickShadow({ levelId, brickId, ...props }) {
   // Prepare render
-  const health = useSelector(state => state.wall[id]?.health);
+  const health = useSelector(state => selectBrick(state, levelId, brickId)?.info?.health);
 
   // Discard render when without state
   if (!health || (health <= 0))
     return null;
 
-  const placementStyle = {
-    gridRow: `${row} / ${row + height}`,
-    gridColumn: `${col} / ${col + width}`,
-  }
-
-  return <div className='brick-shadow' style={placementStyle} dir="ltr" />;
+  return <WallObject {...props} className='brick-shadow' dir="ltr" />;
 }
 
 export default BrickShadow;

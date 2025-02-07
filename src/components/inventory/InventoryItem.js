@@ -2,23 +2,24 @@ import React from "react";
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { selectItemInfo } from "state/slices/inventorySlice";
 
-function CollectableObject({ itemId, height, width, collectablesRef, onClick, children }) {
-    const collectableRef = useRef(null);
+function InventoryItem({ itemId, height, width, containerRef, children, ...props }) {
+    const itemRef = useRef(null);
     const tooltipRef = useRef(null);
 
     const { t } = useTranslation(null, { keyPrefix: `items.${itemId}` });
     const { t: tMeta } = useTranslation(null, { keyPrefix: `items.meta` });
 
-    const ports = useSelector(state => state.items.ids[itemId].ports);
+    const ports = useSelector(state => selectItemInfo(state, itemId).ports);
 
     useEffect(() => {
-        const csRect = collectablesRef.current.getBoundingClientRect();
-        const cRect = collectableRef.current.getBoundingClientRect();
+        const csRect = containerRef.current.getBoundingClientRect();
+        const cRect = itemRef.current.getBoundingClientRect();
         const left = Math.round(cRect.left - csRect.left);
         tooltipRef.current.style.left = `-${left - 5}px`;
 
-    }, [collectablesRef, collectableRef, tooltipRef]);
+    }, [containerRef, itemRef, tooltipRef]);
 
     const handleMouseEnter = () => {
         tooltipRef.current.style.visibility = "visible";
@@ -29,11 +30,11 @@ function CollectableObject({ itemId, height, width, collectablesRef, onClick, ch
 
     return (
         <div
+            {...props}
             className="collectable"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            onClick={onClick}
-            ref={collectableRef}
+            ref={itemRef}
             style={{
                 width: `calc(${width} * var(--wall-cell-width)`,
                 height: `calc(${height} * var(--wall-cell-height)`,
@@ -59,4 +60,4 @@ function CollectableObject({ itemId, height, width, collectablesRef, onClick, ch
     )
 }
 
-export default CollectableObject;
+export default InventoryItem;

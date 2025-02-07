@@ -10,7 +10,7 @@ import 'css/light.css';
 import 'css/inventory.css';
 
 import Resources from './inventory/Resources';
-import Collectables from './inventory/Collectables';
+import Items from './inventory/Items';
 import Upgrades from './upgrades/Upgrades';
 import Connections from './upgrades/Connections';
 import Level1 from './map/levels/Level1'
@@ -47,7 +47,7 @@ function Game() {
         </div>,
         <div key="suffix" id="left" className="unselectable">
             <Resources />
-            <Collectables />
+            <Items />
         </div>,
         <div key="right" id="right" className="unselectable">
             <Upgrades />

@@ -1,19 +1,19 @@
 import React from 'react';
-import CollectableObject from '../CollectableObject';
+import InventoryItem from '../InventoryItem';
 import { default as ControllerVisual, size } from '../../visuals/Controller'
 import { useDispatch, useSelector } from 'react-redux';
-import { controller } from 'state/slices/connectionSlice';
+import { selectConnectionController, switchController } from 'state/slices/improvementsSlice';
 
 function Controller(props) {
-    const controllerStatus = useSelector(state => state.connection.controller);
+    const controllerStatus = useSelector(selectConnectionController);
     const dispatch = useDispatch();
 
     const handleOnClick = () => {
-        dispatch(controller(!controllerStatus));
+        dispatch(switchController(!controllerStatus));
     }
 
     return (
-        <CollectableObject
+        <InventoryItem
             itemId="controller"
             height={size.height}
             width={size.width}
@@ -21,7 +21,7 @@ function Controller(props) {
             {...props}
         >
             <ControllerVisual />
-        </CollectableObject>
+        </InventoryItem>
     )
 }
 

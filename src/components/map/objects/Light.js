@@ -1,17 +1,20 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useRef, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useTick from "hooks/useTick";
+
 import store from "state/store";
-import { discharge, light } from "state/slices/eletronicsSlice";
-import useInitState from "hooks/useInitLevelState";
-import { createLight } from "engine/eletronics";
-import { useEffect, useRef } from "react";
+import useTick from "hooks/useTick";
+import useInitLevelObjState from "hooks/useInitLevelObjState";
 import { useMouseFollow } from "hooks/useMouseFollow";
+import { createLight } from "engine/eletronics";
+
+import { LevelContext } from '../Level';
+import { discharge, light, selectObj } from "state/slices/levelsSlice";
+import { selectItemTick, selectItem } from "state/slices/inventorySlice";
+
 
 function LightFromFlashlight() {
     const ref = useRef();
 
-    console.log("Flash!");
     useMouseFollow("center", (x, y, inside) => {
         if (inside) {
             ref.current.style.left = `calc(50% + ${x}px)`;
@@ -30,60 +33,57 @@ function LightFromFlashlight() {
     )
 }
 
-function Light({ id, batteryId, level, global = false }) {
+function Light({ objId, batteryId, level, global = false }) {
+    const { levelId } = useContext(LevelContext);
+
     // Create state if not in the store (initialization)
-    const hasState = useInitState("eletronics", id, () => createLight(id, batteryId));
+    const hasState = useInitLevelObjState(levelId, objId, () => createLight(levelId, objId, batteryId));
 
     const dispatch = useDispatch();
 
     useTick(1, useCallback(() => {
-        if (!hasState)
+        if (!hasState || !batteryId)
             return;
 
-        const eletronics = store.getState().eletronics;
-        const lightState = eletronics[id];
+        const battery = selectObj(store.getState(), levelId, batteryId);
 
-        if (!lightState.battery)
-            return;
-
-        if (eletronics[lightState.battery].charge > 0) {
-            dispatch(discharge({ id: lightState.battery, charge: 1 }))
-            dispatch(light({ id, status: true }))
+        if (battery.charge > 0) {
+            dispatch(discharge({ levelId, batteryId, charge: 1 }));
+            dispatch(light({ levelId, lightId: objId, status: true }));
         } else {
-            dispatch(light({ id, status: false }))
+            dispatch(light({ levelId, lightId: objId, status: false }));
         }
-    }, [id, hasState, dispatch]));
+    }, [levelId, objId, batteryId, hasState, dispatch]));
 
-    const status = useSelector(state => state.eletronics[id]?.status);
-    const heat = useSelector(state => state.eletronics[id]?.heat);
-    const reached100Heat = useSelector(state => state.eletronics[id]?.reached100Heat);
+    const lightStatus = useSelector(state => selectObj(state, levelId, objId));
+
     const flashlight = useSelector(state =>
-        state.items.ids.flashlight?.found && state.items.charges.flashlight?.charge >= 20
+        selectItemInfo(state, "flashlight").found && selectItemTick(state, "flashlight").charge >= 20
     );
 
     useEffect(() => {
-        level.current.style.visibility = (status || flashlight) ? 'visible' : 'hidden';
-    }, [level, status, flashlight]);
+        level.current.style.visibility = (lightStatus.status || flashlight) ? 'visible' : 'hidden';
+    }, [level, lightStatus.status, flashlight]);
 
     if (!hasState)
         return null;
 
-    const opacity = heat > 100 ? 0 : (1 - heat / 100);
+    const opacity = lightStatus.heat > 100 ? 0 : (1 - lightStatus.heat / 100);
 
     // No lights
-    if (!status && !flashlight) {
+    if (!lightStatus.status && !flashlight) {
         return (
             <div
                 className="light-common light-darkness"
                 style={{
-                    position: global && !reached100Heat ? "fixed" : "absolute",
+                    position: global && !lightStatus.reached100Heat ? "fixed" : "absolute",
                 }}
             />
         )
     }
 
     // Using flashlight
-    if (!status && flashlight) {
+    if (!lightStatus.status && flashlight) {
         return <LightFromFlashlight />
     }
 
@@ -93,12 +93,11 @@ function Light({ id, batteryId, level, global = false }) {
             <div
                 className="light-common light-heating"
                 style={{
-                    position: global && !reached100Heat ? "fixed" : "absolute",
+                    position: global && !lightStatus.reached100Heat ? "fixed" : "absolute",
                     opacity
                 }}
             />
         )
-
     }
 }
 

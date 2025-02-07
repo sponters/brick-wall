@@ -1,19 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import upgrades from "engine/upgrades";
-import { unlock } from "state/slices/improvementsSlice";
+import { selectUpgrade, unlock } from "state/slices/improvementsSlice";
 
-function useImprovementCheckUnlock(owner, id) {
+function useImprovementCheckUnlock(levelId, ownerId, upgradeId) {
     const unlockedStatus = useSelector(state => {
-        if (state.improvements[owner][id].unlocked)
+        if (selectUpgrade(state, levelId, ownerId, upgradeId).unlocked)
             return 2;
-        return upgrades[id].checkUnlock(state, owner) ? 1 : 0;
+        return upgrades[upgradeId].checkUnlock(state, levelId, ownerId) ? 1 : 0;
     });
     const dispatch = useDispatch();
     useEffect(() => {
         if (unlockedStatus === 1) 
-            dispatch(unlock({ owner, id }));
-    }, [unlockedStatus, id, dispatch]);
+            dispatch(unlock({ levelId, ownerId, upgradeId }));
+    }, [unlockedStatus, levelId, ownerId, upgradeId, dispatch]);
 
     return unlockedStatus > 0;
 }
