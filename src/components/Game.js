@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import 'css/game.css';
@@ -15,38 +15,55 @@ import Upgrades from './upgrades/Upgrades';
 import Connections from './upgrades/Connections';
 import Level1 from './map/levels/Level1'
 
-import { resetState } from '../engine/save';
+import { loadState, resetState } from '../engine/save';
 import { useState } from 'react';
+import { GameStatus } from 'consts';
 
 
 function Game() {
     const { t } = useTranslation();
 
-    const [suffix, setSuffix] = useState(0);
+    const [status, setStatus] = useState(GameStatus.loading);
 
-    const handleResetClick = () => {
-        resetState();
-        setSuffix(suffix + 1);
-    }
+    useEffect(() => {
+        if (status === GameStatus.loading) {
+            loadState();
+            setStatus(GameStatus.running);
+            return;
+        }
+        if (status === GameStatus.resetting) {
+            resetState();
+            setStatus(GameStatus.running);
+            return;
+        }
+    }, [status]);
+
+    if (status !== GameStatus.running)
+        return null;
 
     return ([
-        <div key={`header_${suffix}`} id="header" className="unselectable">
+        <div key="header" id="header" className="unselectable">
             <h1>Brick Wall</h1>
         </div>,
-        <div key={`left_${suffix}`} id="left" className="unselectable">
+        <div key="suffix" id="left" className="unselectable">
             <Resources />
             <Collectables />
         </div>,
-        <div key={`right_${suffix}`} id="right" className="unselectable">
+        <div key="right" id="right" className="unselectable">
             <Upgrades />
             <Connections />
         </div>,
-        <div key={`center_${suffix}`} id="center" className="unselectable">
+        <div key="center" id="center" className="unselectable">
             <Level1 />
         </div>,
-        <div key={`footer_${suffix}`} id="footer">
+        <div key="footer" id="footer">
             <div id="footer-menu">
-                <span className="unselectable" onClick={handleResetClick} id="reset">{t("menu.reset")}</span>
+                <span
+                    className="unselectable"
+                    onClick={() => setStatus(GameStatus.resetting)}
+                >
+                    {t("menu.reset")}
+                </span>
             </div>
         </div>
     ]);
