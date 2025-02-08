@@ -15,6 +15,7 @@ function Level1({ front = true }) {
 
     return (
         <Level
+            levelId="l1"
             levelRef={levelRef}
             front={front}
             light={<Light objId="l1_l1" batteryId="l1_b1" level={levelRef} global />}

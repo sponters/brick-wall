@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { createPowerOutlet } from "engine/eletronics";
 import useInitLevelObjState from "hooks/useInitLevelObjState";
-import { EletronicTypes } from 'consts';
+import { ObjectTypes } from 'consts';
 import { LevelContext } from '../Level';
 import { connect, disconnect, selectConnected } from 'state/slices/improvementsSlice';
 import WallObject from '../WallObject';
@@ -24,7 +24,7 @@ function PowerOutlet({ objId, batteryId, port, ...props}) {
         if (connected)
             dispatch(disconnect(objId));
         else
-            dispatch(connect({ levelId, objId, port, type: EletronicTypes.power }));
+            dispatch(connect({ levelId, objId, port, type: ObjectTypes.power }));
     }
 
     if (!hasState)

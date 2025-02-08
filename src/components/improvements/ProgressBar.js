@@ -2,8 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
 
-function ProgressBarUpgrade({ id, tooltip=false, onClick, progress }) {
-    const { t } = useTranslation(null, { keyPrefix: `upgrades.${id}` });
+function ProgressBar({ upgradeId, tooltip=false, onClick, progress }) {
+    const { t } = useTranslation(null, { keyPrefix: `improvements.upgrades.${upgradeId}` });
     const tooltipRef = useRef(null);
 
     const handleMouseEnter = () => {
@@ -39,4 +39,4 @@ function ProgressBarUpgrade({ id, tooltip=false, onClick, progress }) {
     )
 }
 
-export default ProgressBarUpgrade;
+export default ProgressBar;

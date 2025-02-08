@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { selectRes } from 'state/slices/inventorySlice';
 
 function Resource({ resId }) {
-    const { t } = useTranslation(null, { keyPrefix: `items.${resId}` });
+    const { t } = useTranslation(null, { keyPrefix: `inventory.res.${resId}` });
 
     const tooltip = useRef(null);
 

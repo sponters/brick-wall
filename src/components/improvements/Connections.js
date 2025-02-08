@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import ChargePort from "./connections/ChargePort";
 import ControllerInterface from "./connections/ControllerInterface";
 import ControlBatteryPort from "./connections/ControlBatteryPort";
-import { EletronicTypes } from "consts";
+import { ObjectTypes } from "consts";
 import { selectConnectionController, selectConnectionPort } from "state/slices/improvementsSlice";
 
 const ConnectionComponents = {
-    [EletronicTypes.power]: ChargePort,
-    [EletronicTypes.battery]: ControlBatteryPort,
+    [ObjectTypes.power]: ChargePort,
+    [ObjectTypes.battery]: ControlBatteryPort,
 }
 
 function Connections() {

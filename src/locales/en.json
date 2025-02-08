@@ -38,6 +38,9 @@
                 "hashGenerator": {
                     "title": "Generate Hash"
                 },
+                "batteryChargeFaster": {
+                    "title": "Charge Faster"
+                },
                 "chargeFlashlight": {
                     "title": "Charge flashlight"
                 },

@@ -46,7 +46,7 @@ function Battery({ objId, front = false, back = false, ...props }) {
         textShadow: `0 0 4px ${ledColor}`
     };
 
-    if (front && levelFront || back && !levelFront)
+    if ((front && levelFront) || (back && !levelFront))
         ledStyle.zIndex = 11;
 
     const handleChargeOn = () => { setCharging(true); }

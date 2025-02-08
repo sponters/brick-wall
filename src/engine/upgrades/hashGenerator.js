@@ -3,7 +3,7 @@ import { ChargeUpgradeStatus } from "consts";
 import { discharge, gain, selectItemTick } from "state/slices/inventorySlice";
 
 const def = {
-    id: 'hashGenerator',
+    upgradeId: 'hashGenerator',
 
     initialState: {
         info: {
@@ -19,7 +19,9 @@ const def = {
         charge: 0,
     },
     
-    selectLevel: state => state.res.hash.cur,
+    checkUnlock: () => true,
+
+    selectCapacityLevel: state => state.inventory.res.hash.cur,
 
     tickSpend: () => {
         const state = store.getState();

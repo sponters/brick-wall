@@ -65,34 +65,36 @@ addTickCallback(3, () => {
             if ((brick.tick.brokenTicks === 0) && (brick.tick.brokenCharge === 0))
                 continue;
 
-            if (selectObj(state, levelId, brick.batteryId).charge <= 0)
+            if (selectObj(state, levelId, brick.info.batteryId).charge <= 0)
                 continue;
 
             const newValues = {
-                brokenTicks: brick.tick.brokenTicks,
-                brokenCharge: brick.tick.brokenCharge,
+                tick: {
+                    brokenTicks: brick.tick.brokenTicks,
+                    brokenCharge: brick.tick.brokenCharge,
+                }
             };
 
-            if (newValues.brokenTicks > 0)
-                newValues.brokenTicks--;
+            if (newValues.tick.brokenTicks > 0)
+                newValues.tick.brokenTicks--;
 
-            if ((newValues.brokenTicks === 0) && (newValues.brokenCharge > 0)) {
-                const dischargeValue = Math.min(newValues.brokenCharge, selectObj(state, levelId, brick.batteryId).charge);
+            if ((newValues.tick.brokenTicks === 0) && (newValues.tick.brokenCharge > 0)) {
+                const dischargeValue = Math.min(newValues.tick.brokenCharge, selectObj(state, levelId, brick.info.batteryId).charge);
 
                 if (dischargeValue > 0) {
-                    newValues.brokenCharge -= dischargeValue;
-                    store.dispatch(discharge({ levelId, batteryId: brick.batteryId, charge: dischargeValue }));
+                    newValues.tick.brokenCharge -= dischargeValue;
+                    store.dispatch(discharge({ levelId, batteryId: brick.info.batteryId, charge: dischargeValue }));
                 }
             }
 
-            if ((newValues.brokenTicks === 0) && (newValues.brokenCharge === 0)) {
-                store.dispatch(expire(state.levels.defs[brick.type].expire));
-                newValues.health = state.levels.defs[brick.type].maxHealth;
+            if ((newValues.tick.brokenTicks === 0) && (newValues.tick.brokenCharge === 0)) {
+                store.dispatch(expire(state.levels.defs[brick.info.type].expire));
+                newValues.info = { health: state.levels.defs[brick.info.type].maxHealth };
             }
 
             if (!batchDispatch[levelId])
                 batchDispatch[levelId] = { bricks: {} };
-            batchDispatch[levelId].bricks[brickId].tick = newValues;
+            batchDispatch[levelId].bricks[brickId] = newValues;
         }
 
         if (Object.keys(batchDispatch).length > 0)

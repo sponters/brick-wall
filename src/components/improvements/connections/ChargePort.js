@@ -14,9 +14,9 @@ function ChargePort({ levelId, objId, port }) {
         [selectAllItems],
         (items) => Object.keys(items)
             .filter(itemId =>
-                items[itemId].info.ports?.[port] &&
-                items[itemId].info.found &&
-                !items[itemId].info.charged
+                items[itemId].ports?.[port] &&
+                items[itemId].found &&
+                !items[itemId].charged
             )
             .map(itemId => [itemId, ...items[itemId].ports[port]])
     ), [port]);

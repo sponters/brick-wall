@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import store from "state/store";
 import useTick from "hooks/useTick";
 import useInitLevelObjState from "hooks/useInitLevelObjState";
-import { useMouseFollow } from "hooks/useMouseFollow";
+import useMouseFollow from "hooks/useMouseFollow";
 import { createLight } from "engine/eletronics";
 
 import { LevelContext } from '../Level';
 import { discharge, light, selectObj } from "state/slices/levelsSlice";
-import { selectItemTick, selectItem } from "state/slices/inventorySlice";
+import { selectItemInfo, selectItemTick } from "state/slices/inventorySlice";
 
 
 function LightFromFlashlight() {
@@ -62,8 +62,9 @@ function Light({ objId, batteryId, level, global = false }) {
     );
 
     useEffect(() => {
-        level.current.style.visibility = (lightStatus.status || flashlight) ? 'visible' : 'hidden';
-    }, [level, lightStatus.status, flashlight]);
+        if (hasState)
+            level.current.style.visibility = (lightStatus.status || flashlight) ? 'visible' : 'hidden';
+    }, [level, lightStatus?.status, flashlight, hasState]);
 
     if (!hasState)
         return null;

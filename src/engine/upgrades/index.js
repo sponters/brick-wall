@@ -4,9 +4,9 @@ import batteryChargeFaster from './batteryChargeFaster'
 
 
 const upgrades = {
-    [hammerTechnique.id]: hammerTechnique,
-    [hashGenerator.id]: hashGenerator,
-    [batteryChargeFaster.id]: batteryChargeFaster,
+    [hammerTechnique.upgradeId]: hammerTechnique,
+    [hashGenerator.upgradeId]: hashGenerator,
+    [batteryChargeFaster.upgradeId]: batteryChargeFaster,
 };
 
 export default upgrades;

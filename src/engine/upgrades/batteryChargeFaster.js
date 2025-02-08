@@ -5,7 +5,7 @@ import { discharge, selectItemTick } from "state/slices/inventorySlice";
 import { addObj } from "state/slices/levelsSlice";
 
 const def = {
-    id: 'batteryChargeFaster',
+    upgradeId: 'batteryChargeFaster',
 
     initialState: {
         info: {
@@ -34,7 +34,7 @@ const def = {
 
     checkUnlock: () => true,
 
-    selectLevel: (state, levelId, ownerId) => selectUpgrade(state, levelId, ownerId, "batteryChargeFaster").level,
+    selectCapacityLevel: (state, levelId, ownerId) => selectUpgrade(state, levelId, ownerId, "batteryChargeFaster").info.level,
 
     tickSpend: () => {
         const state = store.getState();

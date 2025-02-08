@@ -1,18 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import upgrades from 'engine/upgrades'
 import { commonAdd, commonSet } from '../commonActions';
 
 export const initialState = {
     tabUnlocked: false,
-    global: {
-        player: {
-            hammerTechnique: structuredClone(upgrades.hammerTechnique.initialState),
-        },
-        controller: {
-            hashGenerator: structuredClone(upgrades.hashGenerator.initialState),
-        },
-    },
     connections: {
         port: {
             port: undefined,
@@ -29,8 +20,8 @@ export const improvementsSlice = createSlice({
     initialState,
     reducers: {
         unlock: (state, action) => {
-            const { levelId, ownerId, upgradeid } = action.payload;
-            state[levelId][ownerId][upgradeid].unlock = true;
+            const { levelId, ownerId, upgradeId } = action.payload;
+            state[levelId][ownerId][upgradeId].unlocked = true;
             if (!state.tabUnlocked)
                 state.tabUnlocked = true;
         },
@@ -58,7 +49,7 @@ export const improvementsSlice = createSlice({
         },
         setUpgrade: (state, action) => {
             const { levelId, ownerId, upgradeId, value } = action.payload;
-            commonSet(state[levelId][ownerId][upgradeId], value);
+            commonSet(state, { [levelId]: { [ownerId]: { [upgradeId]: value } } });
         },
         load: (state, action) => {
             return structuredClone(action.payload);
@@ -69,8 +60,9 @@ export const improvementsSlice = createSlice({
 export const selectTabUnlocked = (state) => state.improvements.tabUnlocked;
 export const selectConnectionPort = (state) => state.improvements.connections.port;
 export const selectConnectionController = (state) => state.improvements.connections.controller;
-export const selectUpgrade = (state, levelId, ownerId, upgradeId) => state.improvements[levelId][ownerId][upgradeId];
-export const selectConnected = (state, objId, port) => state.improvements.connections.port === port && state.improvements.connections.objId === objId;
+export const selectUpgrade = (state, levelId, ownerId, upgradeId) => state.improvements[levelId]?.[ownerId]?.[upgradeId];
+export const selectConnected = (state, objId, port) => 
+    state.improvements.connections.port.port === port && state.improvements.connections.port.objId === objId;
 
 export const { unlock, connect, disconnect, switchController, addUpgrade, setUpgrade, load } = improvementsSlice.actions;
 

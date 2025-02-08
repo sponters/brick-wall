@@ -8,8 +8,8 @@ function InventoryItem({ itemId, height, width, containerRef, children, ...props
     const itemRef = useRef(null);
     const tooltipRef = useRef(null);
 
-    const { t } = useTranslation(null, { keyPrefix: `items.${itemId}` });
-    const { t: tMeta } = useTranslation(null, { keyPrefix: `items.meta` });
+    const { t } = useTranslation(null, { keyPrefix: `inventory.items.${itemId}` });
+    const { t: tMeta } = useTranslation(null, { keyPrefix: `inventory.meta` });
 
     const ports = useSelector(state => selectItemInfo(state, itemId).ports);
 

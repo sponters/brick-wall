@@ -86,6 +86,7 @@ export const levelsSlice = createSlice({
         },
         addObj: (state, action) => {
             const { levelId, objId, value } = action.payload;
+            console.log(action.payload);
             commonAdd(state[levelId].objects[objId], value);
         },
         load: (state, action) => {
@@ -95,8 +96,8 @@ export const levelsSlice = createSlice({
 });
 
 export const selectDef = (state, defId) => state.levels.defs[defId];
-export const selectBrick = (state, levelId, brickId) => state.levels[levelId].bricks[brickId];
-export const selectObj = (state, levelId, objId) => state.levels[levelId].objects[objId];
+export const selectBrick = (state, levelId, brickId) => state.levels[levelId]?.bricks[brickId];
+export const selectObj = (state, levelId, objId) => state.levels[levelId]?.objects[objId];
 
 export const { recharge, discharge, light, setLevels, setWall, setBrick, setObj, addObj, load } = levelsSlice.actions;
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import WallObject from "./WallObject";
 import { selectItemInfo, setItemInfo } from "state/slices/inventorySlice";
 
-function CollectableItem({ itemId, children }) {
+function CollectableItem({ itemId, children, ...props }) {
     const found = useSelector(state => selectItemInfo(state, itemId).found);
 
     const dispatch = useDispatch();
@@ -17,6 +17,7 @@ function CollectableItem({ itemId, children }) {
 
     return (
         <WallObject
+            {...props}
             className="collectable-item"
             onClick={handleClick}
         >

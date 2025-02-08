@@ -11,13 +11,14 @@ import 'css/inventory.css';
 
 import Resources from './inventory/Resources';
 import Items from './inventory/Items';
-import Upgrades from './upgrades/Upgrades';
-import Connections from './upgrades/Connections';
+import Upgrades from './improvements/Upgrades';
+import Connections from './improvements/Connections';
 import Level1 from './map/levels/Level1'
 
 import { loadState, resetState } from '../engine/save';
 import { useState } from 'react';
 import { GameStatus } from 'consts';
+import store from 'state/store';
 
 
 function Game() {
@@ -58,6 +59,12 @@ function Game() {
         </div>,
         <div key="footer" id="footer">
             <div id="footer-menu">
+                <span
+                    className="unselectable"
+                    onClick={() => console.log(store.getState())}
+                >
+                    Debug
+                </span>
                 <span
                     className="unselectable"
                     onClick={() => setStatus(GameStatus.resetting)}

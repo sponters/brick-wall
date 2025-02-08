@@ -5,10 +5,10 @@ import { default as FlashlightVisual, size } from '../../visuals/Flashlight'
 function Flashlight(props) {
     return (
         <CollectableItem
+            {...props}
             itemId="flashlight"
             width={size.width}
             height={size.height}
-            {...props}
         >
             <FlashlightVisual />
         </CollectableItem>

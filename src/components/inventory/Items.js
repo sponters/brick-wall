@@ -7,12 +7,12 @@ import { useRef } from 'react';
 import { selectItemInfo } from 'state/slices/inventorySlice';
 
 function Items() {
-    const { t } = useTranslation(null, { keyPrefix: `items.meta` });
+    const { t } = useTranslation(null, { keyPrefix: `inventory.meta` });
 
     const containerRef = useRef(null);
 
     const controller = useSelector(state => selectItemInfo(state, "controller").found);
-    const flashlight = useSelector(state => selectItemInfo(state, "flashight").found);
+    const flashlight = useSelector(state => selectItemInfo(state, "flashlight").found);
 
     const unlocked = controller || flashlight;
 

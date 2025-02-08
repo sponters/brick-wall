@@ -1,8 +1,8 @@
-import { addItem } from "state/slices/inventorySlice";
 import store from "state/store";
+import { addItemInfo, selectRes } from "state/slices/inventorySlice";
 
 const def = {
-    id: 'hammerTechnique',
+    upgradeId: 'hammerTechnique',
 
     initialState: {
         unlocked: false,
@@ -16,11 +16,11 @@ const def = {
     },
 
     checkUnlock: state => {
-        return state.res.brick.history >= 20;
+        return selectRes(state, "brick").history >= 20;
     },
 
     buyEffect: () => {
-        store.dispatch(addItem({ itemId: "hammer", value: { damage: 1 } }));
+        store.dispatch(addItemInfo({ itemId: "hammer", value: { damage: 1 } }));
     }
 }
 

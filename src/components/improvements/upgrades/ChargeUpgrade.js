@@ -4,7 +4,7 @@ import store from 'state/store'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useState } from 'react';
-import ProgressBarUpgrade from './ProgressBarUpgrade';
+import ProgressBar from '../ProgressBar';
 import useTick from 'hooks/useTick';
 import { discharge, selectObj } from 'state/slices/levelsSlice';
 import { recharge, selectItemTick } from 'state/slices/inventorySlice';
@@ -27,11 +27,11 @@ function ChargeUpgrade({ upgradeId, itemId, levelId, batteryId, output, input })
                 dispatch(recharge({ itemId, charge: input }))
             }
         }
-    }, [active, batteryId, itemId, dispatch, output, input]));
+    }, [active, levelId, batteryId, itemId, dispatch, output, input]));
 
     const tick = useSelector(state => selectItemTick(state, itemId));
 
-    return <ProgressBarUpgrade id={upgradeId} onClick={() => setActive(!active)} progress={tick.charge / tick.capacity} />
+    return <ProgressBar upgradeId={upgradeId} onClick={() => setActive(!active)} progress={tick.charge / tick.capacity} />
 }
 
 export default ChargeUpgrade;

@@ -38,14 +38,14 @@ export function loadState() {
     const save = JSON.parse(stringified);
 
     Object.assign(time, save.time);
-    for (const [id, item] of Object.entries(slices))
-        store.dispatch(item.load(save.store[id]));
+    for (const [sliceId, slice] of Object.entries(slices))
+        store.dispatch(slice.load(save.store[sliceId]));
 }
 
 export function resetState() {
     Object.assign(time, initialTime);
-    for (const [, item] of Object.entries(slices))
-        store.dispatch(item.load(item.initialState));
+    for (const [, slice] of Object.entries(slices))
+        store.dispatch(slice.load(slice.initialState));
 }
 
 addTickCallback(4, () => {

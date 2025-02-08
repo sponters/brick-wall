@@ -10,8 +10,9 @@ import { useRef } from 'react';
 import { addUpgrade, selectUpgrade } from 'state/slices/improvementsSlice';
 import store from 'state/store';
 import { spend } from 'state/slices/inventorySlice';
+import useInitUpgradeState from 'hooks/useInitUpgradeState';
 
-function InstantUpgrade({ levelId, ownerId, upgradeId }) {
+function InstantUpgradeComponent({ levelId, ownerId, upgradeId }) {
     const { t } = useTranslation(null, { keyPrefix: `improvements.upgrades.${upgradeId}` });
     const { t: tMeta } = useTranslation(null, { keyPrefix: `improvements.meta` });
     const { t: tRes } = useTranslation(null, { keyPrefix: `inventory.res` });
@@ -75,5 +76,14 @@ function InstantUpgrade({ levelId, ownerId, upgradeId }) {
         </div>
     )
 }
+
+function InstantUpgrade({ levelId, ownerId, upgradeId }) {
+    const hasState = useInitUpgradeState(levelId, ownerId, upgradeId, upgrades[upgradeId].initialState);
+
+    if (!hasState)
+        return null;
+
+    return <InstantUpgradeComponent levelId={levelId} ownerId={ownerId} upgradeId={upgradeId} />;
+}    
 
 export default InstantUpgrade;

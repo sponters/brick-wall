@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createBrickState } from 'engine/brick'
 import { selectBrick, setWall } from 'state/slices/levelsSlice';
 
-function ClassicWall4x2({ id: wallId, batteryId, brickType, layout }) {
+function ClassicWall4x2({ wallId, batteryId, brickType, layout }) {
     const { levelId, front } = useContext(LevelContext);
 
     const brickData = [];

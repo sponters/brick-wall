@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
-function useMouseFollow(id, callback) {
+function useMouseFollow(elementId, callback) {
     
     useEffect(() => {
-        const element = document.getElementById(id);
+        const element = document.getElementById(elementId);
 
         const handler = event => {
             if (!element)
@@ -28,7 +28,7 @@ function useMouseFollow(id, callback) {
 
         document.addEventListener("mousemove", handler);
         return () => { document.removeEventListener("mousemove", handler) }
-    }, [id, callback]);
+    }, [elementId, callback]);
 }
 
 export default useMouseFollow;
