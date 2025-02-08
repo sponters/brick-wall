@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useContext } from "react";
+import React, { useCallback, useRef, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import store from "state/store";
@@ -33,7 +33,7 @@ function LightFromFlashlight() {
     )
 }
 
-function Light({ objId, batteryId, level, global = false }) {
+function Light({ objId, batteryId, global = false }) {
     const { levelId } = useContext(LevelContext);
 
     // Create state if not in the store (initialization)
@@ -60,11 +60,6 @@ function Light({ objId, batteryId, level, global = false }) {
     const flashlight = useSelector(state =>
         selectItemInfo(state, "flashlight").found && selectItemTick(state, "flashlight").charge >= 20
     );
-
-    useEffect(() => {
-        if (hasState)
-            level.current.style.visibility = (lightStatus.status || flashlight) ? 'visible' : 'hidden';
-    }, [level, lightStatus?.status, flashlight, hasState]);
 
     if (!hasState)
         return null;

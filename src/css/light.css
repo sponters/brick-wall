@@ -19,6 +19,7 @@
     height: 100%;
     visibility: visible;
     background: black;
+    pointer-events: auto;
 }
 
 .light-flashlight {

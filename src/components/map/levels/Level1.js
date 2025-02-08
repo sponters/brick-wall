@@ -6,19 +6,15 @@ import PowerOutlet from '../objects/PowerOutlet';
 import ThinPipe from '../objects/ThinPipe';
 import Controller from '../objects/Controller';
 import Flashlight from '../objects/Flashlight';
-import { useRef } from 'react';
 import Level from '../Level';
 
 
 function Level1({ front = true }) {
-    const levelRef = useRef();
-
     return (
         <Level
             levelId="l1"
-            levelRef={levelRef}
             front={front}
-            light={<Light objId="l1_l1" batteryId="l1_b1" level={levelRef} global />}
+            light={<Light objId="l1_l1" batteryId="l1_b1" global />}
         >
             <ClassicWall4x2 wallId="l1_w3" batteryId="l1_b1" brickType="clayBrick" layout={0} />
 
