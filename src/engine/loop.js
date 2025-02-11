@@ -1,4 +1,4 @@
-import { time } from './time'
+import { time, tickMicroseconds } from './time'
 
 const tickCallbacks = [
     new Set(),
@@ -31,9 +31,9 @@ setInterval(() => {
     const currentTime = Date.now();
     const deltaTime = currentTime - lastTime;
 
-    const realTicks = Math.floor(deltaTime / 50);
+    const realTicks = Math.floor(deltaTime / tickMicroseconds);
 
-    lastTime += realTicks * 50;
+    lastTime += realTicks * tickMicroseconds;
 
     const ticks = realTicks > 10 ? 10 : realTicks;
 

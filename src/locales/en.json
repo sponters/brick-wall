@@ -3,13 +3,19 @@
         "menu": {
             "reset": "Reset"
         },
+        "common": {
+            "level": "Level",
+            "description": "Description",
+            "effect": "Effect",
+            "cost": "Cost",
+            "ports": "Ports",
+            "action": "Action"
+        },
         "improvements": {
-            "meta": {
-                "upgrades": "Upgrades",
-                "level": "Level",
-                "description": "Description",
-                "effect": "Effect",
-                "cost": "Cost",
+            "containers": {
+                "upgrades": {
+                    "title": "Upgrades"
+                },
                 "powerOutlet": {
                     "title": "Power Outlet",
                     "nothing": "Nothing to charge",
@@ -39,23 +45,30 @@
                     "title": "Generate Hash"
                 },
                 "batteryChargeFaster": {
-                    "title": "Charge Faster"
+                    "title": "Charge Faster",
+                    "description": "This battery is not limited by its hardware, its charging speed can be controlled",
+                    "effect": "+100/s to charging speed"
                 },
                 "chargeFlashlight": {
                     "title": "Charge flashlight"
                 },
                 "chargeController": {
                     "title": "Charge controller"
+                },
+                "batteryStats": {
+                    "title": "Status",
+                    "description": "Hack into the battery reporting system to read its status"
                 }
             }
         },
         "inventory": {
-            "meta": {
-                "resources": "Resources",
-                "collectables": "Collectables",
-                "description": "Description",
-                "ports": "Ports",
-                "action": "Action"
+            "containers": {
+                "resources": {
+                    "title": "Resources"
+                },
+                "collectables": {
+                    "title": "Collectables"
+                }
             },
             "res": {
                 "brick": {

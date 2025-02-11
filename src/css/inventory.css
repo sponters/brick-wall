@@ -17,20 +17,7 @@
 .resource {
   position: relative;
   width: 100%;
-}
-
-.resource .tooltip {
-  display: inline;
-  position: absolute;
-  visibility: hidden;
-  top: 150%;
-  width: 90%;
-  left: calc(5% - 5px);
-  pointer-events: none;
-  border: 1px solid;
-  background-color: black;
-  padding: 5px;
-  z-index: 1;
+  padding: 2px;
 }
 
 .collectables {
@@ -43,38 +30,4 @@
   position: relative;
   display: inline-block;
   margin: 5px;
-}
-
-.collectable .tooltip {
-  display: inline;
-  position: absolute;
-  visibility: hidden;
-  top: calc(100% + 10px);
-  width: calc(var(--left-width) * 0.9 - 10px);
-  left: 0;
-  pointer-events: none;
-  border: 1px solid;
-  background-color: black;
-  padding: 5px;
-  z-index: 1;
-}
-
-.resource .tooltip .section,
-.collectable .tooltip .section {
-  font-size: 1em;
-  font-weight: bold;
-  padding-bottom: 5px;
-}
-
-.resource .tooltip .separator,
-.collectable .tooltip .separator {
-  padding-top: 5px;
-  margin-top: 5px;
-  border-top: 1px solid white;
-}
-
-.collectable .tooltip .port {
-  font-size: 2vh;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
 }

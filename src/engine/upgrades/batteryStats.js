@@ -1,11 +1,10 @@
 import store from "state/store";
 import { ChargeUpgradeStatus } from "consts";
-import { addUpgrade, selectUpgrade } from "state/slices/improvementsSlice";
+import { addUpgrade } from "state/slices/improvementsSlice";
 import { discharge, selectItemTick } from "state/slices/inventorySlice";
-import { addObj } from "state/slices/levelsSlice";
 
 const def = {
-    upgradeId: 'batteryChargeFaster',
+    upgradeId: 'batteryStats',
 
     initialState: {
         info: {
@@ -13,19 +12,15 @@ const def = {
             status: ChargeUpgradeStatus.pending,
             level: 0,
             costDef: {
-                brick: {
-                    base: 10,
-                    factor: 2,
-                },
                 hash: {
                     base: 5,
-                    factor: 1.3,
+                    factor: 1
                 }
             },
             capacityDef: {
                 capacity: {
-                    base: 100,
-                    factor: 1.3,
+                    base: 500,
+                    factor: 1,
                 }
             },
         },
@@ -34,7 +29,7 @@ const def = {
 
     checkUnlock: () => true,
 
-    selectCapacityLevel: (state, levelId, ownerId) => selectUpgrade(state, levelId, ownerId, "batteryChargeFaster").info.level,
+    selectCapacityLevel: () => 0,
 
     tickSpend: () => {
         const state = store.getState();
@@ -45,8 +40,7 @@ const def = {
     },
 
     buyEffect: (levelId, ownerId) => {
-        store.dispatch(addObj({ levelId, objId: ownerId, value: { chargeSpeed: 5 } }));
-        store.dispatch(addUpgrade({ levelId, ownerId, upgradeId: "batteryChargeFaster", value: { info: { level: 1 } } }));
+        store.dispatch(addUpgrade({ levelId, ownerId, upgradeId: "batteryStats", value: { info: { level: 1 } } }));
     }
 }
 

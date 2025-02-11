@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import WallObject from "./WallObject";
-import { selectItemInfo, setItemInfo } from "state/slices/inventorySlice";
+import { findItem, selectItemInfo } from "state/slices/inventorySlice";
 
 function CollectableItem({ itemId, children, ...props }) {
     const found = useSelector(state => selectItemInfo(state, itemId).found);
@@ -12,7 +12,7 @@ function CollectableItem({ itemId, children, ...props }) {
         return null;
 
     const handleClick = () => {
-        dispatch(setItemInfo({ itemId, value: { found: true } }));
+        dispatch(findItem(itemId));
     }
 
     return (

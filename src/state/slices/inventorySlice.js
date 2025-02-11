@@ -4,6 +4,7 @@ import { commonAdd, commonSet } from '../commonActions';
 
 export const initialState = {
     res: {
+        tabUnlocked: false,
         brick: {
             unlocked: false,
             unlockHistory: 5,
@@ -22,6 +23,7 @@ export const initialState = {
         }
     },
     items: {
+        tabUnlocked: false,
         hammer: {
             found: true,
             damage: 1,
@@ -68,6 +70,11 @@ export const inventorySlice = createSlice({
             const { itemId, value } = action.payload;
             commonSet(state.items[itemId], value);
         },
+        findItem: (state, action) => {
+            state.items[action.payload].found = true;
+            if (!state.items.tabUnlocked)
+                state.items.tabUnlocked = true;
+        },
         recharge: (state, action) => {
             const { itemId, charge } = action.payload;
             const tick = state.tick[itemId];
@@ -100,6 +107,8 @@ export const inventorySlice = createSlice({
                 res.cur += amount;
                 res.best = Math.max(res.best, res.total);
                 res.unlocked = (res.history >= res.unlockHistory);
+                if (res.unlocked && !state.res.tabUnlocked)
+                    state.res.tabUnlocked = true;
             }
         },
         spend: (state, action) => {
@@ -129,6 +138,6 @@ export const selectItemInfo = (state, itemId) => state.inventory.items[itemId];
 export const selectItemTick = (state, itemId) => state.inventory.tick[itemId];
 export const selectAllItems = (state) => state.inventory.items;
 
-export const { addItemInfo, setItemInfo, recharge, discharge, gain, spend, expire, load } = inventorySlice.actions;
+export const { addItemInfo, setItemInfo, findItem, recharge, discharge, gain, spend, expire, load } = inventorySlice.actions;
 
 export default inventorySlice.reducer;

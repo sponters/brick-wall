@@ -1,23 +1,21 @@
-import React from 'react';
-
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next';
 
+
+import useUpgradeCheckUnlock from 'hooks/useImprovementCheckUnlock';
+import useTooltipConfig from 'hooks/useTolltipConfig';
+import useInitUpgradeState from 'hooks/useInitUpgradeState';
 import { calcCost, selectHasFunds } from 'engine/upgrade'
 import upgrades from 'engine/upgrades';
-import { useTranslation } from 'react-i18next';
-import useUpgradeCheckUnlock from 'hooks/useImprovementCheckUnlock';
-import { useRef } from 'react';
-import { addUpgrade, selectUpgrade } from 'state/slices/improvementsSlice';
 import store from 'state/store';
+import { addUpgrade, selectUpgrade } from 'state/slices/improvementsSlice';
 import { spend } from 'state/slices/inventorySlice';
-import useInitUpgradeState from 'hooks/useInitUpgradeState';
+import Tooltip from '../../Tooltip';
 
 function InstantUpgradeComponent({ levelId, ownerId, upgradeId }) {
     const { t } = useTranslation(null, { keyPrefix: `improvements.upgrades.${upgradeId}` });
-    const { t: tMeta } = useTranslation(null, { keyPrefix: `improvements.meta` });
-    const { t: tRes } = useTranslation(null, { keyPrefix: `inventory.res` });
-
-    const tooltip = useRef(null);
+    const { t: tCommon } = useTranslation(null, { keyPrefix: `common` });
 
     const unlocked = useUpgradeCheckUnlock(levelId, ownerId, upgradeId);
 
@@ -26,11 +24,10 @@ function InstantUpgradeComponent({ levelId, ownerId, upgradeId }) {
     const hasFunds = useSelector(state => selectHasFunds(state, cost));
 
     const fundsBorder = hasFunds ? 'upgrade-buyable-border' : 'upgrade-no-funds-border';
-    const formattedCost = Object.keys(cost).map(key => {
-        const resName = tRes(`${key}.name`);
-        const amount = cost[key];
-        return `${resName}: ${amount}`;
-    }).join(", ");
+
+    const upgradeRef = useRef();
+    const tooltipRef = useRef();
+    useTooltipConfig(upgradeRef, tooltipRef);
 
     if (!unlocked)
         return null;
@@ -49,32 +46,24 @@ function InstantUpgradeComponent({ levelId, ownerId, upgradeId }) {
         upgrades[upgradeId].buyEffect()
     }
 
-    const handleMouseEnter = () => {
-        tooltip.current.style.visibility = "visible";
-    }
-    const handleMouseLeave = () => {
-        tooltip.current.style.visibility = "hidden";
-    }
-
-    return (
+    return [
         <div
+            key={upgradeId}
             className={`upgrade ${fundsBorder}`}
             onClick={handleClick}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            ref={upgradeRef}
         >
             <div className="line">{t('title')}</div>
-            <div className="line">{tMeta('level')}: {upgrade.level}</div>
-            <div className="tooltip" ref={tooltip}>
-                <div className="section">{tMeta('description')}</div>
-                {t('description')}
-                {t('effect') ? <div className="section separator">{tMeta('effect')}</div> : ""}
-                {t('effect')}
-                <div className="section separator">{tMeta('cost')}</div>
-                {formattedCost}
-            </div>
-        </div>
-    )
+            <div className="line">{tCommon('level')}: {upgrade.level}</div>
+        </div>,
+        <Tooltip
+            key={`${upgradeId}_tooltip`}
+            tInfo={t}
+            tooltip={["description", "effect", "cost"]}
+            values={{cost}}
+            ref={tooltipRef}
+        />
+    ]
 }
 
 function InstantUpgrade({ levelId, ownerId, upgradeId }) {
@@ -84,6 +73,6 @@ function InstantUpgrade({ levelId, ownerId, upgradeId }) {
         return null;
 
     return <InstantUpgradeComponent levelId={levelId} ownerId={ownerId} upgradeId={upgradeId} />;
-}    
+}
 
 export default InstantUpgrade;

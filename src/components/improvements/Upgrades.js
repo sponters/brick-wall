@@ -10,7 +10,7 @@ function Upgrades() {
 
     return (
         <div className="upgrades-container">
-            {unlocked && <div className="header">{t('improvements.meta.upgrades')}</div>}
+            {unlocked && <div className="header">{t('improvements.containers.upgrades.title')}</div>}
             <InstantUpgrade levelId="global" ownerId="player" upgradeId="hammerTechnique" />
         </div>
     )

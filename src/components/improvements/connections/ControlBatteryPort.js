@@ -3,11 +3,13 @@ import { useTranslation } from "react-i18next";
 import { selectAllItems } from "state/slices/inventorySlice";
 import { createSelector } from "@reduxjs/toolkit";
 import ControllerUpgrade from "../upgrades/ControllerUpgrade";
+import BatteryStatsUpgrade from "../upgrades/BatteryStatsUpgrade";
+import { useSelector } from "react-redux";
 
 function ControlBatteryPort({ levelId, objId, port }) {
-    const { t: tMeta } = useTranslation(null, { keyPrefix: 'improvements.meta.controlBattery' });
+    const { t } = useTranslation(null, { keyPrefix: 'improvements.containers.controlBattery' });
 
-    const hasItem = useMemo(() => createSelector(
+    const selectHasItem = useMemo(() => createSelector(
         [selectAllItems],
         (items) => Object.keys(items)
             .filter(itemId =>
@@ -19,11 +21,14 @@ function ControlBatteryPort({ levelId, objId, port }) {
             }, 0)
     ), [port]);
 
+    const hasItem = useSelector(selectHasItem);
+    console.log(hasItem);
+
     if (hasItem === 0) {
         return (
             <div className="upgrades-container">
-                <div className="header">{tMeta('title')} {port}</div>
-                <div>{tMeta('noItem')}</div>
+                <div className="header">{t('title')} {port}</div>
+                <div>{t('noItem')}</div>
             </div>
         );
     }
@@ -31,16 +36,17 @@ function ControlBatteryPort({ levelId, objId, port }) {
     if (hasItem === 1) {
         return (
             <div className="upgrades-container">
-                <div className="header">{tMeta('title')} {port}</div>
-                <div>{tMeta('noCharge')}</div>
+                <div className="header">{t('title')} {port}</div>
+                <div>{t('noCharge')}</div>
             </div>
         );
     }
 
     return (
         <div className="upgrades-container">
-            <div className="header">{tMeta('title')} {port}</div>
-            <ControllerUpgrade levelId={levelId} ownerId={objId} upgradeId="batteryChargeFaster" />
+            <div className="header">{t('title')} {port}</div>
+            <BatteryStatsUpgrade levelId={levelId} ownerId={objId} tooltip={["description", "cost"]} />
+            <ControllerUpgrade levelId={levelId} ownerId={objId} upgradeId="batteryChargeFaster" tooltip={["description", "effect", "cost"]} />
         </div>
     )
 }

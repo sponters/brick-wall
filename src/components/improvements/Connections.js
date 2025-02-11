@@ -18,14 +18,19 @@ function Connections() {
     const connections = [];
 
     if (controller)
-        connections.push(<ControllerInterface key="controller-interface" />);
+        connections.push(
+            <ControllerInterface key="controller-interface" />
+        );
     if (type !== undefined) {
         const Component = ConnectionComponents[type];
-        connections.push(<Component key="port-interface" levelId={levelId} objId={objId} port={port} />);
+        connections.push(
+            <Component key="port-interface" levelId={levelId} objId={objId} port={port} />
+        );
     }
 
     if (connections.length <= 0)
         return null;
+
     return connections;
 }
 

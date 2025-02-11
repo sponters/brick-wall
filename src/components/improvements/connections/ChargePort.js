@@ -8,7 +8,7 @@ import { selectObj } from "state/slices/levelsSlice";
 
 
 function ChargePort({ levelId, objId, port }) {
-    const { t: tMeta } = useTranslation(null, { keyPrefix: 'improvements.meta.powerOutlet' });
+    const { t } = useTranslation(null, { keyPrefix: 'improvements.containers.powerOutlet' });
 
     const selectChargeableItems = useMemo(() => createSelector(
         [selectAllItems],
@@ -31,8 +31,8 @@ function ChargePort({ levelId, objId, port }) {
     if (!batteryHasCharge) {
         return (
             <div className="upgrades-container">
-                <div className="header">{tMeta('title')} {port}</div>
-                <div>{tMeta('noCharge')}</div>
+                <div className="header">{t('title')} {port}</div>
+                <div>{t('noCharge')}</div>
             </div>
         );
     }
@@ -40,15 +40,15 @@ function ChargePort({ levelId, objId, port }) {
     if (upgrades.length === 0) {
         return (
             <div className="upgrades-container">
-                <div className="header">{tMeta('title')} {port}</div>
-                <div>{tMeta('nothing')}</div>
+                <div className="header">{t('title')} {port}</div>
+                <div>{t('nothing')}</div>
             </div>
         );
     }
 
     return (
         <div className="upgrades-container">
-            <div className="header">{tMeta('title')} {port}</div>
+            <div className="header">{t('title')} {port}</div>
             {upgrades.map(u =>
                 <ChargeUpgrade
                     key={u[3]}

@@ -8,6 +8,7 @@ import 'css/brick.css';
 import 'css/upgrade.css';
 import 'css/light.css';
 import 'css/inventory.css';
+import 'css/tooltip.css';
 
 import Resources from './inventory/Resources';
 import Items from './inventory/Items';

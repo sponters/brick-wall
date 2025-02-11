@@ -18,6 +18,7 @@ function Controller(props) {
             height={size.height}
             width={size.width}
             onClick={handleOnClick}
+            tooltip={["description", "ports", "action"]}
             {...props}
         >
             <ControllerVisual />

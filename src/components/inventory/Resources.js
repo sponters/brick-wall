@@ -1,3 +1,5 @@
+import Tooltip from 'components/Tooltip';
+import useTooltipConfig from 'hooks/useTolltipConfig';
 import React from 'react';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,47 +9,45 @@ import { selectRes } from 'state/slices/inventorySlice';
 function Resource({ resId }) {
     const { t } = useTranslation(null, { keyPrefix: `inventory.res.${resId}` });
 
-    const tooltip = useRef(null);
+    const res = useSelector(state => selectRes(state, resId));
 
-    const cur = useSelector(state => selectRes(state, resId).cur);
+    const resRef = useRef();
+    const tooltipRef = useRef();
+    useTooltipConfig(resRef, tooltipRef);
 
-    const handleMouseEnter = () => {
-        tooltip.current.style.visibility = "visible";
-    }
-    const handleMouseLeave = () => {
-        tooltip.current.style.visibility = "hidden";
-    }
+    if (!res.unlocked)
+        return null;
 
-    return (
+    return [
         <div
+            key={resId}
             className='resource'
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            ref={resRef}
         >
-            {t('name')}: {cur}
-            <div className='tooltip' ref={tooltip}>
-                <div className="section">Description</div>
-                {t('description')}
-
-            </div>
-        </div>
-    )
+            {t('name')}: {res.cur}
+        </div>,
+        <Tooltip
+            key={`${resId}_tooltip`}
+            tInfo={t}
+            tooltip={["description"]}
+            ref={tooltipRef}
+        />
+    ];
 }
 
 function Resources() {
-    const brick = useSelector(state => selectRes(state, "brick").unlocked);
-    const hash = useSelector(state => selectRes(state, "hash").unlocked);
+    const { t } = useTranslation(null, { keyPrefix: "inventory.containers.resources" });
 
-    const unlocked = brick || hash;
+    const unlocked = useSelector(state => state.inventory.res.tabUnlocked);
 
     if (!unlocked)
         return null;
 
     return (
         <div className="inventory-container">
-            <div className="header">Resources</div>
-            {brick && <Resource resId="brick" />}
-            {hash && <Resource resId="hash" />}
+            <div className="header">{t("title")}</div>
+            <Resource resId="brick" />
+            <Resource resId="hash" />
         </div>
     );
 }

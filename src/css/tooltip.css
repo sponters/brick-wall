@@ -1,0 +1,31 @@
+.tooltip {
+  display: inline;
+  position: absolute;
+  visibility: hidden;
+  left: 0;
+  top: 0;
+  width: calc(100% - 12px);
+  pointer-events: none;
+  border: 1px solid;
+  background-color: black;
+  padding: 5px;
+  z-index: 1;
+}
+
+.tooltip .section {
+  font-size: 1em;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.tooltip .separator {
+  padding-top: 5px;
+  margin-top: 5px;
+  border-top: 1px solid white;
+}
+
+.tooltip .port {
+  font-size: 2vh;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}

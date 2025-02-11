@@ -1,39 +1,29 @@
+import Tooltip from "components/Tooltip";
+import useTooltipConfig from "hooks/useTolltipConfig";
 import React from "react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { selectItemInfo } from "state/slices/inventorySlice";
 
-function InventoryItem({ itemId, height, width, containerRef, children, ...props }) {
-    const itemRef = useRef(null);
-    const tooltipRef = useRef(null);
-
+function InventoryItem({ itemId, height, width, children, tooltip, values={}, sections={}, ...props }) {
     const { t } = useTranslation(null, { keyPrefix: `inventory.items.${itemId}` });
-    const { t: tMeta } = useTranslation(null, { keyPrefix: `inventory.meta` });
 
-    const ports = useSelector(state => selectItemInfo(state, itemId).ports);
+    const itemInfo = useSelector(state => selectItemInfo(state, itemId));
+    const ports = itemInfo.ports;
 
-    useEffect(() => {
-        const csRect = containerRef.current.getBoundingClientRect();
-        const cRect = itemRef.current.getBoundingClientRect();
-        const left = Math.round(cRect.left - csRect.left);
-        tooltipRef.current.style.left = `-${left - 5}px`;
+    const itemRef = useRef();
+    const tooltipRef = useRef();
+    useTooltipConfig(itemRef, tooltipRef);
 
-    }, [containerRef, itemRef, tooltipRef]);
+    if (!itemInfo.found)
+        return null;
 
-    const handleMouseEnter = () => {
-        tooltipRef.current.style.visibility = "visible";
-    }
-    const handleMouseLeave = () => {
-        tooltipRef.current.style.visibility = "hidden";
-    }
-
-    return (
+    return [
         <div
+            key={itemId}
             {...props}
             className="collectable"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
             ref={itemRef}
             style={{
                 width: `calc(${width} * var(--wall-cell-width)`,
@@ -41,23 +31,16 @@ function InventoryItem({ itemId, height, width, containerRef, children, ...props
             }}
         >
             {children}
-            <div className="tooltip" ref={tooltipRef}>
-                <div className="section">{t('name')}</div>
-                {t('description')}
-                {ports ? <div className="section separator">{tMeta('ports')}</div> : ""}
-                <div style={{ display: "inline-block" }}>
-                    {Object.keys(ports).map(port =>
-                        <div key={port} style={{ textAlign: "left" }}>
-                            <span className="port">{port}</span>
-                            <span>: {t(`ports.${port}`)}</span>
-                        </div>
-                    )}
-                </div>
-                {t('action') ? <div className="section separator">{tMeta('action')}</div> : ""}
-                {t('action')}
-            </div>
-        </div>
-    )
+        </div>,
+        <Tooltip
+            key={`${itemId}_tooltip`}
+            tInfo={t}
+            tooltip={tooltip}
+            values={{ports, ...values}}
+            sections={{description: t("name"), ...sections}}
+            ref={tooltipRef}
+        />
+    ]
 }
 
 export default InventoryItem;

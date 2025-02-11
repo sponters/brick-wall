@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import ControllerUpgrade from "../upgrades/ControllerUpgrade";
 
 function ControllerInterface() {
-    const { t } = useTranslation(null, { keyPrefix: 'improvements.meta.controller' });
+    const { t } = useTranslation(null, { keyPrefix: 'improvements.containers.controller' });
 
     return (
         <div className="upgrades-container">
