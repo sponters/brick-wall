@@ -26,8 +26,7 @@ function InstantUpgradeComponent({ levelId, ownerId, upgradeId }) {
     const fundsBorder = hasFunds ? 'upgrade-buyable-border' : 'upgrade-no-funds-border';
 
     const upgradeRef = useRef();
-    const tooltipRef = useRef();
-    useTooltipConfig(upgradeRef, tooltipRef);
+    const showTooltip = useTooltipConfig(upgradeRef);
 
     if (!unlocked)
         return null;
@@ -56,12 +55,13 @@ function InstantUpgradeComponent({ levelId, ownerId, upgradeId }) {
             <div className="line">{t('title')}</div>
             <div className="line">{tCommon('level')}: {upgrade.level}</div>
         </div>,
+        showTooltip &&
         <Tooltip
             key={`${upgradeId}_tooltip`}
             tInfo={t}
-            tooltip={["description", "effect", "cost"]}
-            values={{cost}}
-            ref={tooltipRef}
+            sections={["description", "effect", "cost"]}
+            extras={{ values: { cost } }}
+            ownerRef={upgradeRef}
         />
     ]
 }

@@ -30,7 +30,7 @@ function useCreateTickCallback(levelId, ownerId, upgradeId, capacity) {
                     charge: upgrade.charge - capacity
                 }
             }));
-            upgrades[upgradeId].buyEffect(levelId, ownerId);
+            upgrades[upgradeId].buyEffect(levelId, ownerId, upgradeId);
 
             return;
         }
@@ -38,10 +38,10 @@ function useCreateTickCallback(levelId, ownerId, upgradeId, capacity) {
         if (upgrade.info.status !== ChargeUpgradeStatus.charging)
             return;
 
-        if (!upgrades[upgradeId].tickSpend(levelId, ownerId))
+        if (!upgrades[upgradeId].tickSpend(levelId, ownerId, upgradeId))
             return;
 
-        store.dispatch(addUpgrade({ levelId, ownerId, upgradeId, value: { charge: 1 } }));
+        store.dispatch(addUpgrade({ levelId, ownerId, upgradeId, value: { charge: upgrade.info.chargeSpeed } }));
     }, [levelId, ownerId, upgradeId, capacity]);
 }
 
@@ -70,14 +70,14 @@ function createClickHandler(levelId, ownerId, upgradeId) {
     };
 }
 
-function ControllerUpgradeComponent({ levelId, ownerId, upgradeId, tooltip = [] }) {
+function ControllerUpgradeComponent({ levelId, ownerId, upgradeId, sections = [] }) {
     const { t } = useTranslation(null, { keyPrefix: `improvements.upgrades.${upgradeId}` });
 
     const unlocked = useUpgradeCheckUnlock(levelId, ownerId, upgradeId);
 
     const upgrade = useSelector(state => selectUpgrade(state, levelId, ownerId, upgradeId));
     const cost = calcCost(upgrade.info);
-    const capacityLevel = useSelector(state => upgrades[upgradeId].selectCapacityLevel(state, levelId, ownerId));
+    const capacityLevel = useSelector(state => upgrades[upgradeId].selectCapacityLevel(state, levelId, ownerId, upgradeId));
 
     const capacity = useMemo(() => {
         const { capacity } = calcCost({ costDef: upgrade.info.capacityDef, level: capacityLevel });
@@ -87,28 +87,34 @@ function ControllerUpgradeComponent({ levelId, ownerId, upgradeId, tooltip = [] 
     useTick(3, useCreateTickCallback(levelId, ownerId, upgradeId, capacity));
 
     const barRef = useRef();
-    const tooltipRef = useRef();
-    useTooltipConfig(barRef, tooltipRef);
+    const showTooltip = useTooltipConfig(barRef);
 
     if (!unlocked)
         return null;
 
-    return [
+    const components = [
         <ProgressBar
             key={upgradeId}
             upgradeId={upgradeId}
             onClick={createClickHandler(levelId, ownerId, upgradeId)}
             progress={upgrade.charge / capacity}
             ref={barRef}
-        />,
-        <Tooltip
-            key={`${upgradeId}_tooltip`}
-            tInfo={t}
-            tooltip={tooltip}
-            values={{cost}}
-            ref={tooltipRef}
         />
     ];
+
+    if (showTooltip) {
+        components.push(
+            <Tooltip
+                key={`${upgradeId}_tooltip`}
+                tInfo={t}
+                sections={sections}
+                extras={{ values: { cost } }}
+                ownerRef={barRef}
+            />
+        )
+    }
+
+    return components;
 }
 
 function ControllerUpgrade({ levelId, ownerId, upgradeId, ...props }) {

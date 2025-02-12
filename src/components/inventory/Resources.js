@@ -12,8 +12,7 @@ function Resource({ resId }) {
     const res = useSelector(state => selectRes(state, resId));
 
     const resRef = useRef();
-    const tooltipRef = useRef();
-    useTooltipConfig(resRef, tooltipRef);
+    const showTooltip = useTooltipConfig(resRef);
 
     if (!res.unlocked)
         return null;
@@ -26,11 +25,12 @@ function Resource({ resId }) {
         >
             {t('name')}: {res.cur}
         </div>,
+        showTooltip &&
         <Tooltip
             key={`${resId}_tooltip`}
             tInfo={t}
-            tooltip={["description"]}
-            ref={tooltipRef}
+            sections={["description"]}
+            ownerRef={resRef}
         />
     ];
 }

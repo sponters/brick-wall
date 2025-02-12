@@ -17,15 +17,24 @@ function ChargeUpgrade({ upgradeId, itemId, levelId, batteryId, output, input })
     useTick(2, useCallback(() => {
         if (active) {
             const state = store.getState();
-            const transferCharge = Math.min(
+            const toFullCharge = selectItemTick(state, itemId).capacity - selectItemTick(state, itemId).charge;
+
+            const transferOutput = Math.min(
                 output,
                 selectObj(state, levelId, batteryId).charge,
-                selectItemTick(state, itemId).capacity - selectItemTick(state, itemId).charge
             );
-            if (transferCharge > 0) {
-                dispatch(discharge({ levelId, batteryId, charge: transferCharge }));
-                dispatch(recharge({ itemId, charge: input }))
+            const transferInput = Math.min(
+                Math.round(input * transferOutput / output),
+                toFullCharge,
+            )
+
+            if (transferOutput > 0) {
+                dispatch(discharge({ levelId, batteryId, charge: transferOutput }));
+                dispatch(recharge({ itemId, charge: transferInput }));
             }
+
+            if (transferInput === toFullCharge)
+                setActive(false);
         }
     }, [active, levelId, batteryId, itemId, dispatch, output, input]));
 

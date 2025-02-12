@@ -8,7 +8,7 @@ function Flashlight(props) {
             itemId="flashlight"
             height={size.height}
             width={size.width}
-            tooltip={["description", "ports"]}
+            sections={["description", "ports"]}
             {...props}
         >
             <FlashlightVisual />

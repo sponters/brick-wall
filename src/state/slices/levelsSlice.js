@@ -86,7 +86,6 @@ export const levelsSlice = createSlice({
         },
         addObj: (state, action) => {
             const { levelId, objId, value } = action.payload;
-            console.log(action.payload);
             commonAdd(state[levelId].objects[objId], value);
         },
         load: (state, action) => {

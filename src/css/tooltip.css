@@ -1,7 +1,7 @@
 .tooltip {
   display: inline;
   position: absolute;
-  visibility: hidden;
+  visibility: visible;
   left: 0;
   top: 0;
   width: calc(100% - 12px);

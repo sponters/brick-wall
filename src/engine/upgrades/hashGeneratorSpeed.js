@@ -1,24 +1,21 @@
 import store from "state/store";
 import { ChargeUpgradeStatus } from "consts";
-import { addObj } from "state/slices/levelsSlice";
+import { selectRes } from "state/slices/inventorySlice";
+import { addUpgrade } from "state/slices/improvementsSlice";
 import { buyEffectLevelUpgrade, defaultControllerTickSpend, defaultSelectCapacityLevel } from "engine/upgrade";
 
 const def = {
-    upgradeId: 'batteryChargeFaster',
+    upgradeId: 'hashGeneratorSpeed',
 
     initialState: {
         info: {
-            unlocked: true,
+            unlocked: false,
             status: ChargeUpgradeStatus.pending,
             level: 0,
             chargeSpeed: 1,
             costDef: {
-                brick: {
-                    base: 10,
-                    factor: 2,
-                },
                 hash: {
-                    base: 5,
+                    base: 4,
                     factor: 1.3,
                 }
             },
@@ -32,13 +29,13 @@ const def = {
         charge: 0,
     },
 
-    checkUnlock: () => true,
+    checkUnlock: (state) => selectRes(state, "hash").history >= 4,
 
     selectCapacityLevel: defaultSelectCapacityLevel,
     tickSpend: defaultControllerTickSpend,
-
+    
     buyEffect: (levelId, ownerId, upgradeId) => {
-        store.dispatch(addObj({ levelId, objId: ownerId, value: { chargeSpeed: 5 } }));
+        store.dispatch(addUpgrade({ levelId, ownerId, upgradeId: "hashGenerator", value: { info: { chargeSpeed: 1 } } }));
         buyEffectLevelUpgrade(levelId, ownerId, upgradeId);
     }
 }

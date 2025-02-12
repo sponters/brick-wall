@@ -44,10 +44,15 @@
                 "hashGenerator": {
                     "title": "Generate Hash"
                 },
+                "hashGeneratorSpeed": {
+                    "title": "Hash Speed",
+                    "description": "Increase hash generation speed, consuming more energy",
+                    "effect": "+100% hash speed / level\n+100% energy consumption / level"
+                },
                 "batteryChargeFaster": {
                     "title": "Charge Faster",
                     "description": "This battery is not limited by its hardware, its charging speed can be controlled",
-                    "effect": "+100/s to charging speed"
+                    "effect": "+100% to charging speed"
                 },
                 "chargeFlashlight": {
                     "title": "Charge flashlight"
