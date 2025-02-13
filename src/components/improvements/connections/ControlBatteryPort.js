@@ -44,8 +44,8 @@ function ControlBatteryPort({ levelId, objId, port }) {
     return (
         <div className="upgrades-container">
             <div className="header">{t('title')} {port}</div>
-            <BatteryStatsUpgrade levelId={levelId} ownerId={objId} sections={["description", "cost"]} />
-            <ControllerUpgrade levelId={levelId} ownerId={objId} upgradeId="batteryChargeFaster" sections={["description", "effect", "cost"]} />
+            <BatteryStatsUpgrade levelId={levelId} ownerId={objId} sections={["description", "cost", "time"]} />
+            <ControllerUpgrade levelId={levelId} ownerId={objId} upgradeId="batteryChargeFaster" sections={["description", "effect", "cost", "time"]} />
         </div>
     )
 }

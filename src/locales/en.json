@@ -9,7 +9,8 @@
             "effect": "Effect",
             "cost": "Cost",
             "ports": "Ports",
-            "action": "Action"
+            "action": "Action",
+            "time": "Time"
         },
         "improvements": {
             "containers": {
@@ -48,6 +49,10 @@
                     "title": "Hash Speed",
                     "description": "Increase hash generation speed, consuming more energy",
                     "effect": "+100% hash speed / level\n+100% energy consumption / level"
+                },
+                "autoHashGenerator": {
+                    "title": "Auto Hash",
+                    "description": "Start generating a new hash automatically"
                 },
                 "batteryChargeFaster": {
                     "title": "Charge Faster",

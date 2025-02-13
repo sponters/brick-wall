@@ -10,3 +10,8 @@ export function speedTicksToSeconds(speed) {
     return speed * ticksPerSecond;
 }
 
+export function formatTicksToTime(ticks) {
+    const time = Math.round((ticks / ticksPerSecond) * 10) / 10;
+    const formatted = time.toFixed(1);
+    return `${formatted}s`;
+}

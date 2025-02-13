@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { selectAllIRes } from 'state/slices/inventorySlice';
 
 function getNearestPositioned(element) {
     let current = element;
@@ -11,9 +13,22 @@ function getNearestPositioned(element) {
     return current;
 }
 
+function TooltipCost({ cost }) {
+    const { t: tRes } = useTranslation(null, { keyPrefix: `inventory.res` });
+    const res = useSelector(state => selectAllIRes(state));
+
+    return Object.keys(cost).map(key => {
+        const resName = tRes(`${key}.name`);
+        const amount = cost[key];
+        const cur = res[key].cur;
+        const hasAmount = cur >= cost[key];
+        return <div key={resName} style={{color: hasAmount ? "#5bbe2a": "red"}}>{resName}: {amount} / {cur}</div>
+    });
+
+}
+
 function Tooltip({ tInfo, sections = [], extras = {}, ownerRef, ...props }) {
     const { t: tCommon } = useTranslation(null, { keyPrefix: `common` });
-    const { t: tRes } = useTranslation(null, { keyPrefix: `inventory.res` });
 
     const tooltipRef = useRef();
 
@@ -35,12 +50,7 @@ function Tooltip({ tInfo, sections = [], extras = {}, ownerRef, ...props }) {
 
     function getValue(tooltip) {
         if (tooltip === "cost") {
-            const formattedCost = Object.keys(extras.values.cost).map(key => {
-                const resName = tRes(`${key}.name`);
-                const amount = extras.values.cost[key];
-                return <div key={resName}>{resName}: {amount}</div>
-            });
-            return formattedCost;
+            return [<TooltipCost key="cost_value" cost={extras.values.cost} />]
         }
         if (tooltip === "ports") {
             return [

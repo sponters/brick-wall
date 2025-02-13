@@ -137,6 +137,7 @@ export const selectRes = (state, resId) => state.inventory.res[resId];
 export const selectItemInfo = (state, itemId) => state.inventory.items[itemId];
 export const selectItemTick = (state, itemId) => state.inventory.tick[itemId];
 export const selectAllItems = (state) => state.inventory.items;
+export const selectAllIRes = (state) => state.inventory.res;
 
 export const { addItemInfo, setItemInfo, findItem, recharge, discharge, gain, spend, expire, load } = inventorySlice.actions;
 

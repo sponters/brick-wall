@@ -10,6 +10,7 @@ const def = {
         info: {
             unlocked: true,
             status: ChargeUpgradeStatus.pending,
+            auto: false,
             chargeSpeed: 1,
             costDef: {},
             capacityDef: {

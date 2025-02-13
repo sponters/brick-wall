@@ -56,8 +56,8 @@ function ChargePort({ levelId, objId, port }) {
                     itemId={u[0]}
                     levelId={levelId}
                     batteryId={batteryId}
-                    output={u[1]}
-                    input={u[2]}
+                    dischargeValue={u[1]}
+                    chargeValue={u[2]}
                 />
             )}
         </div>

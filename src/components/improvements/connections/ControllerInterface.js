@@ -8,8 +8,9 @@ function ControllerInterface() {
     return (
         <div className="upgrades-container">
             <div className="header">{t('title')}</div>
-            <ControllerUpgrade levelId="global" ownerId="controller" upgradeId="hashGenerator" />
-            <ControllerUpgrade levelId="global" ownerId="controller" upgradeId="hashGeneratorSpeed" sections={["description", "effect", "cost"]} />
+            <ControllerUpgrade levelId="global" ownerId="controller" upgradeId="hashGenerator" sections={["time"]} />
+            <ControllerUpgrade levelId="global" ownerId="controller" upgradeId="hashGeneratorSpeed" sections={["description", "effect", "cost", "time"]} />
+            <ControllerUpgrade levelId="global" ownerId="controller" upgradeId="autoHashGenerator" sections={["description", "cost", "time"]} />
         </div>
     )
 }

@@ -14,7 +14,18 @@ import { addUpgrade, selectUpgrade, setUpgrade } from 'state/slices/improvements
 import { spend } from 'state/slices/inventorySlice';
 import ProgressBar from '../ProgressBar';
 import Tooltip from '../../Tooltip';
+import { formatTicksToTime } from 'engine/time';
 
+function tryPurchase(levelId, ownerId, upgradeId, upgrade) {
+    const cost = calcCost(upgrade.info);
+    const hasFunds = selectHasFunds(store.getState(), cost);
+
+    if (!hasFunds)
+        return;
+
+    store.dispatch(spend(cost));
+    store.dispatch(setUpgrade({ levelId, ownerId, upgradeId, value: { info: { status: ChargeUpgradeStatus.charging } } }));
+}
 
 function useCreateTickCallback(levelId, ownerId, upgradeId, capacity) {
     return useCallback(() => {
@@ -35,8 +46,14 @@ function useCreateTickCallback(levelId, ownerId, upgradeId, capacity) {
             return;
         }
 
-        if (upgrade.info.status !== ChargeUpgradeStatus.charging)
+        if (upgrade.info.status === ChargeUpgradeStatus.paused)
             return;
+
+        if (upgrade.info.status === ChargeUpgradeStatus.pending) {
+            if (upgrade.info.auto)
+                tryPurchase(levelId, ownerId, upgradeId, upgrade);
+            return;
+        }
 
         if (!upgrades[upgradeId].tickSpend(levelId, ownerId, upgradeId))
             return;
@@ -59,14 +76,7 @@ function createClickHandler(levelId, ownerId, upgradeId) {
             return;
         }
 
-        const cost = calcCost(upgrade.info);
-        const hasFunds = selectHasFunds(store.getState(), cost);
-
-        if (!hasFunds)
-            return;
-
-        store.dispatch(spend(cost));
-        store.dispatch(setUpgrade({ levelId, ownerId, upgradeId, value: { info: { status: ChargeUpgradeStatus.charging } } }));
+        tryPurchase(levelId, ownerId, upgradeId, upgrade);
     };
 }
 
@@ -89,13 +99,19 @@ function ControllerUpgradeComponent({ levelId, ownerId, upgradeId, sections = []
     const barRef = useRef();
     const showTooltip = useTooltipConfig(barRef);
 
-    if (!unlocked)
+    const time = formatTicksToTime((capacity - upgrade.charge) / upgrade.info.chargeSpeed);
+
+    const isMaxLevel = upgrade.info.maxLevel && ((upgrade.info.level || 0) >= upgrade.info.maxLevel);
+
+    if (!unlocked || isMaxLevel)
         return null;
+
+    const title = t("title") + (upgrade.info.level ? ` (${upgrade.info.level})` : "");
 
     const components = [
         <ProgressBar
             key={upgradeId}
-            upgradeId={upgradeId}
+            title={title}
             onClick={createClickHandler(levelId, ownerId, upgradeId)}
             progress={upgrade.charge / capacity}
             ref={barRef}
@@ -108,7 +124,7 @@ function ControllerUpgradeComponent({ levelId, ownerId, upgradeId, sections = []
                 key={`${upgradeId}_tooltip`}
                 tInfo={t}
                 sections={sections}
-                extras={{ values: { cost } }}
+                extras={{ values: { cost, time } }}
                 ownerRef={barRef}
             />
         )
