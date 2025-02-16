@@ -4,9 +4,23 @@ import { commonAdd, commonSet } from '../commonActions';
 
 export const initialState = {
     defs: {
-        clayBrick: {
+        clayBrickL1: {
+            known: false,
             maxHealth: 4,
-            damageResistance: 5,
+            damageResistance: 30,
+            regenTicks: 200,
+            regenCharge: 20,
+            reward: {
+                brick: 1,
+            },
+            expire: {
+                brick: 1,
+            }
+        },
+        clayBrickL2: {
+            known: false,
+            maxHealth: 4,
+            damageResistance: 13,
             regenTicks: 200,
             regenCharge: 20,
             reward: {
@@ -17,6 +31,7 @@ export const initialState = {
             }
         },
         unburntBrick: {
+            known: true,
             maxHealth: 4,
             damageResistance: 0,
             regenTicks: 200,

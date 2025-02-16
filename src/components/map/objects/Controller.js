@@ -9,6 +9,7 @@ function Controller(props) {
             width={size.width}
             height={size.height}
             {...props}
+            data-obj-type="controller"
         >
             <ControllerVisual />
         </CollectableItem>

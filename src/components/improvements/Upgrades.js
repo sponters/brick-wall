@@ -12,6 +12,8 @@ function Upgrades() {
         <div className="upgrades-container">
             {unlocked && <div className="header">{t('improvements.containers.upgrades.title')}</div>}
             <InstantUpgrade levelId="global" ownerId="player" upgradeId="hammerTechnique" />
+            <InstantUpgrade levelId="global" ownerId="player" upgradeId="brickInstaKill" />
+            <InstantUpgrade levelId="global" ownerId="player" upgradeId="fasterAutoHammer" />
         </div>
     )
 }

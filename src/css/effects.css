@@ -1,0 +1,51 @@
+.effects {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.brick-hit {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    animation: fadeout 150ms both
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.score-gain {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    animation: score-animation 400ms linear both;
+    font-size: 3vh;
+}
+
+@keyframes score-animation {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) translateY(-20px);
+    }
+
+    80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) translateY(-44px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) translateY(-50px);
+    }
+}

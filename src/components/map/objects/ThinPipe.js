@@ -16,7 +16,11 @@ function ThinPipe({ left = false, right = false, top = false, bottom = false, ..
     const length = straight ? "65%" : "75%";
 
     return (
-        <WallObject {...props} className="thin-pipe">
+        <WallObject
+            {...props}
+            className="thin-pipe"
+            data-obj-type="thinPipe"
+        >
             {localLeft &&
                 <div className="pipe"
                     style={{

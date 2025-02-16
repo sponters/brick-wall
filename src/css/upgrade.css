@@ -2,7 +2,14 @@
   position: relative;
   text-align: center;
   width: 90%;
-  margin: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.upgrades-container + .upgrades-container {
+  border-top: 2px solid white;
+  margin-top: 15px;
+  padding-top: 15px;
 }
 
 .upgrades-container .header {
@@ -10,8 +17,14 @@
   font-size: 1.1em;
   font-weight: bold;
   padding-bottom: 5px;
+}
+
+.upgrades-container .separator {
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold;
   border-bottom: 1px solid white;
-  margin-bottom: 10px;
+  padding-bottom: 5px;
 }
 
 .upgrade {
@@ -20,7 +33,7 @@
   display: inline-block;
   position: relative;
   width: 40%;
-  height: 3.5em;
+  height: 3em;
   background-color: darkslategray;
   margin: 2%;
 }

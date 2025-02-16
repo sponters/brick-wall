@@ -2,7 +2,14 @@
   position: relative;
   text-align: center;
   width: 90%;
-  margin: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.inventory-container + .inventory-container {
+  border-top: 2px solid white;
+  margin-top: 15px;
+  padding-top: 15px;
 }
 
 .inventory-container .header {
@@ -10,8 +17,6 @@
   font-size: 1.1em;
   font-weight: bold;
   padding-bottom: 5px;
-  border-bottom: 1px solid white;
-  margin-bottom: 10px;
 }
 
 .resource {

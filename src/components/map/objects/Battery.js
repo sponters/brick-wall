@@ -66,6 +66,7 @@ function Battery({ objId, front = false, back = false, ...props }) {
             onMouseDown={handleChargeOn}
             onMouseLeave={handleChargeOff}
             onMouseUp={handleChargeOff}
+            data-obj-type="battery"
         >
             <div className="battery-led" style={ledStyle}>●</div>
             <div className="battery-screen">

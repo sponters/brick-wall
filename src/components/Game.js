@@ -9,8 +9,10 @@ import 'css/upgrade.css';
 import 'css/light.css';
 import 'css/inventory.css';
 import 'css/tooltip.css';
+import 'css/effects.css';
 
 import Resources from './inventory/Resources';
+import Score from './inventory/Score';
 import Items from './inventory/Items';
 import Upgrades from './improvements/Upgrades';
 import Connections from './improvements/Connections';
@@ -48,6 +50,7 @@ function Game() {
             <h1>Brick Wall</h1>
         </div>,
         <div key="suffix" id="left" className="unselectable">
+            <Score />
             <Resources />
             <Items />
         </div>,

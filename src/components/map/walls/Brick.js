@@ -1,79 +1,72 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useContext } from 'react';
 import { useSelector } from 'react-redux'
 import { hit } from 'engine/brick'
 import * as images from 'img'
 import { selectBrick } from 'state/slices/levelsSlice';
 import WallObject from '../WallObject';
+import { LevelContext } from '../Level';
 
 function Brick({ levelId, brickId, type, disabled = false, ...props }) {
-  
-  const brickInfo = useSelector(state => selectBrick(state, levelId, brickId)?.info);
-  const [hits, setHits] = useState([]);
+    const { effectRef } = useContext(LevelContext);
 
-  // Discard render when without state
-  if (!brickInfo)
-    return null;
+    const brickInfo = useSelector(state => selectBrick(state, levelId, brickId)?.info);
 
-  const display = brickInfo.health === 0 ? 'none' : 'inline';
+    // Discard render when without state
+    if (!brickInfo)
+        return null;
 
-  const crackValue = brickInfo.health / brickInfo.maxHealth;
-  const cracked1 = (crackValue < 0.67) ? brickInfo.cracked1 : 0;
-  const cracked2 = (crackValue < 0.34) ? brickInfo.cracked2 : 0;
-  const cracked1Img = `cracked${cracked1}`;
-  const cracked2Img = `cracked${cracked2}`;
+    if (brickInfo.health === 0)
+        return null;
 
-  const onMouseDown = () => {
-    const tookDamage = hit(levelId, brickId);
+    const crackValue = brickInfo.health / brickInfo.maxHealth;
+    const cracked1 = (crackValue < 0.67) ? brickInfo.cracked1 : 0;
+    const cracked2 = (crackValue < 0.34) ? brickInfo.cracked2 : 0;
+    const cracked1Img = `cracked${cracked1}`;
+    const cracked2Img = `cracked${cracked2}`;
 
-    if (tookDamage) {
-      setHits([...hits, Math.floor(Math.random() * 0)]);
-      setTimeout(() => {
-        const [, ...rest] = hits;
-        setHits(rest);
-      }, 100);
-    }
-  };
+    const onGameHit = (event) => {
+        hit(levelId, brickId, event, effectRef);
+    };
 
-  return (
-    <WallObject {...props} className='brick-wrapper' dir="ltr">
-      <div
-        className="brick"
-        onMouseDown={!disabled ? onMouseDown : undefined}
-        style={{
-          display: display,
-          backgroundImage: `url(${images[type]})`
-        }}
-      />
-      {cracked1 > 0 &&
-        <div
-          className="brick-cracked"
-          style={{
-            display: display,
-            backgroundImage: `url(${images[cracked1Img]})`
-          }}
-        />
-      }
-      {cracked2 > 0 &&
-        <div
-          className="brick-cracked"
-          style={{
-            display: display,
-            backgroundImage: `url(${images[cracked2Img]})`
-          }}
-        />
-      }
-      {hits.map((value, index) => {
-        return <img
-          key={index}
-          alt="Pow!"
-          className="brick-hit unselectable"
-          src={images.hit}
-          style={{ transform: `translate(-50%, -50%) rotate(${value}deg)` }}
-        />
-      })}
-    </WallObject>
-  );
+    return (
+        <WallObject
+            {...props}
+            className='brick'
+            data-obj-type="brick"
+            dir="ltr"
+            ref={(el) => {
+                if (!disabled && (el !== null))
+                    el.addEventListener("gameHitEvent", onGameHit);
+                return () => {
+                    if (!disabled && (el !== null))
+                        el.removeEventListener("gameHitEvent", onGameHit);
+                }
+            }}
+        >
+            <div
+                className="brick-image"
+                style={{
+                    backgroundImage: `url(${images[type]})`
+                }}
+            />
+            {cracked1 > 0 &&
+                <div
+                    className="brick-cracked"
+                    style={{
+                        backgroundImage: `url(${images[cracked1Img]})`
+                    }}
+                />
+            }
+            {cracked2 > 0 &&
+                <div
+                    className="brick-cracked"
+                    style={{
+                        backgroundImage: `url(${images[cracked2Img]})`
+                    }}
+                />
+            }
+        </WallObject>
+    );
 }
 
 export default Brick;

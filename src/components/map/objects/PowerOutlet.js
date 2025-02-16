@@ -35,6 +35,7 @@ function PowerOutlet({ objId, batteryId, port, ...props}) {
             {...props}
             className="eletronic-metal-frame"
             onClick={handleClick}
+            data-obj-type="powerOutlet"
         >
             <div className="battery-plug">{port}</div>
         </WallObject>

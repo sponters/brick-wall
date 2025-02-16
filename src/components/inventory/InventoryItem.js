@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { selectItemInfo } from "state/slices/inventorySlice";
 
-function InventoryItem({ itemId, height, width, children, sections, ...props }) {
+function InventoryItem({ itemId, height, width, children, sections, extras = {}, ...props }) {
     const { t } = useTranslation(null, { keyPrefix: `inventory.items.${itemId}` });
 
     const itemInfo = useSelector(state => selectItemInfo(state, itemId));
@@ -36,7 +36,18 @@ function InventoryItem({ itemId, height, width, children, sections, ...props }) 
             key={`${itemId}_tooltip`}
             tInfo={t}
             sections={sections}
-            extras={{ values: { ports }, headers: { description: t("name") } }}
+            extras={
+                {
+                    values: {
+                        ...extras.values,
+                        ports
+                    },
+                    headers: {
+                        ...extras.headers,
+                        description: t("name")
+                    }
+                }
+            }
             ownerRef={itemRef}
         />
     ]

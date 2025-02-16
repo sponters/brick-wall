@@ -2,7 +2,32 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { commonAdd, commonSet } from '../commonActions';
 
+export const scoreLevelProgression = [
+    200,
+    1000,
+    5000,
+    10000,
+    50000,
+]
+
 export const initialState = {
+    score: {
+        info: {
+            level: 0,
+            comboUnlocked: false,
+            brickBonusUnlocked: false,
+            combo: {
+                hits: 0,
+                max: 20
+            },
+            bricks: {
+                unburntBrick: 10,
+                clayBrickL2: 20,
+                clayBrickL1: 30,
+            }
+        },
+        total: 0,
+    },
     res: {
         tabUnlocked: false,
         brick: {
@@ -25,8 +50,9 @@ export const initialState = {
     items: {
         tabUnlocked: false,
         hammer: {
-            found: true,
+            found: false,
             damage: 1,
+            cooldown: 1000
         },
         controller: {
             found: false,
@@ -127,6 +153,20 @@ export const inventorySlice = createSlice({
                     res.cur = res.total;
             }
         },
+        addScore: (state, action) => {
+            commonAdd(state.score, action.payload);
+            while (state.score.total >= scoreLevelProgression[state.score.info.level])
+                state.score.info.level += 1;
+            if (state.score.info.level >= 1 && !state.score.info.comboUnlocked)
+                state.score.info.comboUnlocked = true;
+            if (state.score.info.level >= 3 && !state.score.info.brickBonusUnlocked)
+                state.score.info.brickBonusUnlocked = true;
+            if (state.score.info.combo.hits > state.score.info.combo.max)
+                state.score.info.combo.hits = state.score.info.combo.max;
+        },
+        setScore: (state, action) => {
+            commonSet(state.score, action.payload);
+        },
         load: (state, action) => {
             return structuredClone(action.payload);
         }
@@ -138,7 +178,8 @@ export const selectItemInfo = (state, itemId) => state.inventory.items[itemId];
 export const selectItemTick = (state, itemId) => state.inventory.tick[itemId];
 export const selectAllItems = (state) => state.inventory.items;
 export const selectAllIRes = (state) => state.inventory.res;
+export const selectScore = (state) => state.inventory.score;
 
-export const { addItemInfo, setItemInfo, findItem, recharge, discharge, gain, spend, expire, load } = inventorySlice.actions;
+export const { addItemInfo, setItemInfo, findItem, recharge, discharge, gain, spend, expire, addScore, setScore, load } = inventorySlice.actions;
 
 export default inventorySlice.reducer;

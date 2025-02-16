@@ -9,6 +9,7 @@ function Flashlight(props) {
             itemId="flashlight"
             width={size.width}
             height={size.height}
+            data-obj-type="flashlight"
         >
             <FlashlightVisual />
         </CollectableItem>

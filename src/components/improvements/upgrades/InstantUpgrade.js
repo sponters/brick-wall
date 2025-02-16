@@ -9,7 +9,7 @@ import useInitUpgradeState from 'hooks/useInitUpgradeState';
 import { calcCost, selectHasFunds } from 'engine/upgrade'
 import upgrades from 'engine/upgrades';
 import store from 'state/store';
-import { addUpgrade, selectUpgrade } from 'state/slices/improvementsSlice';
+import { selectUpgrade } from 'state/slices/improvementsSlice';
 import { spend } from 'state/slices/inventorySlice';
 import Tooltip from '../../Tooltip';
 
@@ -20,7 +20,7 @@ function InstantUpgradeComponent({ levelId, ownerId, upgradeId }) {
     const unlocked = useUpgradeCheckUnlock(levelId, ownerId, upgradeId);
 
     const upgrade = useSelector(state => selectUpgrade(state, levelId, ownerId, upgradeId));
-    const cost = calcCost(upgrade);
+    const cost = calcCost(upgrade.info);
     const hasFunds = useSelector(state => selectHasFunds(state, cost));
 
     const fundsBorder = hasFunds ? 'upgrade-buyable-border' : 'upgrade-no-funds-border';
@@ -28,21 +28,23 @@ function InstantUpgradeComponent({ levelId, ownerId, upgradeId }) {
     const upgradeRef = useRef();
     const showTooltip = useTooltipConfig(upgradeRef);
 
-    if (!unlocked)
+    const level = (upgrade.info.level === undefined) ? -1 : upgrade.info.level;
+    const maxLevel = upgrade.info.maxLevel ? upgrade.info.maxLevel : Number.MAX_SAFE_INTEGER;
+
+    if (!unlocked || (level >= maxLevel))
         return null;
 
     const handleClick = () => {
         const state = store.getState();
         const upgrade = selectUpgrade(state, levelId, ownerId, upgradeId);
-        const cost = calcCost(upgrade);
+        const cost = calcCost(upgrade.info);
         const hasFunds = selectHasFunds(state, cost);
 
         if (!hasFunds)
             return;
 
         store.dispatch(spend(cost));
-        store.dispatch(addUpgrade({ levelId, ownerId, upgradeId, value: { level: 1 } }));
-        upgrades[upgradeId].buyEffect()
+        upgrades[upgradeId].buyEffect(levelId, ownerId, upgradeId);
     }
 
     return [
@@ -53,7 +55,11 @@ function InstantUpgradeComponent({ levelId, ownerId, upgradeId }) {
             ref={upgradeRef}
         >
             <div className="line">{t('title')}</div>
-            <div className="line">{tCommon('level')}: {upgrade.level}</div>
+            {(maxLevel > 1 && level >= 0) &&
+                <div className="line">{tCommon('level')}:&nbsp;
+                    {(maxLevel === Number.MAX_SAFE_INTEGER) ? upgrade.info.level : `(${level} / ${maxLevel})`}
+                </div>
+            }
         </div>,
         showTooltip &&
         <Tooltip

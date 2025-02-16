@@ -10,7 +10,8 @@
             "cost": "Cost",
             "ports": "Ports",
             "action": "Action",
-            "time": "Time"
+            "time": "Time",
+            "next_level": "Next Level"
         },
         "improvements": {
             "containers": {
@@ -37,6 +38,16 @@
                     "description": "With enough spare bricks, one can train their aim and precision.",
                     "effect": "+1 damage to hammer"
                 },
+                "brickInstaKill": {
+                    "title": "Brick Insta Kill",
+                    "description": "Brutal force will confuse the Machine to think the brick glitched.",
+                    "effect": "x2 brick phase time"
+                },
+                "fasterAutoHammer": {
+                    "title": "Faster Hammer",
+                    "description": "Muscle memory is a wonderful thing.",
+                    "effect": "-100ms to auto hammer"
+                },
                 "slowerBricks": {
                     "title": "Slower Bricks",
                     "description": "Some wires in the right place will cause a slower brick respawn.",
@@ -59,6 +70,11 @@
                     "description": "This battery is not limited by its hardware, its charging speed can be controlled",
                     "effect": "+100% to charging speed"
                 },
+                "batteryMaxCapacity": {
+                    "title": "More Capacity",
+                    "description": "This battery capacity is limited by software, some hacking should increase it.",
+                    "effect": "+500 to capacity"
+                },
                 "chargeFlashlight": {
                     "title": "Charge flashlight"
                 },
@@ -78,6 +94,9 @@
                 },
                 "collectables": {
                     "title": "Collectables"
+                },
+                "score": {
+                    "title": "Score"
                 }
             },
             "res": {
@@ -91,6 +110,13 @@
                 }
             },
             "items": {
+                "hammer": {
+                    "name": "Hammer",
+                    "description": "The best tool to break walls",
+                    "action1": "Click to hit",
+                    "action2": "Click and hold to auto hit",
+                    "damage": "damage"
+                },
                 "controller": {
                     "name": "Controller",
                     "description": "An equipment that connects and controls parts of the environment",
@@ -108,6 +134,14 @@
                     },
                     "action": ""
                 }
+            },
+            "score": {
+                "levels": [
+                    "Unlock combos",
+                    "Unlock an upgrade",
+                    "Unlock brick bonus",
+                    "Unlock auto hammer"
+                ]
             }
         }
     }

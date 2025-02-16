@@ -1,9 +1,10 @@
-.brick-wrapper {
+.brick {
   display: inline-block;
   position: relative;
+  pointer-events: auto;
 }
 
-.brick {
+.brick-image {
   position: absolute;
   left: 0;
   top: 0;
@@ -11,7 +12,7 @@
   height: 121%;
   display: inline;
   background-size: 100% 100%;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .brick-cracked {
@@ -32,13 +33,5 @@
   -webkit-box-shadow:0 0 20px #000000;
   -moz-box-shadow: 0 0 20px #000000;
   box-shadow: 0 0 20px #000000;
-}
-
-.brick-hit {
-  position: absolute;
-  pointer-events: none;
-  left: 50%;
-  top: 50%;
-  z-index: 1;
 }
 

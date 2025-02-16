@@ -1,17 +1,23 @@
 import store from 'state/store'
 import { addTickCallback } from './loop'
 import { discharge, selectBrick, selectDef, selectObj, setLevels, setBrick } from 'state/slices/levelsSlice';
-import { expire, gain, selectItemInfo } from 'state/slices/inventorySlice';
+import { addScore, expire, gain } from 'state/slices/inventorySlice';
+import { computeBrickScore } from './score';
+import { selectUpgrade } from 'state/slices/improvementsSlice';
 
 export function createBrickState(batteryId, type) {
+    const cracked1 = Math.floor(Math.random() * 3);
+    const random = Math.floor(Math.random() * 2);
+    const cracked2 = (random + ((random >= cracked1) ? 1 : 0)) % 3;
+
     return {
         info: {
             batteryId,
             type,
             maxHealth: selectDef(store.getState(), type).maxHealth,
             health: selectDef(store.getState(), type).maxHealth,
-            cracked1: Math.floor(Math.random() * 3) + 1,
-            cracked2: Math.floor(Math.random() * 3) + 1,
+            cracked1: cracked1 + 1,
+            cracked2: cracked2 + 1,
         },
         tick: {
             brokenTicks: 0,
@@ -20,29 +26,44 @@ export function createBrickState(batteryId, type) {
     }
 };
 
-export function hit(levelId, brickId) {
+export function hit(levelId, brickId, event, effectRef) {
     const state = store.getState();
     const brickInfo = selectBrick(state, levelId, brickId).info;
-    const damage = selectItemInfo(state, "hammer").damage;
+    const damage = event.detail.damage;
     const brickDef = selectDef(state, brickInfo.type);
+
+    const tickMult = (selectUpgrade(state, "global", "player", "brickInstaKill").info.level === 1) ? 2 : 1;
 
     const realDamage = damage - brickDef.damageResistance;
     if (realDamage <= 0)
         return false;
 
+    event.stopPropagation();
+
+    effectRef.current?.addBrickHitEffect(event);
+
     const health = brickInfo.health - realDamage;
 
-    if (health > 0)
+    if (health > 0) {
         store.dispatch(setBrick({ levelId, brickId, value: { info: { health } } }));
-    else {
+        store.dispatch(addScore({ info: { combo: { hits: 1 } } }));
+    } else {
+        const scoreGain = computeBrickScore(state, brickInfo.type);
+
+        effectRef.current?.addScoreEffect(event, scoreGain);
+
         store.dispatch(gain(brickDef.reward));
+        store.dispatch(addScore({
+            total: scoreGain,
+            info: { combo: { hits: 1 } },
+        }));
         store.dispatch(setBrick({
             levelId, brickId, value: {
                 info: {
                     health: 0,
                 },
                 tick: {
-                    brokenTicks: brickDef.regenTicks,
+                    brokenTicks: brickDef.regenTicks * tickMult,
                     brokenCharge: brickDef.regenCharge,
                 },
             }
@@ -52,6 +73,7 @@ export function hit(levelId, brickId) {
     return true;
 }
 
+console.log("ADDDDDEEEEDDD!!!!!!");
 addTickCallback(3, () => {
     const batchDispatch = {};
 
