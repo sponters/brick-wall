@@ -1,7 +1,7 @@
 export const wallRows = 44;
 export const wallCols = 68;
 
-export const jumpStart = true;
+export const jumpStart = (process.env.NODE_ENV === "development") ? true : false;
 
 export const GameStatus = {
     loading: 0,

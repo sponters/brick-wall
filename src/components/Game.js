@@ -63,12 +63,12 @@ function Game() {
         </div>,
         <div key="footer" id="footer">
             <div id="footer-menu">
-                <span
+                {process.env.NODE_ENV === "development" && <span
                     className="unselectable"
                     onClick={() => console.log(store.getState())}
                 >
                     Debug
-                </span>
+                </span>}
                 <span
                     className="unselectable"
                     onClick={() => setStatus(GameStatus.resetting)}
