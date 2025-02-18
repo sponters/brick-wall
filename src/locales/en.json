@@ -11,7 +11,8 @@
             "ports": "Ports",
             "action": "Action",
             "time": "Time",
-            "next_level": "Next Level"
+            "next_level": "Next Level",
+            "consume": "Consume"
         },
         "improvements": {
             "containers": {
@@ -26,8 +27,18 @@
                 "controller": {
                     "title": "Controller"
                 },
+                "controlController": {
+                    "title": "Controller Controls",
+                    "noItem": "No item to connect",
+                    "noCharge": "Control item has no charge"
+                },
                 "controlBattery": {
                     "title": "Battery Controls",
+                    "noItem": "No item to connect",
+                    "noCharge": "Control item has no charge"
+                },
+                "score": {
+                    "title": "Score Controls",
                     "noItem": "No item to connect",
                     "noCharge": "Control item has no charge"
                 }
@@ -54,16 +65,26 @@
                     "effect": ""
                 },
                 "hashGenerator": {
-                    "title": "Generate Hash"
+                    "title": "Generate Hash",
+                    "description": "The more hashes there are in the controller, the longer it takes to generate the next one"
                 },
                 "hashGeneratorSpeed": {
                     "title": "Hash Speed",
                     "description": "Increase hash generation speed, consuming more energy",
                     "effect": "+100% hash speed / level\n+100% energy consumption / level"
                 },
+                "hashGeneratorSpeedV2": {
+                    "title": "Faster Hash Speed",
+                    "description": "Increase Hash Speed effect",
+                    "effect": "+100% hash speed effect / level"
+                },
                 "autoHashGenerator": {
                     "title": "Auto Hash",
                     "description": "Start generating a new hash automatically"
+                },
+                "rainbowGenerator": {
+                    "title": "Generate Rainbow table",
+                    "description": "Combines hashes into one rainbow table"
                 },
                 "batteryChargeFaster": {
                     "title": "Charge Faster",
@@ -84,6 +105,21 @@
                 "batteryStats": {
                     "title": "Status",
                     "description": "Hack into the battery reporting system to read its status"
+                },
+                "scoreMaxCombo": {
+                    "title": "Bigger combo",
+                    "description": "Get longer hit chains",
+                    "effect": "+10 to max combo"
+                },
+                "scoreMoreBrickBonus": {
+                    "title": "More Brick Bonus",
+                    "description": "Spare bricks will give more bonus to score",
+                    "effect": "+100% to brick bonus"
+                },
+                "controllerUpgrade": {
+                    "title": "Upgrade Controller Systems",
+                    "description": "Time to expand this machine abilities",
+                    "effect": "Controller V2 System"
                 }
             }
         },
@@ -107,6 +143,10 @@
                 "hash": {
                     "name": "hashes",
                     "description": "Pre-stored hashing power to spend in intensive computing operations. There is limited space inside the controller, but this storage can be expanded."
+                },
+                "rainbow": {
+                    "name": "rainbows",
+                    "description": "A combination of hashes into a powerful processing table."
                 }
             },
             "items": {
@@ -138,11 +178,16 @@
             "score": {
                 "levels": [
                     "Unlock combos",
-                    "Unlock an upgrade",
+                    "Unlock upgrades",
                     "Unlock brick bonus",
-                    "Unlock auto hammer"
+                    "Unlock auto hammer!",
+                    "Unlock controller control?",
+                    "Unlock million"
                 ]
             }
+        },
+        "effects": {
+            "almostHit": "Need more damage"
         }
     }
 }

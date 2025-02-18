@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import { commonAdd, commonSet } from '../commonActions';
+import { jumpStart } from 'consts';
 
 export const scoreLevelProgression = [
     200,
     1000,
     5000,
     10000,
-    50000,
+    200000,
+    1000000,
 ]
 
 export const initialState = {
@@ -26,7 +28,7 @@ export const initialState = {
                 clayBrickL1: 30,
             }
         },
-        total: 0,
+        total: jumpStart ? 150000 : 0,
     },
     res: {
         tabUnlocked: false,
@@ -37,6 +39,7 @@ export const initialState = {
             best: 0,
             total: 0,
             cur: 0,
+            max: Number.MAX_SAFE_INTEGER,
         },
         hash: {
             unlocked: false,
@@ -45,6 +48,16 @@ export const initialState = {
             best: 0,
             total: 0,
             cur: 0,
+            max: 20,
+        },
+        rainbow: {
+            unlocked: false,
+            unlockHistory: 1,
+            history: 0,
+            best: 0,
+            total: 0,
+            cur: 0,
+            max: 20,
         }
     },
     items: {
@@ -135,6 +148,8 @@ export const inventorySlice = createSlice({
                 res.unlocked = (res.history >= res.unlockHistory);
                 if (res.unlocked && !state.res.tabUnlocked)
                     state.res.tabUnlocked = true;
+                if (res.cur > res.max)
+                    res.cur = res.max;
             }
         },
         spend: (state, action) => {

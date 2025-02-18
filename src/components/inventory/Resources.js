@@ -11,6 +11,8 @@ function Resource({ resId }) {
 
     const res = useSelector(state => selectRes(state, resId));
 
+    const formattedMax = res.max < Number.MAX_SAFE_INTEGER ? ` / ${res.max}` : "";
+
     const resRef = useRef();
     const showTooltip = useTooltipConfig(resRef);
 
@@ -23,7 +25,7 @@ function Resource({ resId }) {
             className='resource'
             ref={resRef}
         >
-            {t('name')}: {res.cur}
+            {t('name')}: {res.cur}{formattedMax}
         </div>,
         showTooltip &&
         <Tooltip
@@ -48,6 +50,7 @@ function Resources() {
             <div className="header">{t("title")}</div>
             <Resource resId="brick" />
             <Resource resId="hash" />
+            <Resource resId="rainbow" />
         </div>
     );
 }

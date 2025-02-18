@@ -30,8 +30,8 @@ function ChargePort({ levelId, objId, port }) {
 
     if (!batteryHasCharge) {
         return (
-            <div className="upgrades-container">
-                <div className="header">{t('title')} {port}</div>
+            <div className="improvements-container">
+                <div className="header">{t('title')}</div>
                 <div>{t('noCharge')}</div>
             </div>
         );
@@ -39,16 +39,16 @@ function ChargePort({ levelId, objId, port }) {
 
     if (upgrades.length === 0) {
         return (
-            <div className="upgrades-container">
-                <div className="header">{t('title')} {port}</div>
+            <div className="improvements-container">
+                <div className="header">{t('title')}</div>
                 <div>{t('nothing')}</div>
             </div>
         );
     }
 
     return (
-        <div className="upgrades-container">
-            <div className="header">{t('title')} {port}</div>
+        <div className="improvements-container">
+            <div className="header">{t('title')}</div>
             {upgrades.map(u =>
                 <ChargeUpgrade
                     key={u[3]}

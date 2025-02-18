@@ -32,11 +32,14 @@ export function hit(levelId, brickId, event, effectRef) {
     const damage = event.detail.damage;
     const brickDef = selectDef(state, brickInfo.type);
 
-    const tickMult = (selectUpgrade(state, "global", "player", "brickInstaKill").info.level === 1) ? 2 : 1;
+    const tickMult = (selectUpgrade(state, "global", "player", "brickInstaKill")?.info.level === 1) ? 2 : 1;
 
     const realDamage = damage - brickDef.damageResistance;
-    if (realDamage <= 0)
+    if (realDamage <= 0) {
+        if (realDamage >= -2)
+            effectRef.current?.addBrickAlmostHit(event);
         return false;
+    }
 
     event.stopPropagation();
 
@@ -73,8 +76,7 @@ export function hit(levelId, brickId, event, effectRef) {
     return true;
 }
 
-console.log("ADDDDDEEEEDDD!!!!!!");
-addTickCallback(3, () => {
+function tickCallback() {
     const batchDispatch = {};
 
     for (const [levelId, level] of Object.entries(store.getState().levels)) {
@@ -122,4 +124,5 @@ addTickCallback(3, () => {
         if (Object.keys(batchDispatch).length > 0)
             store.dispatch(setLevels(batchDispatch));
     }
-});
+}
+addTickCallback(3, tickCallback);

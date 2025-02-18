@@ -1,11 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import ControllerUpgrade from "../upgrades/ControllerUpgrade";
-import BatteryStatsUpgrade from "../upgrades/BatteryStatsUpgrade";
 import useHasItemWithPort from "hooks/useHasItemWithPort";
 
-function ControlBatteryPort({ levelId, objId, port }) {
-    const { t } = useTranslation(null, { keyPrefix: 'improvements.containers.controlBattery' });
+
+function ScorePort({ levelId, objId, port }) {
+    const { t } = useTranslation(null, { keyPrefix: 'improvements.containers.score' });
 
     const hasItem = useHasItemWithPort(port);
 
@@ -30,11 +30,10 @@ function ControlBatteryPort({ levelId, objId, port }) {
     return (
         <div className="improvements-container">
             <div className="header">{t('title')}</div>
-            <BatteryStatsUpgrade levelId={levelId} ownerId={objId} sections={["description", "cost", "time"]} />
-            <ControllerUpgrade levelId={levelId} ownerId={objId} upgradeId="batteryChargeFaster" sections={["description", "effect", "cost", "time"]} />
-            <ControllerUpgrade levelId={levelId} ownerId={objId} upgradeId="batteryMaxCapacity" sections={["description", "effect", "cost", "time"]} />
+            <ControllerUpgrade levelId={levelId} ownerId={objId} upgradeId="scoreMaxCombo" sections={["description", "effect", "cost", "time"]} />
+            <ControllerUpgrade levelId={levelId} ownerId={objId} upgradeId="scoreMoreBrickBonus" sections={["description", "effect", "cost", "time"]} />
         </div>
     )
 }
 
-export default ControlBatteryPort;
+export default ScorePort;

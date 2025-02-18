@@ -1,3 +1,4 @@
+import { speedTicksToSeconds } from 'engine/time';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -27,6 +28,16 @@ function TooltipCost({ cost }) {
 
 }
 
+function TooltipConsume({ consume }) {
+    const { t: tRes } = useTranslation(null, { keyPrefix: `inventory.res` });
+
+    return Object.keys(consume).map(key => {
+        const resName = tRes(`${key}.name`);
+        const amount = speedTicksToSeconds(consume[key]);
+        return <div key={resName}>{resName}: {amount} / sec</div>
+    });
+}
+
 function Tooltip({ tInfo, sections = [], extras = {}, ownerRef, ...props }) {
     const { t: tCommon } = useTranslation(null, { keyPrefix: `common` });
 
@@ -51,6 +62,9 @@ function Tooltip({ tInfo, sections = [], extras = {}, ownerRef, ...props }) {
     function getValue(tooltip) {
         if (tooltip === "cost") {
             return [<TooltipCost key="cost_value" cost={extras.values.cost} />]
+        }
+        if (tooltip === "consume") {
+            return [<TooltipConsume key="consume_value" consume={extras.values.consume} />]
         }
         if (tooltip === "ports") {
             return [

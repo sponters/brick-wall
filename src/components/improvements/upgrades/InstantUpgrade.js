@@ -23,7 +23,7 @@ function InstantUpgradeComponent({ levelId, ownerId, upgradeId }) {
     const cost = calcCost(upgrade.info);
     const hasFunds = useSelector(state => selectHasFunds(state, cost));
 
-    const fundsBorder = hasFunds ? 'upgrade-buyable-border' : 'upgrade-no-funds-border';
+    const fundsBorder = hasFunds ? 'improvement-buyable-border' : 'improvement-no-funds-border';
 
     const upgradeRef = useRef();
     const showTooltip = useTooltipConfig(upgradeRef);

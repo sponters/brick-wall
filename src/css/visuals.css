@@ -70,6 +70,20 @@
     height: 85%;
 }
 
+.controller-screen-v2 {
+    animation: changing-color 1s linear infinite alternate;
+}
+
+@keyframes changing-color {
+    from {
+        color: #509b5d;
+    }
+
+    to {
+        color: yellow;
+    }
+}
+
 .image-visual {
     position: absolute;
     left: 0;

@@ -2,11 +2,14 @@ import React from 'react';
 import InventoryItem from '../InventoryItem';
 import { default as ControllerVisual, size } from '../../visuals/Controller'
 import { useDispatch, useSelector } from 'react-redux';
-import { selectConnectionController, switchController } from 'state/slices/improvementsSlice';
+import { selectConnectionController, selectUpgrade, switchController } from 'state/slices/improvementsSlice';
 
 function Controller(props) {
     const controllerStatus = useSelector(selectConnectionController);
+    const upgraded = useSelector(state => selectUpgrade(state, "global", "controller", "controllerUpgrade")?.info.level >= 1);
     const dispatch = useDispatch();
+
+    const version = upgraded ? 2 : 1;
 
     const handleOnClick = () => {
         dispatch(switchController(!controllerStatus));
@@ -21,7 +24,7 @@ function Controller(props) {
             sections={["description", "ports", "action"]}
             {...props}
         >
-            <ControllerVisual />
+            <ControllerVisual version={version} />
         </InventoryItem>
     )
 }

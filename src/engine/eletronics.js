@@ -1,12 +1,14 @@
 import { setObj } from "state/slices/levelsSlice";
 import store from "state/store";
 
+export const batteryBaseChargeSpeed = 5;
+
 export function createBattery(levelId, objId) {
     store.dispatch(setObj({
         levelId, objId, value: {
             capacity: 1000,
             charge: 0,
-            chargeSpeed: 5,
+            chargeSpeed: batteryBaseChargeSpeed,
         }
     }));
 }

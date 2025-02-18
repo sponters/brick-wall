@@ -1,11 +1,20 @@
+import { BorderTypes } from 'consts';
 import React from 'react';
 
-function ProgressBar({ title, progress, ...props }) {
+function ProgressBar({ borderType = BorderTypes.normal, title, progress, ...props }) {
     const percentage = Math.min(Math.floor(progress * 10000) / 100, 100);
+
+    const borderCss = (
+        (borderType === BorderTypes.normal) ?
+            "improvement-normal-border" :
+            (borderType === BorderTypes.hasFunds) ?
+                "improvement-buyable-border" :
+                "improvement-no-funds-border"
+    );
 
     return (
         <div
-            className="connection"
+            className={`connection ${borderCss}`}
             {...props}
         >
             <div className="bar" style={{ width: `${percentage}%` }} />

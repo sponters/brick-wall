@@ -1,14 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import ChargePort from "./connections/ChargePort";
+import ScorePort from "./connections/ScorePort";
 import ControllerInterface from "./connections/ControllerInterface";
 import ControlBatteryPort from "./connections/ControlBatteryPort";
-import { ObjectTypes } from "consts";
+import { ConnectionTypes as ConnectionTypes } from "consts";
 import { selectConnectionController, selectConnectionPort } from "state/slices/improvementsSlice";
+import ControlController from "./connections/ControlController";
 
 const ConnectionComponents = {
-    [ObjectTypes.power]: ChargePort,
-    [ObjectTypes.battery]: ControlBatteryPort,
+    [ConnectionTypes.power]: ChargePort,
+    [ConnectionTypes.battery]: ControlBatteryPort,
+    [ConnectionTypes.score]: ScorePort,
+    [ConnectionTypes.controller]: ControlController,
 }
 
 function Connections() {

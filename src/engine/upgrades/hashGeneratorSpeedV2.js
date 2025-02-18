@@ -1,12 +1,11 @@
 import store from "state/store";
 import { ChargeUpgradeStatus } from "consts";
-import { selectRes } from "state/slices/inventorySlice";
 import { selectUpgrade, setUpgrade } from "state/slices/improvementsSlice";
 import { buyEffectLevelUpgrade, defaultControllerTickSpend, defaultSelectCapacityLevel } from "engine/upgrade";
 import { batteryBaseChargeSpeed } from "engine/eletronics";
 
 const def = {
-    upgradeId: 'hashGeneratorSpeed',
+    upgradeId: 'hashGeneratorSpeedV2',
 
     initialState: {
         info: {
@@ -17,9 +16,16 @@ const def = {
             dischargeSpeed: 1,
             costDef: {
                 hash: {
-                    base: 4,
+                    base: 6,
                     factor: 1.3,
+                },
+                rainbow: {
+                    base: 2,
+                    factor: 1.1,
                 }
+            },
+            tickCost: {
+                hash: 1,
             },
             capacityDef: {
                 capacity: {
@@ -31,7 +37,7 @@ const def = {
         charge: 0,
     },
 
-    checkUnlock: (state) => selectRes(state, "hash").history >= 4,
+    checkUnlock: (state, levelId, ownerId) => selectUpgrade(state, levelId, ownerId, "controllerUpgrade").info.level >= 1,
 
     selectCapacityLevel: defaultSelectCapacityLevel,
     tickSpend: defaultControllerTickSpend,

@@ -1,9 +1,10 @@
 import React from 'react';
 
-function Controller() {
+function Controller({ version }) {
+    const extraClass = (version === 2) ? " controller-screen-v2" : "";
     return (
         <div className="tech-black-frame">
-            <div className="controller-screen">
+            <div className={`controller-screen${extraClass}`}>
                 ≡≡<br />▒▒
             </div>
         </div>

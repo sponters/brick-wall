@@ -24,16 +24,25 @@
     }
 }
 
+.brick-almost-hit {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    animation: floating-up 400ms linear both;
+    font-size: 3vh;
+}
+
 .score-gain {
     position: absolute;
     pointer-events: none;
     z-index: 1;
     transform: translate(-50%, -50%);
-    animation: score-animation 400ms linear both;
+    animation: floating-up 400ms linear both;
     font-size: 3vh;
 }
 
-@keyframes score-animation {
+@keyframes floating-up {
     0% {
         opacity: 1;
         transform: translate(-50%, -50%) translateY(-20px);

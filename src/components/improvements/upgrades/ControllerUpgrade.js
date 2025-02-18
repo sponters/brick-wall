@@ -9,7 +9,7 @@ import useInitUpgradeState from 'hooks/useInitUpgradeState';
 import useTooltipConfig from 'hooks/useTolltipConfig';
 import { calcCost, selectHasFunds } from 'engine/upgrade';
 import upgrades from 'engine/upgrades';
-import { ChargeUpgradeStatus } from 'consts';
+import { BorderTypes, ChargeUpgradeStatus } from 'consts';
 import { addUpgrade, selectUpgrade, setUpgrade } from 'state/slices/improvementsSlice';
 import { spend } from 'state/slices/inventorySlice';
 import ProgressBar from '../ProgressBar';
@@ -87,7 +87,14 @@ function ControllerUpgradeComponent({ levelId, ownerId, upgradeId, sections = []
 
     const upgrade = useSelector(state => selectUpgrade(state, levelId, ownerId, upgradeId));
     const cost = calcCost(upgrade.info);
+    const hasFunds = useSelector(state => selectHasFunds(state, cost));
+
+    const fundsBorder = (upgrade.info.status !== ChargeUpgradeStatus.pending) ?
+        BorderTypes.normal :
+        (hasFunds ? BorderTypes.hasFunds : BorderTypes.noFunds);
+
     const capacityLevel = useSelector(state => upgrades[upgradeId].selectCapacityLevel(state, levelId, ownerId, upgradeId));
+    const consume = upgrade.info.tickCost || {};
 
     const capacity = useMemo(() => {
         const { capacity } = calcCost({ costDef: upgrade.info.capacityDef, level: capacityLevel });
@@ -111,6 +118,7 @@ function ControllerUpgradeComponent({ levelId, ownerId, upgradeId, sections = []
     const components = [
         <ProgressBar
             key={upgradeId}
+            borderType={fundsBorder}
             title={title}
             onClick={createClickHandler(levelId, ownerId, upgradeId)}
             progress={upgrade.charge / capacity}
@@ -124,7 +132,7 @@ function ControllerUpgradeComponent({ levelId, ownerId, upgradeId, sections = []
                 key={`${upgradeId}_tooltip`}
                 tInfo={t}
                 sections={sections}
-                extras={{ values: { cost, time } }}
+                extras={{ values: { cost, time, consume } }}
                 ownerRef={barRef}
             />
         )

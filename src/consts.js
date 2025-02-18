@@ -1,6 +1,8 @@
 export const wallRows = 44;
 export const wallCols = 68;
 
+export const jumpStart = true;
+
 export const GameStatus = {
     loading: 0,
     resetting: 1,
@@ -13,8 +15,15 @@ export const ChargeUpgradeStatus = {
     charging: 2
 };
 
-export const ObjectTypes = {
+export const ConnectionTypes = {
     power: "power",
     battery: "battery",
     controller: "controller",
+    score: "score",
+};
+
+export const BorderTypes = {
+    normal: 0,
+    hasFunds: 1,
+    noFunds: 2
 }

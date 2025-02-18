@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit'
 import { commonAdd, commonSet } from '../commonActions';
 
 export const initialState = {
-    tabUnlocked: false,
     connections: {
         port: {
             port: undefined,
@@ -22,8 +21,6 @@ export const improvementsSlice = createSlice({
         unlock: (state, action) => {
             const { levelId, ownerId, upgradeId } = action.payload;
             state[levelId][ownerId][upgradeId].unlocked = true;
-            if (!state.tabUnlocked)
-                state.tabUnlocked = true;
         },
         connect: (state, action) => {
             state.connections.port.port = action.payload.port;
@@ -57,7 +54,6 @@ export const improvementsSlice = createSlice({
     }
 });
 
-export const selectTabUnlocked = (state) => state.improvements.tabUnlocked;
 export const selectConnectionPort = (state) => state.improvements.connections.port;
 export const selectConnectionController = (state) => state.improvements.connections.controller;
 export const selectUpgrade = (state, levelId, ownerId, upgradeId) => state.improvements[levelId]?.[ownerId]?.[upgradeId];

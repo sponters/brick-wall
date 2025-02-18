@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useTick from "hooks/useTick";
 import useInitLevelObjState from "hooks/useInitLevelObjState";
-import { ObjectTypes } from "consts";
+import { ConnectionTypes } from "consts";
 import { createBattery } from "engine/eletronics";
 
 import { LevelContext } from '../Level';
@@ -56,7 +56,7 @@ function Battery({ objId, front = false, back = false, ...props }) {
         if (connected)
             dispatch(disconnect(objId));
         else
-            dispatch(connect({ levelId, objId, port: "◘", type: ObjectTypes.battery }));
+            dispatch(connect({ levelId, objId, port: "◘", type: ConnectionTypes.battery }));
     }
 
     return (

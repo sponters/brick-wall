@@ -1,5 +1,5 @@
 import { addUpgrade, selectUpgrade } from "state/slices/improvementsSlice";
-import { discharge, selectItemTick, selectRes } from "state/slices/inventorySlice";
+import { discharge, selectItemTick, selectRes, spend } from "state/slices/inventorySlice";
 import store from "state/store";
 
 export function calcCost({ costDef, level }) {
@@ -25,7 +25,13 @@ export function defaultControllerTickSpend(levelId, ownerId, upgradeId) {
     if (selectItemTick(state, "controller").charge <= 0)
         return false;
     const upgrade = selectUpgrade(state, levelId, ownerId, upgradeId)
-    store.dispatch(discharge({ itemId: "controller", charge: upgrade.info.chargeSpeed }));
+    if (upgrade.info.tickCost) {
+        if (!selectHasFunds(state, upgrade.info.tickCost))
+            return false;
+        store.dispatch(spend(upgrade.info.tickCost));
+    }
+    const charge = upgrade.info.dischargeSpeed ? upgrade.info.dischargeSpeed : upgrade.info.chargeSpeed;
+    store.dispatch(discharge({ itemId: "controller", charge }));
     return true;
 }
 

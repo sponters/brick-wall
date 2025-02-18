@@ -1,28 +1,28 @@
 import { ChargeUpgradeStatus } from "consts";
-import { selectRes } from "state/slices/inventorySlice";
-import { buyEffectLevelUpgrade, defaultControllerTickSpend } from "engine/upgrade";
-import store from "state/store";
-import { setUpgrade } from "state/slices/improvementsSlice";
+import { buyEffectLevelUpgrade, defaultControllerTickSpend, defaultSelectCapacityLevel } from "engine/upgrade";
 
 const def = {
-    upgradeId: 'autoHashGenerator',
+    upgradeId: 'controllerUpgrade',
 
     initialState: {
         info: {
-            unlocked: false,
+            unlocked: true,
             status: ChargeUpgradeStatus.pending,
             level: 0,
             maxLevel: 1,
             chargeSpeed: 1,
             costDef: {
                 hash: {
-                    base: 10,
+                    base: 15,
                     factor: 1,
                 }
             },
+            tickCost: {
+                hash: 1
+            },
             capacityDef: {
                 capacity: {
-                    base: 400,
+                    base: 100,
                     factor: 1,
                 }
             },
@@ -30,13 +30,12 @@ const def = {
         charge: 0,
     },
 
-    checkUnlock: (state) => selectRes(state, "hash").history >= 1,
+    checkUnlock: () => true,
 
-    selectCapacityLevel: () => 0,
+    selectCapacityLevel: defaultSelectCapacityLevel,
     tickSpend: defaultControllerTickSpend,
 
     buyEffect: (levelId, ownerId, upgradeId) => {
-        store.dispatch(setUpgrade({ levelId, ownerId, upgradeId: "hashGenerator", value: { info: { auto: true } } }));
         buyEffectLevelUpgrade(levelId, ownerId, upgradeId);
     }
 }

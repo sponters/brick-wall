@@ -2,6 +2,7 @@ import React, { useContext, useRef, useState } from "react";
 import * as images from 'img'
 
 import { LevelContext } from '../Level';
+import { useTranslation } from "react-i18next";
 
 
 function BrickHitEffect({ left, top, rotation }) {
@@ -17,6 +18,22 @@ function BrickHitEffect({ left, top, rotation }) {
             }}
         />
     );
+}
+
+function BrickAlmostHitEffect({ left, top }) {
+    const { t } = useTranslation(null, { keyPrefix: `effects` });
+    return (
+        <div
+            className="brick-almost-hit unselectable"
+            style={{
+                left: `${left}px`,
+                top: `${top}px`,
+            }}
+        >
+            {t("almostHit")}
+        </div>
+    );
+
 }
 
 function AddScoreEffect({ left, top, value }) {
@@ -43,6 +60,13 @@ function createEffectCalls(containerRef, createEffect) {
                 top: event.clientY - parentRect.y,
                 rotation: Math.floor(Math.random() * 0)
             }, 150);
+        },
+        addBrickAlmostHit: (event) => {
+            const parentRect = containerRef.current.parentNode.getBoundingClientRect();
+            createEffect(BrickAlmostHitEffect, {
+                left: event.clientX - parentRect.x,
+                top: event.clientY - parentRect.y,
+            }, 400);
         },
         addScoreEffect: (event, value) => {
             const parentRect = containerRef.current.parentNode.getBoundingClientRect();
