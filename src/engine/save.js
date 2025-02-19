@@ -34,6 +34,8 @@ export function saveState() {
 
 export function loadState() {
     const base64 = localStorage.getItem(SAVE_KEY);
+    if (!base64)
+        return;
     const stringified = decompressFromBase64(base64)
     const save = JSON.parse(stringified);
 
