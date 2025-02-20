@@ -20,7 +20,7 @@ import Level1 from './map/levels/Level1'
 
 import { loadState, resetState } from '../engine/save';
 import { useState } from 'react';
-import { GameStatus } from 'consts';
+import { GameStatus, isDev } from 'consts';
 import store from 'state/store';
 
 
@@ -63,7 +63,7 @@ function Game() {
         </div>,
         <div key="footer" id="footer">
             <div id="footer-menu">
-                {process.env.NODE_ENV === "development" && <span
+                {isDev() && <span
                     className="unselectable"
                     onClick={() => console.log(store.getState())}
                 >
