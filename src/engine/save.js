@@ -44,6 +44,23 @@ export function loadState() {
         store.dispatch(slice.load(save.store[sliceId]));
 }
 
+export function exportState() {
+    const save = {
+        time,
+        store: store.getState()
+    };
+    const stringified = JSON.stringify(save);
+    navigator.clipboard.writeText(stringified);
+}
+
+export function importState(stringified) {
+    const save = JSON.parse(stringified);
+
+    Object.assign(time, save.time);
+    for (const [sliceId, slice] of Object.entries(slices))
+        store.dispatch(slice.load(save.store[sliceId]));
+}
+
 export function resetState() {
     Object.assign(time, initialTime);
     for (const [, slice] of Object.entries(slices))

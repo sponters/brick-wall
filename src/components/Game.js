@@ -18,16 +18,18 @@ import Upgrades from './improvements/Upgrades';
 import Connections from './improvements/Connections';
 import Level1 from './map/levels/Level1'
 
-import { loadState, resetState } from '../engine/save';
+import { exportState, loadState, resetState } from '../engine/save';
 import { useState } from 'react';
 import { GameStatus, isDev } from 'consts';
 import store from 'state/store';
+import ImportModal from './menu/ImportModal';
 
 
 function Game() {
     const { t } = useTranslation();
 
     const [status, setStatus] = useState(GameStatus.loading);
+    const [importing, setImporting] = useState(false);
 
     useEffect(() => {
         if (status === GameStatus.loading) {
@@ -71,7 +73,13 @@ function Game() {
                 </span>}
                 <span
                     className="unselectable"
-                    onClick={() => navigator.clipboard.writeText(JSON.stringify(store.getState()))}
+                    onClick={() => setImporting(!importing)}
+                >
+                    Import
+                </span>
+                <span
+                    className="unselectable"
+                    onClick={() => exportState()}
                 >
                     Export
                 </span>
@@ -82,7 +90,8 @@ function Game() {
                     {t("menu.reset")}
                 </span>
             </div>
-        </div>
+        </div>,
+        importing ? <ImportModal onClose={() => setImporting(false)} /> : null
     ]);
 }
 
