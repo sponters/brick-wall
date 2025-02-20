@@ -27,7 +27,7 @@ const def = {
         charge: 0,
     },
     
-    checkUnlock: (state, levelId, ownerId) => selectUpgrade(state, levelId, ownerId, "controllerUpgrade").info.level >= 1,
+    checkUnlock: (state, levelId, ownerId) => selectUpgrade(state, levelId, ownerId, "controllerUpgrade")?.info.level >= 1,
 
     selectCapacityLevel: state => state.inventory.res.rainbow.cur,
     tickSpend: defaultControllerTickSpend,
