@@ -71,6 +71,12 @@ function Game() {
                 </span>}
                 <span
                     className="unselectable"
+                    onClick={() => navigator.clipboard.writeText(JSON.stringify(store.getState()))}
+                >
+                    Export
+                </span>
+                <span
+                    className="unselectable"
                     onClick={() => setStatus(GameStatus.resetting)}
                 >
                     {t("menu.reset")}

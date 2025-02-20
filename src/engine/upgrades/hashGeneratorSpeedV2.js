@@ -46,7 +46,7 @@ const def = {
         const state = store.getState();
         const v1 = selectUpgrade(state, levelId, ownerId, "hashGeneratorSpeed").info.level;
         const v2 = selectUpgrade(state, levelId, ownerId, "hashGeneratorSpeedV2").info.level;
-        const chargeSpeed = batteryBaseChargeSpeed * v1 * (1 + v2);
+        const chargeSpeed = batteryBaseChargeSpeed * (v1 + 1) * (1 + v2);
         const dischargeSpeed = batteryBaseChargeSpeed * v1;
         store.dispatch(setUpgrade({ levelId, ownerId, upgradeId: "hashGenerator", value: { info: { chargeSpeed, dischargeSpeed } } }));
         buyEffectLevelUpgrade(levelId, ownerId, upgradeId);
